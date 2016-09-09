@@ -277,7 +277,7 @@
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sitemap"></i> 企业管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level" style="display: none;">
+                        <ul class="nav nav-second-level">
                             <li>
                                 <a href="/admin/company/sectormanager">部门管理</a>
                             </li>
@@ -297,8 +297,8 @@
                         <a href="/admin/adv/manager"><i class="fa fa-table"></i> 广告点管理</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap"></i> 流程中心<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level" style="display: none;">
+                        <a href="#"><i class="fa fa-umbrella"></i> 流程中心<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
                             <li>
                                 <a href="/admin/flow/devmanager">开发</a>
                             </li>
@@ -313,8 +313,8 @@
 
 
                     <li>
-                        <a href="#"><i class="fa fa-sitemap"></i> 权限管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level" style="display: none;">
+                        <a href="#"><i class="fa fa-leaf"></i> 权限管理<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
                             <li>
                                 <a href="/admin/auth/usermanager">用户管理</a>
                             </li>
