@@ -21,16 +21,15 @@ class CustomerController extends \yii\web\Controller
     public function actionJson($draw = 1, $start = 0, $length = 10)
     {
         $seach = \Yii::$app->request->get('search');
-        $offset = ($draw - 1) * $length;
         $data = IsNavigation::find();
         if(isset($seach['value'])) {
-            $data = $data->where("id like \"%" . $seach['value'] . "%\"");
+            $ar = $data->where("id like \"%" . $seach['value'] . "%\"");
         }
-        $data = $data->limit($length)->offset($offset)->orderBy("id asc")->all();
-        $count = IsNavigation::find()->count();
+        $data = $ar->limit($length)->offset($start)->orderBy("id asc")->all();
+        $count = $ar->count();
         $jsonArray = array(
-            'draw' => [1,2],
-            'recordsTotal' => $count,
+            'draw' => $draw,
+            'recordsTotal' => IsNavigation::find()->count(),
             'recordsFiltered' => $count
         );
         if(count($data) == 0) {

@@ -25,90 +25,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="odd gradeX">
-                                <td>Trident</td>
-                                <td>Internet Explorer 4.0</td>
-                                <td>Win 95+</td>
-                                <td class="center">4</td>
-                                <td class="center">X</td>
-                            </tr>
-                            <tr class="even gradeC">
-                                <td>Trident</td>
-                                <td>Internet Explorer 5.0</td>
-                                <td>Win 95+</td>
-                                <td class="center">5</td>
-                                <td class="center">C</td>
-                            </tr>
-                            <tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 5.5</td>
-                                <td>Win 95+</td>
-                                <td class="center">5.5</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="even gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 6</td>
-                                <td>Win 98+</td>
-                                <td class="center">6</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr><tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr>
-
-                            <tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr>
-                            <tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr><tr class="odd gradeA">
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td class="center">7</td>
-                                <td class="center">A</td>
-                            </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -128,7 +44,6 @@
 <script type="text/javascript">
     $(window).ready(function(){
         $('#dataTables-example').dataTable({
-                "sdom": '<"top"lf>rt<"bottom"ip><"clear">',
                 "language": {
                     "sLengthMenu": "每页显示  _MENU_ 条",
                     "sZeroRecords": "没有找到符合条件的数据",
@@ -143,7 +58,10 @@
                         "sLast": "尾页"
                     },
                 },
+                "aLengthMenu" : [10,20,50,100],
+                "serverSide": true,
                 "fnServerData": function(sSource, aoData, fnCallback) {
+                    console.log(aoData);
                     //将客户名称加入参数数组
                     $.ajax( {
                         "type": "GET",
@@ -151,13 +69,9 @@
                         "url": '/admin/customer/json',
                         "dataType": "json",
                         "data": aoData, //以json格式传递
-                        "success": function(resp) {
-                            console.log(resp.data);
-                            fnCallback(resp);
-                        }
+                        "success": fnCallback
                     });
                 },
-                "serverSide": true,
                 'columns': [
                     { "data": "company" },
                     { "data": "contact" },
@@ -166,6 +80,6 @@
                     { "data": "phone" },
                 ]
             }
-        );
+        ).api();
     });
 </script>
