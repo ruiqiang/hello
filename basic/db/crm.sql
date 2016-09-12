@@ -68,8 +68,50 @@ CREATE TABLE p_media
 (
 	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	media_name varchar(20) COMMENT '媒体名称',
+	create_time datetime COMMENT '创建时间',
+	update_time datetime COMMENT '更新时间',
 	PRIMARY KEY (id)
 ) COMMENT = '媒体表';
+
+
+CREATE TABLE p_sales
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	sales_customer varchar(50) NOT NULL COMMENT '客户名称',
+	sales_adv_info varchar(255) COMMENT '广告信息',
+	sales_community_id bigint(11) COMMENT '社区id',
+	sales_status int(2) COMMENT '销售状态',
+	create_time datetime COMMENT '创建时间',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) COMMENT = '销售单表';
+
+
+CREATE TABLE p_sales_adv
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	sales_id bigint(11) NOT NULL COMMENT '销售表id',
+	adv_id bigint(11) COMMENT '广告位id',
+	create_time datetime COMMENT '创建时间',
+	PRIMARY KEY (id)
+) COMMENT = '客户广告位关系表';
+
+
+CREATE TABLE p_sector
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	sector_name varchar(50) NOT NULL COMMENT '部门名称',
+	sector_financial_no varchar(30) COMMENT '部门财务编码',
+	sector_level int(2) COMMENT '部门等级',
+	sector_count int(4) COMMENT '部门人数',
+	sector_fid bigint(11) COMMENT '部门上级部门id',
+	sector_order_no int(4) COMMENT '部门顺序号',
+	sector_sid bigint(11) COMMENT '部门负责人id',
+	sector_city varchar(20) COMMENT '部门所在城市',
+	create_time datetime NOT NULL COMMENT '创建时间',
+	update_time datetime NOT NULL COMMENT '更新时间',
+	PRIMARY KEY (id)
+) COMMENT = '部门表';
 
 
 CREATE TABLE p_company
@@ -87,6 +129,73 @@ CREATE TABLE p_company
 	update_time datetime NOT NULL COMMENT '更新时间',
 	PRIMARY KEY (id)
 ) COMMENT = '公司表';
+
+
+CREATE TABLE p_menu
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	menu_name varchar(50) NOT NULL COMMENT '菜单名称',
+	menu_url varchar(255) NOT NULL COMMENT '菜单地址',
+	parent_id bigint(11) NOT NULL COMMENT '父级id',
+	-- 0 => 系统主菜单
+	-- 1 => 模块菜单
+	menu_level int(1) NOT NULL COMMENT '菜单级别 : 0 => 系统主菜单
+1 => 模块菜单',
+	menu_note varchar(255) COMMENT '菜单备注',
+	create_time datetime NOT NULL COMMENT '创建时间',
+	update_time datetime NOT NULL COMMENT '更新时间',
+	PRIMARY KEY (id)
+) COMMENT = '菜单表';
+
+
+CREATE TABLE p_role_menu
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	menu_id bigint(11) NOT NULL COMMENT '菜单id',
+	role_id bigint(11) NOT NULL COMMENT '权限id',
+	create_time datetime NOT NULL COMMENT '创建时间',
+	PRIMARY KEY (id)
+) COMMENT = '权限与菜单关系表';
+
+
+CREATE TABLE p_staff_role
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	role_id bigint(11) NOT NULL COMMENT '权限id',
+	staff_id bigint(11) COMMENT '员工id',
+	create_time datetime NOT NULL COMMENT '创建时间',
+	PRIMARY KEY (id)
+) COMMENT = '用户与权限关系表';
+
+
+CREATE TABLE p_role
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	role_name varchar(50) NOT NULL COMMENT '权限名称',
+	role_code varchar(20) NOT NULL COMMENT '权限编码',
+	create_time datetime NOT NULL COMMENT '创建时间',
+	update_time datetime NOT NULL COMMENT '更新时间',
+	PRIMARY KEY (id)
+) COMMENT = '权限表';
+
+
+CREATE TABLE p_task
+(
+	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	task_name varchar(50) COMMENT '任务名称',
+	task_contract varchar(50) COMMENT '任务合同名称',
+	task_contract_img varchar(11) COMMENT '任务合同图片地址',
+	task_community_id bigint(11) COMMENT '任务小区id',
+	task_staff_id bigint(11) COMMENT '任务开发人员(负责人)',
+	task_server_id bigint(11) COMMENT '任务维护人id',
+	task_status int(2) COMMENT '任务状态',
+	task_level int(2) COMMENT '任务级别',
+	-- 0 否, 没有合同
+	-- 1 是, 有合同
+	task_is_contract enum("0","1") COMMENT '任务是否有合同 : 0 否, 没有合同
+1 是, 有合同',
+	PRIMARY KEY (id)
+) COMMENT = '任务表';
 
 
 CREATE TABLE p_community
@@ -120,107 +229,6 @@ CREATE TABLE p_community
 	update_time datetime NOT NULL COMMENT '更新时间',
 	PRIMARY KEY (id)
 ) COMMENT = '社区信息表';
-
-
-CREATE TABLE p_sector
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	sector_name varchar(50) NOT NULL COMMENT '部门名称',
-	sector_financial_no varchar(30) COMMENT '部门财务编码',
-	sector_level int(2) COMMENT '部门等级',
-	sector_count int(4) COMMENT '部门人数',
-	sector_fid bigint(11) COMMENT '部门上级部门id',
-	sector_order_no int(4) COMMENT '部门顺序号',
-	sector_sid bigint(11) COMMENT '部门负责人id',
-	sector_city varchar(20) COMMENT '部门所在城市',
-	create_time datetime NOT NULL COMMENT '创建时间',
-	update_time datetime NOT NULL COMMENT '更新时间',
-	PRIMARY KEY (id)
-) COMMENT = '部门表';
-
-
-CREATE TABLE p_sales
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	sales_customer varchar(50) NOT NULL COMMENT '客户名称',
-	sales_adv_info varchar(255) COMMENT '广告信息',
-	sales_community_id bigint(11) COMMENT '社区id',
-	sales_status int(2) COMMENT '销售状态',
-	PRIMARY KEY (id)
-) COMMENT = '销售单表';
-
-
-CREATE TABLE p_sales_adv
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	sales_id bigint(11) NOT NULL COMMENT '销售表id',
-	adv_id bigint(11) COMMENT '广告位id',
-	PRIMARY KEY (id)
-) COMMENT = '客户广告位关系表';
-
-
-CREATE TABLE p_task
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	task_name varchar(50) COMMENT '任务名称',
-	task_contract varchar(50) COMMENT '任务合同名称',
-	task_contract_img varchar(11) COMMENT '任务合同图片地址',
-	task_community_id bigint(11) COMMENT '任务小区id',
-	task_staff_id bigint(11) COMMENT '任务开发人员(负责人)',
-	task_server_id bigint(11) COMMENT '任务维护人id',
-	task_status int(2) COMMENT '任务状态',
-	task_level int(2) COMMENT '任务级别',
-	-- 0 否, 没有合同
-	-- 1 是, 有合同
-	task_is_contract enum("0","1") COMMENT '任务是否有合同 : 0 否, 没有合同
-1 是, 有合同',
-	PRIMARY KEY (id)
-) COMMENT = '任务表';
-
-
-CREATE TABLE p_menu
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	menu_name varchar(50) NOT NULL COMMENT '菜单名称',
-	menu_url varchar(255) NOT NULL COMMENT '菜单地址',
-	parent_id bigint(11) NOT NULL COMMENT '父级id',
-	menu_level int(1) NOT NULL COMMENT '菜单级别',
-	menu_note varchar(255) COMMENT '菜单备注',
-	create_time datetime NOT NULL COMMENT '创建时间',
-	update_time datetime NOT NULL COMMENT '更新时间',
-	PRIMARY KEY (id)
-) COMMENT = '菜单表';
-
-
-CREATE TABLE p_role
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	role_name varchar(50) NOT NULL COMMENT '权限名称',
-	role_code varchar(20) NOT NULL COMMENT '权限编码',
-	create_time datetime NOT NULL COMMENT '创建时间',
-	update_time datetime NOT NULL COMMENT '更新时间',
-	PRIMARY KEY (id)
-) COMMENT = '权限表';
-
-
-CREATE TABLE p_role_menu
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	menu_id bigint(11) NOT NULL COMMENT '菜单id',
-	role_id bigint(11) NOT NULL COMMENT '权限id',
-	create_time datetime NOT NULL COMMENT '创建时间',
-	PRIMARY KEY (id)
-) COMMENT = '权限与菜单关系表';
-
-
-CREATE TABLE p_staff_role
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	role_id bigint(11) NOT NULL COMMENT '权限id',
-	staff_id bigint(11) COMMENT '员工id',
-	create_time datetime NOT NULL COMMENT '创建时间',
-	PRIMARY KEY (id)
-) COMMENT = '用户与权限关系表';
 
 
 
