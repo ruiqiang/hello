@@ -44,42 +44,22 @@
 <script type="text/javascript">
     $(window).ready(function(){
         $('#dataTables-example').dataTable({
-                "language": {
-                    "sLengthMenu": "每页显示  _MENU_ 条",
-                    "sZeroRecords": "没有找到符合条件的数据",
-                    "sInfo": "当前第 _START_ - _END_ 条　共计 _TOTAL_ 条",
-                    "sInfoEmpty": "没有记录",
-                    "sInfoFiltered": "(从 _MAX_ 条记录中过滤)",
-                    "sSearch": "搜索：",
-                    "oPaginate": {
-                        "sFirst": "首页",
-                        "sPrevious": "前一页",
-                        "sNext": "后一页",
-                        "sLast": "尾页"
-                    },
-                },
-                "aLengthMenu" : [10,20,50,100],
-                "serverSide": true,
-                "fnServerData": function(sSource, aoData, fnCallback) {
-                    console.log(aoData);
-                    //将客户名称加入参数数组
-                    $.ajax( {
-                        "type": "GET",
-                        "contentType": "application/json",
-                        "url": '/admin/customer/json',
-                        "dataType": "json",
-                        "data": aoData, //以json格式传递
-                        "success": fnCallback
-                    });
-                },
-                'columns': [
-                    { "data": "company" },
-                    { "data": "contact" },
-                    { "data": "edit" },
-                    { "data": "name" },
-                    { "data": "phone" },
-                ]
-            }
-        ).api();
+            "language": {
+                "url": "/assets/adminTemplate/js/dataTables/zh-cn.txt"
+            },
+            "aLengthMenu" : [10,20,50,100],
+            "serverSide": true,
+            "fnServerData": function(sSource, aoData, fnCallback) {
+                $.ajax( {
+                    "type": "GET",
+                    "contentType": "application/json",
+                    "url": "<?=$jsonurl?>",
+                    "dataType": "json",
+                    "data": aoData, //以json格式传递
+                    "success": fnCallback
+                });
+            },
+            'columns' : <?=$columns?>
+        }).api();
     });
 </script>

@@ -2,7 +2,8 @@
 
 namespace app\modules\admin\controllers;
 
-use app\modules\admin\models\IsNavigation;
+use app\modules\admin\models\DataTools;
+use app\modules\admin\models\PCustomer;
 
 class CustomerController extends \yii\web\Controller
 {
@@ -10,43 +11,31 @@ class CustomerController extends \yii\web\Controller
     public $layout='admin';
 
     /**
+     * @var array 显示的数据列
+     */
+    public $columns = array("id","customer_name","customer_contact","customer_industry","edit");
+
+    /**
+     * relation 关联的字段做成数组,支持多relation的深层字段属性
+     * @var array
+     */
+    public $columnsVal = array("id","customer_name","customer_contact","customer_industry","");
+
+    /**
      *
      * @return string
      */
     public function actionManager()
     {
-        return $this->render('customerManager');
+        $column = DataTools::getDataTablesColumns($this->columns);
+        $jsonDataUrl = '/admin/customer/customermanagerjson';
+        return $this->render('customerManager', array("columns" => $column, 'jsonurl'=>$jsonDataUrl));
     }
 
-    public function actionJson($draw = 1, $start = 0, $length = 10)
+    public function actionCustomermanagerjson($draw = 1, $start = 0, $length = 10)
     {
-        $seach = \Yii::$app->request->get('search');
-        $data = IsNavigation::find();
-        if(isset($seach['value'])) {
-            $ar = $data->where("id like \"%" . $seach['value'] . "%\"");
-        }
-        $data = $ar->limit($length)->offset($start)->orderBy("id asc")->all();
-        $count = $ar->count();
-        $jsonArray = array(
-            'draw' => $draw,
-            'recordsTotal' => IsNavigation::find()->count(),
-            'recordsFiltered' => $count
-        );
-        if(count($data) == 0) {
-            $jsonArray['data'] = [];
-        }
-        foreach($data as $key=>$nav) {
-            $array = array (
-                "company" => $nav->id,
-                "contact" => $nav->navi_name,
-                "edit" => $nav->content,
-                "name" => $nav->last_modified,
-                "phone" => "13851871381",
-            );
-            $jsonArray['data'][] = $array;
-        }
-        header('Content-Type: text/json; charset=utf-8');
-        echo json_encode($jsonArray);
-        exit;
+        //请求,排序,展示字段,展示字段的字段名(支持relation字段),主表实例,搜索字段
+        DataTools::getJsonData(\Yii::$app->request, "id desc", $this->columns, $this->columnsVal,
+            new PCustomer, "customer_name");
     }
 }
