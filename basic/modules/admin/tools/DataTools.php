@@ -70,8 +70,15 @@ class DataTools {
             }
             $jsonArray['data'][] = $array;
         }
+        DataTools::jsonEncodeResponse($jsonArray);
+    }
+
+    /**
+     * 作为json字符串返回
+     * @param $json
+     */
+    public static function jsonEncodeResponse($json) {
         header('Content-Type: text/json; charset=utf-8');
-        echo json_encode($jsonArray);
-        exit;
+        echo json_encode($json);exit;
     }
 }

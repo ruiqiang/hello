@@ -18,6 +18,8 @@ use Yii;
  */
 class PMenu extends \yii\db\ActiveRecord
 {
+    public $childMenus;
+    
     /**
      * @inheritdoc
      */
@@ -55,5 +57,17 @@ class PMenu extends \yii\db\ActiveRecord
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
         ];
+    }
+
+    /**
+     * 获取菜单树列表
+     */
+    public static function getTreeMenuList() {
+        $menuList = PMenu::find()->where("`menu_level` = 1")->all();
+        foreach($menuList as $key => $menu) {
+            $childMenuList = PMenu::find()->where('`parent_id` = "' . $menu->id . '"')->all();
+            $menuList[$key]['childMenus'] = $childMenuList;
+        }
+        return $menuList;
     }
 }
