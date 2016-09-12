@@ -11,6 +11,8 @@
  */
 
 return [
+  'app\modules\admin\models\DataTools' => '/../modules/admin/tools/DataTools.php',
+
   'yii\jui\JuiAsset' => '/../vendor/vendor/yiisoft/yii2-jui/JuiAsset.php',
   'yii\jui\DatePickerLanguageAsset' => '/../vendor/vendor/yiisoft/yii2-jui/DatePickerLanguageAsset.php',
   'yii\jui\Widget' => '/../vendor/vendor/yiisoft/yii2-jui/Widget.php',
