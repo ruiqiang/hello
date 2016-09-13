@@ -41,23 +41,7 @@
 </div>
 
 
-<div class="tree" id="tree" style="min-height:50rem;padding-top:1rem;display:none;width:45rem;max-height:60rem;min-height:30rem;">
-    <ul>
-        <li>控制台</li>
-        <li>UI Elements</li>
-        <li>Charts</li>
-        <li>Tabs & Panels</li>
-        <li>Responseive Tables</li>
-        <li>Forms</li>
-        <li data-jstree='{"opened" : true}'>权限管理
-            <ul>
-                <li>用户管理</li>
-                <li>角色管理</li>
-                <li>菜单管理</li>
-            </ul>
-        </li>
-        <li>Empty Page</li>
-    </ul>
+<div class="tree" id="tree" style="min-height:10rem;padding-top:1rem;padding-bottom:1rem;display:none;width:40rem;max-height:40rem;overflow:auto;">
 </div>
 
 <!-- /. PAGE INNER  -->
@@ -70,20 +54,33 @@
 <!-- JsTree Js-->
 <script src="/assets/adminTemplate/js/jstree/dist/jstree.min.js"></script>
 <script type="text/javascript">
+var tree;
 $(document).ready(function () {
 
     $.jstree.defaults.core.themes.responsive = true;
-
-    $('#tree').jstree({ plugins : ["checkbox","","types","wholerow"], "core" : { "themes" : { "name" : "default-dark" } }, "types" : { "file" : { "icon" : "jstree-file" } } });
+    $.jstree.defaults.core.themes.name = "default-dark";
+    $.jstree.defaults.plugins = ["checkbox","","types","wholerow"];
 
     var d = dialog({
-        title:'可拖动弹出框',
+        //align: 'left',
+        title:'',
         id:'demo',
         drag:true,
         content:$('#tree'),
         fixed:true,
         okValue: '确 定',
         ok: function () {
+            var checkedIds = $('#tree').jstree().get_checked();
+            $.ajax({
+                "type": "POST",
+                "contentType": "application/x-www-form-urlencoded",
+                "url": "/admin/auth/getmenuinfo",
+                "data" : checkedIds,
+                "dataType": "json",
+                "success": function (data) {
+
+                }
+            });
             this.close();
             return false;
         },
@@ -108,20 +105,51 @@ $(document).ready(function () {
             "url": "/assets/adminTemplate/js/dataTables/zh-cn.txt"
         },
         "aLengthMenu" : [10,20,50,100],
-            "serverSide": true,
-            "fnServerData": function(sSource, aoData, fnCallback) {
+        "serverSide": true,
+        "fnServerData": function(sSource, aoData, fnCallback) {
             $.ajax( {
                 "type": "GET",
                 "contentType": "application/json",
                 "url": "<?=$jsonurl?>",
                 "dataType": "json",
                 "data": aoData, //以json格式传递
-                "success": fnCallback
+                "success": function(data) {
+                    fnCallback(data);
+                    $('.roleEdit').bind("click", function(){
+                        var roleId = $(this).attr('role_id');
+                        tree = $('#tree').jstree({});
+                        $('#tree').jstree(true).settings.core.data = {
+                            url:'/admin/auth/getmenutreedata?role_id=' + roleId,
+                            "dataType" : "json",
+                            "type" : "GET"
+                        };
+                        $('#tree').jstree(true).refresh();
+                        tree = $('#tree').jstree({
+                            "core" : {
+                                "data" : {
+                                "url": '/admin/auth/getmenutreedata?role_id=' + roleId,
+                                "dataType" : "json",
+                                "type" : "GET"
+                                }
+                            }
+                        }).refresh();
+                        d.show();
+                    });
+
+                    $('.roleDelete').bind("click", function(){
+                        var roleId = $(this).attr('role_id');
+                        console.log(roleId);
+                    });
+                }
             });
         },
         'columns' : <?=$columns?>
         }
     ).api();
+
+    $('#tree').bind("select_node.jstree", function (e, data) {
+        console.log(data);
+    });
 });
 
 function mybind(func, fn) {

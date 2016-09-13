@@ -66,7 +66,8 @@ class DataTools {
                     $array[$v] = $val->$columnVals[$k];
                 }
                 else
-                    $array[$v] = "";
+                    $array[$v] = "<a href='javascript:;' role_id='". $val->id . "' class='btn btn-success btn-xs roleEdit'>编辑</a>" .
+                        "&nbsp;&nbsp;<a href='javascript:;' role_id='". $val->id . "' class='btn btn-danger btn-xs roleDelete'>删除</a>";
             }
             $jsonArray['data'][] = $array;
         }
@@ -80,5 +81,21 @@ class DataTools {
     public static function jsonEncodeResponse($json) {
         header('Content-Type: text/json; charset=utf-8');
         echo json_encode($json);exit;
+    }
+
+    /**
+     * 将2维的单列数组写成1维的有序数组
+     * array('0'=>array('menu_id' = > 1)) ==> array(1)
+     * @param $d2array
+     * @return array
+     */
+    public static function put2dArrayTo1d($d2array) {
+        $array = array();
+        foreach($d2array as $d1array) {
+            foreach($d1array as $value) {
+                $array[] = $value;
+            }
+        }
+        return $array;
     }
 }

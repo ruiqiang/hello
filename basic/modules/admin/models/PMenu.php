@@ -61,12 +61,45 @@ class PMenu extends \yii\db\ActiveRecord
 
     /**
      * 获取菜单树列表
+     * @return array|\yii\db\ActiveRecord[]
      */
     public static function getTreeMenuList() {
-        $menuList = PMenu::find()->where("`menu_level` = 1")->all();
-        foreach($menuList as $key => $menu) {
-            $childMenuList = PMenu::find()->where('`parent_id` = "' . $menu->id . '"')->all();
-            $menuList[$key]['childMenus'] = $childMenuList;
+        $menuList = PMenu::getSubMenuList(0);
+        return $menuList;
+    }
+
+    /**
+     * 返回JSTree需要的json数据
+     * @param $menulist
+     * @param $roleMenuList
+     * @return array
+     */
+    public static function responseTreeJsonData($menulist, $roleMenuList = null) {
+        $jsonArray = array();
+        foreach($menulist as $key=>$menu) {
+            $jsonArray[$key]['text'] = $menu->menu_name;
+            $jsonArray[$key]['id'] = $menu->id;
+            if(count($menu->childMenus) > 0) {
+                $jsonArray[$key]['children'] = PMenu::responseTreeJsonData($menu->childMenus, $roleMenuList);
+                $jsonArray[$key]['state']['opened'] = "true";
+                $jsonArray[$key]['icon']= "glyphicon glyphicon-folder-open";
+            }
+            if(in_array($menu->id,$roleMenuList)) {
+                $jsonArray[$key]['state']['selected'] = "true";
+            }
+        }
+        return $jsonArray;
+    }
+
+    /**
+     * 获取某个菜单的全部子菜单
+     * @param $id
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getSubMenuList($id) {
+        $menuList = PMenu::find()->where('`parent_id` = "' . $id . '"')->all();
+        foreach($menuList as &$li) {
+            $li['childMenus'] = PMenu::getSubMenuList($li['id']);
         }
         return $menuList;
     }

@@ -5,12 +5,14 @@ namespace app\modules\admin\controllers;
 use app\modules\admin\models\DataTools;
 use app\modules\admin\models\PMenu;
 use app\modules\admin\models\PRole;
+use app\modules\admin\models\PRoleMenu;
 use app\modules\admin\models\PStaff;
 
 class AuthController extends \yii\web\Controller
 {
+    public $enableCsrfValidation = false;
 
-    public $layout='admin';
+    public $layout = 'admin';
 
     /**
      * @var array 显示的数据列
@@ -86,6 +88,14 @@ class AuthController extends \yii\web\Controller
         return $this->render('menuManager', array('menus' => $menuList));
     }
 
+    public function actionGetmenutreedata()
+    {
+        $role_id = \Yii::$app->request->get('role_id','0');
+        $roleMenuList = PRoleMenu::find()->select('menu_id')->where('`role_id` = "' . $role_id . '"')->asArray()->all();
+        $menuList = PMenu::getTreeMenuList();
+        DataTools::jsonEncodeResponse(PMenu::responseTreeJsonData($menuList, DataTools::put2dArrayTo1d($roleMenuList)));
+    }
+
     /**
      * 获取单个菜单的信息
      * @param $menu_id
@@ -98,19 +108,90 @@ class AuthController extends \yii\web\Controller
     }
 
     /**
-     * 更新菜单信息
-     * @param $menu_id
+     * 更新菜单信息，添加子菜单
+     * 返回 -1失败 1更新成功 2更新成功并且添加子菜单成功
      */
-    public function actionUpdatemenuinfo()///*$menu_id, $menu_name, $menu_url*/
+    public function actionUpdatemenuinfo()
     {
-        echo "<pre>";print_r($_POST);exit;
+        $request = \Yii::$app->request;
+        $menu_id = $request->post('menu_id','0');
+        $menu_name = $request->post('menu_name', null);
+        $menu_url = $request->post('menu_url', null);
+
+        $sub_menu_name = trim($request->post('sub_menu_name', null)) == "" ? null : trim($request->post('sub_menu_name', null));
+        $sub_menu_url = trim($request->post('sub_menu_url', null)) == "" ? null : trim($request->post('sub_menu_url', null));
+
         $menu = PMenu::find()->where('`id` = ' . $menu_id)->one();
+        if($menu == null || $menu->id < 1) {
+            echo '-1';
+            exit;
+        }
         $childCount = PMenu::find()->where('`parent_id` = ' . $menu_id)->count();
-        $menu->menu_name = $menu_name;
-        $menu->menu_url = $menu_url;
+        $menu->menu_name = trim($menu_name) == "" ? null : trim($menu_name);
+        $menu->menu_url = trim($menu_url) == "/" ? null : trim($menu_url);
         if($childCount > 0) {
-            $menu->menu_url = null;//有子菜单的虚菜单url不做更新
+            $menu->menu_url = $menu->menu_url;//有子菜单的虚菜单url不做更新
         }
         $menu->save();
+
+        //添加子菜单
+        if($sub_menu_name != null && $sub_menu_url != null) {
+            $subMenu = new PMenu();
+            $subMenu->menu_name = $sub_menu_name;
+            $subMenu->menu_url = $sub_menu_url;
+            $subMenu->parent_id = $menu_id;
+            $subMenu->menu_level = $menu->menu_level + 1;
+            $subMenu->create_time = date('Y-m-d H:i:s');
+            $subMenu->update_time = date('Y-m-d H:i:s');
+            $subMenu->save();
+            echo "2";
+            exit;
+        }
+        echo '1';
+        exit;
+    }
+
+    /**
+     * 删除菜单,有子菜单的菜单无法删除,需要先删除其子菜单
+     * @throws \Exception
+     */
+    public function actionDeletemenu()
+    {
+        $request = \Yii::$app->request;
+        $menu_id = $request->post('menu_id','0');
+        $menu = PMenu::find()->where('`id` = ' . $menu_id)->one();
+        if($menu != null && $menu->id > 0) {
+            $childMenuCounts = PMenu::find()->where('`parent_id` = ' . $menu_id)->count();
+            if($childMenuCounts < 1) {
+                $menu->delete();
+                echo "1";
+                exit;
+            } else {
+                echo "0";
+                exit;
+            }
+        }
+        echo "-1";
+        exit;
+    }
+
+    public function actionDeletemenu()
+    {
+        $request = \Yii::$app->request;
+        $menu_id = $request->post('menu_id','0');
+        $menu = PMenu::find()->where('`id` = ' . $menu_id)->one();
+        if($menu != null && $menu->id > 0) {
+            $childMenuCounts = PMenu::find()->where('`parent_id` = ' . $menu_id)->count();
+            if($childMenuCounts < 1) {
+                $menu->delete();
+                echo "1";
+                exit;
+            } else {
+                echo "0";
+                exit;
+            }
+        }
+        echo "-1";
+        exit;
     }
 }
