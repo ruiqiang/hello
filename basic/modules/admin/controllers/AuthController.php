@@ -174,24 +174,4 @@ class AuthController extends \yii\web\Controller
         echo "-1";
         exit;
     }
-
-    public function actionDeletemenu()
-    {
-        $request = \Yii::$app->request;
-        $menu_id = $request->post('menu_id','0');
-        $menu = PMenu::find()->where('`id` = ' . $menu_id)->one();
-        if($menu != null && $menu->id > 0) {
-            $childMenuCounts = PMenu::find()->where('`parent_id` = ' . $menu_id)->count();
-            if($childMenuCounts < 1) {
-                $menu->delete();
-                echo "1";
-                exit;
-            } else {
-                echo "0";
-                exit;
-            }
-        }
-        echo "-1";
-        exit;
-    }
 }
