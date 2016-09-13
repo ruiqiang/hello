@@ -174,4 +174,86 @@ class AuthController extends \yii\web\Controller
         echo "-1";
         exit;
     }
+
+
+    /**
+     * 更新权限和菜单的绑定关系
+     * @throws \Exception
+     */
+    public function actionUpdaterolemenu()
+    {
+        $request = \Yii::$app->request;
+        $menu_ids = $request->post('ids',array());
+        $role_id = $request->post('role_id','0');
+        $menuIds = DataTools::put2dArrayTo1d(PRoleMenu::find()->select('menu_id')->where('`role_id` = "' . $role_id . '"')->asArray()->all());
+        $deleteSet = array();//需要删除的id集合
+        $insertSet = array();//需要添加的id集合
+        $allSet = array_merge($menu_ids,$menuIds);
+        $insertSet = array_diff($allSet, $menuIds);
+        $deleteSet = array_diff($allSet, $menu_ids);
+        $deleteSetString = implode(',',$deleteSet);
+        if(count($deleteSet) > 0) {
+            \Yii::$app->db->createCommand('delete from p_role_menu where menu_id in (' . $deleteSetString . ') and role_id = "' . $role_id . '"')->execute();
+        }
+        $insertSql = 'insert into p_role_menu values';
+        $date = date('Y-m-d H:i:s');
+        foreach($insertSet as $insertMenuId) {
+            $insertSql .= '(null, "' . $insertMenuId . '", "' . $role_id . '", "' . $date . '"),';
+        }
+        $insertSql = substr($insertSql,0,strlen($insertSql) - 1);
+        if(count($insertSet) > 0) {
+            \Yii::$app->db->createCommand($insertSql)->execute();
+        }
+        echo "1";exit;
+    }
+
+    /**
+     * 删除权限角色
+     * @throws \yii\db\Exception
+     */
+    public function actionDeleterole()
+    {
+        $request = \Yii::$app->request;
+        $role_id = $request->post('role_id','0');
+        $role = PRole::find()->where('id = "' . $role_id . '"')->one();
+        $role->delete();
+        \Yii::$app->db->createCommand('delete from p_role_menu where role_id = "' . $role_id . '"')->execute();
+        echo "1";exit;
+    }
+
+    /**
+     * 删除权限角色
+     * @throws \yii\db\Exception
+     */
+    public function actionAddrole()
+    {
+        $date = date('Y-m-d H:i:s');
+        $request = \Yii::$app->request;
+        $role_name = $request->post('roleName', null);
+        $role_code = $request->post('roleCode', null);
+        if($role_name != null && trim($role_name) != '' && $role_code != null && trim($role_code) != '') {
+            $roleNameExsist = PRole::find()->where('role_name = "' . $role_name . '"')->one();
+            $roleCodeExsist = PRole::find()->where('role_code = "' . $role_code . '"')->one();
+            if($roleNameExsist != null) {
+                echo "-2";//角色名存在
+            } else if($roleCodeExsist != null) {
+                echo "-3";//角色代码存在
+            } else {
+                $role = new PRole();
+                $role->role_name = trim($role_name);
+                $role->role_code = trim($role_code);
+                $role->create_time = $date;
+                $role->update_time = $date;
+                $role->save();
+
+                echo "1";
+            }
+        } else {
+            if($role_name == null || trim($role_name) == '')
+                echo "-1.1";
+            else if ($role_code == null || trim($role_code) == '')
+                echo "-1.2";
+        }
+        exit;
+    }
 }

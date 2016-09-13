@@ -9,13 +9,12 @@
     <!-- /. ROW  -->
 
     <div class="row">
-
         <div class="col-md-12">
             <!-- Advanced Tables -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     角色列表
-                    <a href="javascript:;" class="btn btn-primary" id="dialog" style="float:right;margin-top:-0.5rem;">弹出框</a>
+                    <a href="javascript:;" class="btn btn-info" id="dialog" style="float:right;margin-top:-0.5rem;">添加角色</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -44,6 +43,23 @@
 <div class="tree" id="tree" style="min-height:10rem;padding-top:1rem;padding-bottom:1rem;display:none;width:40rem;max-height:40rem;overflow:auto;">
 </div>
 
+<div id="roleAdd" style="display:none;width:40rem;">
+    <div class="form-group" id="roleAddDialogDiv">
+        <label>角色名称(不可重复)：</label>
+        <br>
+        <input class="form-control" type="text" name="new_role_name" />
+        <br>
+        <label>角色代码(角色的唯一标识,不可重复)：</label>
+        <br>
+        <input class="form-control" type="text" name="new_role_code" />
+
+        <div id="addroleinfo" style="display:none;margin-top:10px;">
+            <label>角色名已经存在!</label>
+        </div>
+    </div>
+</div>
+
+<input name="roleId" type="hidden" />
 <!-- /. PAGE INNER  -->
 <script src="/assets/artDialog/dist/dialog.js"></script>
 <script src="/assets/artDialog/dist/dialog-plus.js"></script>
@@ -64,7 +80,7 @@ $(document).ready(function () {
     var d = dialog({
         //align: 'left',
         title:'',
-        id:'demo',
+        id:'roleEdit',
         drag:true,
         content:$('#tree'),
         fixed:true,
@@ -74,11 +90,13 @@ $(document).ready(function () {
             $.ajax({
                 "type": "POST",
                 "contentType": "application/x-www-form-urlencoded",
-                "url": "/admin/auth/getmenuinfo",
-                "data" : checkedIds,
+                "url": "/admin/auth/updaterolemenu",
+                "data" : {'ids' : checkedIds,'role_id' : $('input[name=roleId]').val()},
                 "dataType": "json",
                 "success": function (data) {
-
+                    if(data != '1') {
+                        alert("修改失败!");
+                    }
                 }
             });
             this.close();
@@ -92,12 +110,85 @@ $(document).ready(function () {
         resize:true,
     });
 
+    $('input[name=new_role_code]').keydown(function(){
+        if($(this).hasClass('alert-danger')) {
+            $('#addroleinfo').hide();
+            $('input[name=new_role_code]').removeClass('alert-danger');
+        }
+    });
+
+    $('input[name=new_role_name]').keydown(function(){
+        if($(this).hasClass('alert-danger')) {
+            $('#addroleinfo').hide();
+            $('input[name=new_role_name]').removeClass('alert-danger');
+        }
+    });
+
+    var addDialog = dialog({
+        title:'添加角色',
+        id:'roleAdd',
+        drag:true,
+        content:$('#roleAdd'),
+        fixed:true,
+        okValue: '确 定',
+        ok: function () {
+            var roleName = $('input[name=new_role_name]').val();
+            var roleCode = $('input[name=new_role_code]').val();
+            if(roleName == '') {
+                $('#addroleinfo').html('角色名称不能为空!');
+                $('input[name=new_role_name]').addClass('alert-danger').focus();
+            } else if(roleCode == '') {
+                $('#addroleinfo').html('角色代码不能为空!');
+                $('input[name=new_role_code]').addClass('alert-danger').focus();
+            }
+            $.ajax({
+                "type": "POST",
+                "contentType": "application/x-www-form-urlencoded",
+                "url": "/admin/auth/addrole",
+                "data" : {'roleName' : roleName,'roleCode' : roleCode},
+                "dataType": "json",
+                "success": function (data) {
+                    if(data != '1') {
+                        $('#addroleinfo').addClass('text-danger').show();
+                        if(data == '-3') {//角色代码存在
+                            $('#addroleinfo').html('角色代码存在!');
+                            $('input[name=new_role_code]').addClass('alert-danger').focus();
+                        }
+                        if(data == '-2') {//角色名存在
+                            $('#addroleinfo').html('角色名称存在!');
+                            $('input[name=new_role_name]').addClass('alert-danger').focus();
+                        }
+                        if(data == '-1.1') {
+                            $('#addroleinfo').html('角色名称存在非法字符,不要输入空格!');
+                            $('input[name=new_role_name]').addClass('alert-danger').focus();
+                        }
+                        if(data == '-1.2') {
+                            $('#addroleinfo').html('角色代码存在非法字符,不要输入空格!');
+                            $('input[name=new_role_code]').addClass('alert-danger').focus();
+                        }
+                        return false;
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            });
+            //this.close();
+            return false;
+        },
+        cancelValue:'取消',
+        cancel: function () {
+            this.close();// 隐藏
+            return false;
+        },
+        resize:true,
+    });
+
     mybind("#dialog",function() {
-        d.show();
+        addDialog.show();
     });
 
     mybind("#dialogSubmit",function() {
-        d.close();
+        addDialog.close();
     });
 
     $('#dataTables-example').dataTable({
@@ -117,6 +208,7 @@ $(document).ready(function () {
                     fnCallback(data);
                     $('.roleEdit').bind("click", function(){
                         var roleId = $(this).attr('role_id');
+                        $('input[name=roleId]').val(roleId);
                         tree = $('#tree').jstree({});
                         $('#tree').jstree(true).settings.core.data = {
                             url:'/admin/auth/getmenutreedata?role_id=' + roleId,
@@ -137,8 +229,23 @@ $(document).ready(function () {
                     });
 
                     $('.roleDelete').bind("click", function(){
-                        var roleId = $(this).attr('role_id');
-                        console.log(roleId);
+                        if(confirm('确定要删除该角色吗？')) {
+                            var roleId = $(this).attr('role_id');
+                            $.ajax({
+                                "type": "POST",
+                                "contentType": "application/x-www-form-urlencoded",
+                                "url": "/admin/auth/deleterole",
+                                "data": {'role_id': roleId},
+                                "dataType": "json",
+                                "success": function (data) {
+                                    if (data == '1') {
+                                        window.location.reload();
+                                    } else {
+                                        alert("删除失败!");
+                                    }
+                                }
+                            });
+                        }
                     });
                 }
             });
