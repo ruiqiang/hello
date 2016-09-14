@@ -1,36 +1,12 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : local
-Source Server Version : 50617
-Source Host           : localhost:3306
-Source Database       : p_db
-
-Target Server Type    : MYSQL
-Target Server Version : 50617
-File Encoding         : 65001
-
-Date: 2016-09-13 19:20:47
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for p_role
--- ----------------------------
-DROP TABLE IF EXISTS `p_role`;
-CREATE TABLE `p_role` (
-  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `role_name` varchar(50) NOT NULL COMMENT '权限名称',
-  `role_code` varchar(20) NOT NULL COMMENT '权限编码',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime NOT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='权限表';
-
--- ----------------------------
--- Records of p_role
--- ----------------------------
-INSERT INTO `p_role` VALUES ('1', '超级管理员', 'xadmin', '2016-09-12 15:51:35', '2016-09-12 15:51:37');
-INSERT INTO `p_role` VALUES ('2', 'admin', 'sadmin', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-INSERT INTO `p_role` VALUES ('3', 'staff', 'xstaff', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `p_role` VALUES (1, 'abc123', 'abc', '2016-9-12 15:51:35', '2016-9-14 14:37:46');
+INSERT INTO `p_role` VALUES (2, 'admin', 'sadmin', '0000-0-0 00:00:00', '2016-9-14 11:51:18');
+INSERT INTO `p_role` VALUES (3, 'staff', 'xstaff', '0000-0-0 00:00:00', '0000-0-0 00:00:00');
+INSERT INTO `p_role` VALUES (5, 'a', 'a', '2016-9-14 10:04:23', '2016-9-14 10:04:23');
+INSERT INTO `p_role` VALUES (6, 'ab', 'ab', '2016-9-14 10:04:34', '2016-9-14 10:04:34');
+INSERT INTO `p_role` VALUES (7, 'c', 'c', '2016-9-14 14:15:51', '2016-9-14 14:15:51');
+INSERT INTO `p_role` VALUES (8, 'd', 'd', '2016-9-14 14:15:56', '2016-9-14 14:15:56');
+INSERT INTO `p_role` VALUES (9, '9', '9', '2016-9-14 14:16:03', '2016-9-14 14:16:03');
+INSERT INTO `p_role` VALUES (10, 'f', 'f', '2016-9-14 14:16:10', '2016-9-14 14:16:10');
+INSERT INTO `p_role` VALUES (11, 'g', 'g', '2016-9-14 14:16:14', '2016-9-14 14:16:14');
+INSERT INTO `p_role` VALUES (12, 'hs', 'h', '2016-9-14 14:16:24', '2016-9-14 14:39:21');
+INSERT INTO `p_role` VALUES (13, 'gh', 'gh', '2016-9-14 14:39:37', '2016-9-14 14:39:37');
