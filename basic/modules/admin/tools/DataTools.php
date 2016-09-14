@@ -35,8 +35,9 @@ class DataTools {
      * @param $columnVals 列值字段名
      */
     public static function getJsonData ($request,$order,$columns, $columnVals, $object, $searchField) {
-        $seach = $request->get('search');
+        $seach = $request->get('search', "");
         $data = $object::find();
+        $ar = $data;
         if(isset($seach['value'])) {
             $ar = $data->where("$searchField like \"%" . $seach['value'] . "%\"");
         }
@@ -57,17 +58,49 @@ class DataTools {
                 if(is_array($columnVals[$k])) {
                     $tempV = $val;
                     for($temp = 0; $temp < count($columnVals[$k]); $temp++) {
-                        $tempV = $tempV->$columnVals[$k][$temp];
+                        if($tempV != null) {
+                            if(is_array($columnVals[$k][$temp])) {
+                                foreach($columnVals[$k][$temp] as $kkk=>$vvv) {
+                                    $tempV = $tempV->$kkk->$vvv;
+                                }
+                            } else {
+                                $tempV = $tempV->$columnVals[$k][$temp];
+                            }
+                        } else {
+                            $tempV = "";
+                        }
                     }
                     $array[$v] = $tempV;
                     continue;
                 }
-                if(isset($columnVals[$k]) && trim($columnVals[$k]) != "") {
+                if(isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
                     $array[$v] = $val->$columnVals[$k];
                 }
-                else
-                    $array[$v] = "<a href='javascript:;' role_id='". $val->id . "' class='btn btn-success btn-xs roleEdit'>编辑</a>" .
-                        "&nbsp;&nbsp;<a href='javascript:;' role_id='". $val->id . "' class='btn btn-danger btn-xs roleDelete'>删除</a>";
+                else {
+                    $array[$v] = "";
+                    $bindRoleHtml = "<a href='javascript:;' staff_id='" . $val->id . "' class='btn btn-success btn-xs bindRole'>关联角色</a>";
+                    $editRoleHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEditName'>更新权限名</a>";
+                    $editHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEdit'>编辑</a>";
+                    $deleteHtml = '<a href=\'javascript:;\' role_id=\'\" . $val->id . \"\' class=\'btn btn-danger btn-xs roleDelete\'>删除</a>';
+                    $nbsp = "&nbsp;&nbsp;";
+                    if(strpos($columnVals[$k], '<') === 0) {
+                        $html = substr($columnVals[$k],1);
+                        $html = substr($html,0,strlen($html)-1);
+                        $htmlArray = explode(',',$html);
+                        foreach($htmlArray as $element) {
+                            if($element == 'editrole')
+                                $array[$v] .= $editRoleHtml . $nbsp;
+                            if($element == 'edit')
+                                $array[$v] .= $editHtml . $nbsp;
+                            if($element == 'delete')
+                                $array[$v] .= $deleteHtml . $nbsp;
+                            if($element == 'bindrole')
+                                $array[$v] .= $bindRoleHtml . $nbsp;
+                        }
+                    } else {
+                        $array[$v] = $editHtml . $nbsp . $deleteHtml;
+                    }
+                }
             }
             $jsonArray['data'][] = $array;
         }

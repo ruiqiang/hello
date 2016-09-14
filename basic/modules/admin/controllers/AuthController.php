@@ -7,6 +7,7 @@ use app\modules\admin\models\PMenu;
 use app\modules\admin\models\PRole;
 use app\modules\admin\models\PRoleMenu;
 use app\modules\admin\models\PStaff;
+use app\modules\admin\models\PStaffRole;
 
 class AuthController extends \yii\web\Controller
 {
@@ -20,10 +21,11 @@ class AuthController extends \yii\web\Controller
     public $usercolumns = array("id","staff_name","staff_sector_name","staff_in","edit");
 
     /**
-     * relation 关联的字段做成数组,支持多relation的深层字段属性
+     * relation 关联的字段做成数组,支持多relation的深层字段属性(最多三层)
      * @var array
      */
-    public $usercolumnsVal = array("id","staff_name",array("sector","sector_name"),"staff_in","");
+    public $usercolumnsVal = array("id","staff_name",array("sector","sector_name"),
+        array("roleId",array("role"=>"role_name")),"<bindrole>");
 
     /**
      * @var array 显示的数据列
@@ -34,7 +36,7 @@ class AuthController extends \yii\web\Controller
      * relation 关联的字段做成数组,支持多relation的深层字段属性
      * @var array
      */
-    public $rolecolumnsVal = array("id","role_name","role_code","create_time","");
+    public $rolecolumnsVal = array("id","role_name","role_code","create_time","<editrole,edit,delete>");
 
     /**
      * 用户管理
@@ -42,9 +44,12 @@ class AuthController extends \yii\web\Controller
      */
     public function actionUsermanager()
     {
+        $roleList = PRole::find()->all();
         $column = DataTools::getDataTablesColumns($this->usercolumns);
         $jsonDataUrl = '/admin/auth/usermanagerjson';
-        return $this->render('userManager', array("columns" => $column, 'jsonurl'=>$jsonDataUrl));
+        return $this->render('userManager', array("columns" => $column, 'jsonurl'=>$jsonDataUrl,
+            'rolelist' => $roleList
+        ));
     }
 
     /**
@@ -75,7 +80,7 @@ class AuthController extends \yii\web\Controller
     {
         //请求,排序,展示字段,展示字段的字段名(支持relation字段),主表实例,搜索字段
         DataTools::getJsonData(\Yii::$app->request, "id desc", $this->rolecolumns, $this->rolecolumnsVal,
-            new PRole, "role_name");
+            new PRole, "role_code");
     }
 
     /**
@@ -255,5 +260,90 @@ class AuthController extends \yii\web\Controller
                 echo "-1.2";
         }
         exit;
+    }
+
+    /**
+     * 获取单个权限信息
+     * @param $role_id
+     */
+    public function actionGetroleinfo($role_id)
+    {
+        $role = PRole::find()->where('id = "' . $role_id . '"')->one()->attributes;
+        DataTools::jsonEncodeResponse($role);
+    }
+
+    /**
+     * 更新权限名称和代码
+     */
+    public function actionUpdateroleinfo()
+    {
+        $date = date('Y-m-d H:i:s');
+        $request = \Yii::$app->request;
+        $role_name = $request->post('role_name', null);
+        $role_code = $request->post('role_code', null);
+        $role_id = $request->post('role_id', '0');
+        $role = PRole::find()->where('id = "' . $role_id . '"')->one();
+        if ($role != null) {
+            $roleNameExsist = PRole::find()->where('role_name = "' . $role_name . '" and id != "' . $role_id . '"')->one();
+            $roleCodeExsist = PRole::find()->where('role_code = "' . $role_code . '" and id != "' . $role_id . '"')->one();
+            if ($roleNameExsist != null) {
+                echo "-2";//角色名存在
+            } else if ($roleCodeExsist != null) {
+                echo "-3";//角色代码存在
+            } else {
+                $role->role_name = trim($role_name);
+                $role->role_code = trim($role_code);
+                $role->update_time = $date;
+                $role->save();
+
+                echo "1";
+            }
+        } else {
+            echo "-1";//权限id不存在
+
+        }
+        exit;
+    }
+
+    /**
+     * 绑定员工和角色关系
+     */
+    public function actionStaffbindrole()
+    {
+        $date = date('Y-m-d H:i:s');
+        $request = \Yii::$app->request;
+        $role_id = $request->post('role_id', null);
+        $staff_id = $request->post('staff_id', null);
+        $staff = PStaff::find()->where('id = "' . $staff_id . '"')->one();
+        $role = PRole::find()->where('id = "' . $role_id . '"')->one();
+        if($staff != null && $role != null) {
+            $staffRoleAr = PStaffRole::find()->where('staff_id = "' . $staff_id . '"');
+            $staffRole = null;
+            if($staffRoleAr->count() <= 1) {
+                $staffRole = $staffRoleAr->one();
+            } else {
+                \Yii::$app->db->createCommand('delete from p_staff_role where staff_id = "' . $staff_id . '"')->execute();
+            }
+            $staffRoleNew = $staffRole == null ? new PStaffRole() : $staffRole;
+            $staffRoleNew->role_id = $role_id;
+            $staffRoleNew->staff_id = $staff_id;
+            $staffRoleNew->create_time = $date;
+            $staffRoleNew->save();
+            echo "1";
+        } else {
+            echo "-1";
+        }
+        exit;
+    }
+
+    /**
+     * 获取员工的角色
+     */
+    public function actionGetuserrole()
+    {
+        $request = \Yii::$app->request;
+        $staff_id = $request->get('staff_id', '0');
+        $role = PStaffRole::find()->where('staff_id = "' .$staff_id. '"')->one();
+        DataTools::jsonEncodeResponse($role == null ? null : $role->attributes);
     }
 }

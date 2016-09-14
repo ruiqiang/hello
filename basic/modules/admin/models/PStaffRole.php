@@ -22,6 +22,11 @@ class PStaffRole extends \yii\db\ActiveRecord
         return 'p_staff_role';
     }
 
+    public function getRole()
+    {
+        return $this->hasOne(PRole::className(), ['id' => 'role_id']);
+    }
+
     /**
      * @inheritdoc
      */
