@@ -93,6 +93,9 @@ class AuthController extends \yii\web\Controller
         return $this->render('menuManager', array('menus' => $menuList));
     }
 
+    /**
+     * 获取某个角色的菜单信息
+     */
     public function actionGetmenutreedata()
     {
         $role_id = \Yii::$app->request->get('role_id','0');

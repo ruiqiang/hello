@@ -103,4 +103,67 @@ class PMenu extends \yii\db\ActiveRecord
         }
         return $menuList;
     }
+
+    /**
+     * 获取用户的权限子菜单
+     * @param $roleMenuIdList
+     * @param $parent_id
+     * @param $request_url
+     * @param $token
+     * @return array
+     */
+    public static function getSubRoleMenuList($roleMenuIdList, $parent_id, $request_url, &$token) {
+        $roleMenu = Yii::$app->db->createCommand('select * from p_menu where parent_id = ' . $parent_id .
+            ' and (id in (SELECT parent_id FROM `p_menu` where id in(
+            \'0\',"' . implode('","', DataTools::put2dArrayTo1d($roleMenuIdList)) . '"))
+            or id in (\'0\',"' . implode('","', DataTools::put2dArrayTo1d($roleMenuIdList)) . '")) order by id asc')->queryAll();
+        foreach($roleMenu as &$li) {
+            if($li['menu_url'] === $request_url && $token['is_auth'] === false) {
+                $token['is_auth'] = true;
+                $token['menu_id'] = $li['id'];
+            }
+            $li['childMenus'] = PMenu::getSubRoleMenuList($roleMenuIdList, $li['id'], $request_url, $token);
+        }
+        return $roleMenu;
+    }
+
+    /**
+     * 根据权限id获取菜单列表
+     * @param $role_id
+     * @param $request_url
+     * @return array
+     */
+    public static function getrolemenulist($role_id, $request_url)
+    {
+        $roleMenuIdList = array();
+        $roleMenuIdListAr = PRoleMenu::find()->select('menu_id')->where('role_id = "' . $role_id . '"');
+        if($roleMenuIdListAr != null) {
+            $roleMenuIdList = $roleMenuIdListAr->all();
+        }
+        $token = array(
+            'is_auth' => false,  //当前菜单是否有权限访问
+            'root_menu_id' => 0, //当前主菜单的id
+            'menu_id' => 0,      //当前菜单的id
+        );
+        $roleMenu = PMenu::getSubRoleMenuList($roleMenuIdList, 0, $request_url, $token);
+        $token['root_menu_id'] = PMenu::getMenuRootId($token['menu_id']);
+        return array('roleMenu' => $roleMenu, 'token' => $token);
+    }
+
+    /**
+     * 按照menu_url查询菜单信息
+     * @param $menu_url
+     * @return PMenu|array|null|\yii\db\ActiveRecord
+     */
+    public static function getMenuInfoByMenuUrl($menu_url)
+    {
+        $menu = PMenu::find()->where('menu_url = "' .$menu_url. '"')->one();
+        return $menu == null ? new PMenu() : $menu;
+    }
+
+    public static function getMenuRootId($menu_id) {
+        $menu = PMenu::find()->where('id = "' .$menu_id. '"')->one();
+        if($menu == null || $menu->parent_id === '0') return $menu_id;
+        else return PMenu::getMenuRootId($menu->parent_id);
+    }
 }

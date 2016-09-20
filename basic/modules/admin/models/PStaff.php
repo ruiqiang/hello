@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $id
  * @property string $staff_name
+ * @property string $password
  * @property integer $staff_level
  * @property string $staff_aids_id
  * @property string $staff_no
@@ -49,10 +50,10 @@ class PStaff extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['staff_name', 'staff_no', 'create_time', 'update_time'], 'required'],
+            [['staff_name', 'password', 'staff_no', 'create_time', 'update_time'], 'required'],
             [['staff_level', 'staff_aids_id', 'staff_no', 'staff_sector', 'staff_phone'], 'integer'],
             [['staff_in', 'staff_lastlogin', 'staff_logintime', 'create_time', 'update_time'], 'safe'],
-            [['staff_name'], 'string', 'max' => 20],
+            [['staff_name', 'password'], 'string', 'max' => 20],
             [['staff_workplace'], 'string', 'max' => 100],
             [['staff_position'], 'string', 'max' => 50],
             [['staff_email'], 'string', 'max' => 30],
@@ -67,6 +68,7 @@ class PStaff extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'staff_name' => 'Staff Name',
+            'password' => 'Password',
             'staff_level' => 'Staff Level',
             'staff_aids_id' => 'Staff Aids ID',
             'staff_no' => 'Staff No',

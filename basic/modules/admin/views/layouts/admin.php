@@ -271,61 +271,29 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
+                    <?php foreach($this->params['menuList'] as $menu) {?>
+                    <li>
+                        <?php if($this->params['menuAuth']['root_menu_id'] == $menu['id']) {?>
+                        <a class="active-menu" href="<?=$menu['menu_url']?>"><i class="fa fa-dashboard"></i><?=$menu['menu_name']?>
+                        <?php } else {?>
+                        <a href="<?=$menu['menu_url']?>"><i class="fa fa-dashboard"></i><?=$menu['menu_name']?>
+                        <?php }?>
+                        <?php if(count($menu['childMenus']) > 0) { ?>
+                            <span class="fa arrow"></span>
+                        </a>
+                            <ul class="nav nav-second-level">
+                            <?php foreach($menu['childMenus'] as $childMenu) {?>
+                                <li>
+                                    <a href="<?=$childMenu['menu_url']?>"><?=$childMenu['menu_name']?></a>
+                                </li>
+                            <?php }?>
+                            </ul>
+                        <?php } else {?>
+                        </a>
+                        <?php }?>
+                    </li>
+                    <?php }?>
 
-                    <li>
-                        <a class="active-menu" href="/admin/index"><i class="fa fa-dashboard"></i> 控制台</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-sitemap"></i> 企业管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="/admin/company/sectormanager">部门管理</a>
-                            </li>
-                            <li>
-                                <a href="/admin/company/staffmanager">员工管理</a>
-                            </li>
-                        </ul>
-                    </li>
-					<li>
-                        <a href="/admin/customer/manager"><i class="fa fa-bar-chart-o"></i> 客户管理</a>
-                    </li>
-                    <li>
-                        <a href="/admin/community/manager"><i class="fa fa-qrcode"></i> 小区管理</a>
-                    </li>
-
-                    <li>
-                        <a href="/admin/adv/manager"><i class="fa fa-table"></i> 广告点管理</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-umbrella"></i> 流程中心<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="/admin/flow/devmanager">开发</a>
-                            </li>
-                            <li>
-                                <a href="/admin/flow/salemanager">销售</a>
-                            </li>
-                            <li>
-                                <a href="/admin/flow/maintainmanager">维修</a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                    <li>
-                        <a href="#"><i class="fa fa-leaf"></i> 权限管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="/admin/auth/usermanager">用户管理</a>
-                            </li>
-                            <li>
-                                <a href="/admin/auth/rolemanager">角色管理</a>
-                            </li>
-                            <li>
-                                <a href="/admin/auth/menumanager">菜单管理</a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
 
             </div>
