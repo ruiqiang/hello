@@ -66,7 +66,7 @@ $(window).ready(function() {
                     errorinfo.show().html('密码不正确!');
                 }
                 if(data == 1) {
-
+                    window.location.href = "/admin/index";
                 }
             }
         });

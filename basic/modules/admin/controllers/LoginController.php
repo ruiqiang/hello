@@ -52,6 +52,16 @@ class LoginController extends \yii\web\Controller
     }
 
     /**
+     * 退出登录
+     */
+    public function actionDologout()
+    {
+        $session = \Yii::$app->session;
+        unset($session['loginUser']);
+        $this->redirect('/admin');
+    }
+
+    /**
      * 检验用户名
      */
     public function actionCheckname()
