@@ -32,7 +32,7 @@ class AdminModule extends \yii\base\Module
             $session = \Yii::$app->session;
             if ((!isset($session['loginUser']) || $session['loginUser']->id < 1) && !in_array($_SERVER['REQUEST_URI'], $donotneedlogin)) {
                 parent::runAction("login", []);
-                exit;
+                //exit;
             } else {
                 if (!in_array($_SERVER['REQUEST_URI'], $donotneedlogin)) {
                     $userLogin = $session['loginUser'];
