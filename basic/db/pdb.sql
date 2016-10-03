@@ -31,73 +31,73 @@ CREATE TABLE p_adv
 (
 	id bigint(11) NOT NULL AUTO_INCREMENT,
 	adv_id bigint(11) NOT NULL,
-	-- Îªp_community±íÖ÷¼ü
-	adv_community_id bigint(11) NOT NULL COMMENT 'Îªp_community±íÖ÷¼ü',
-	-- Èô¹ã¸æÎ»ÕıÔÚÊ¹ÓÃ£¬ÔòÏÔÊ¾¿Í»§Ãû³Æ
-	adv_name varchar(50) COMMENT 'Èô¹ã¸æÎ»ÕıÔÚÊ¹ÓÃ£¬ÔòÏÔÊ¾¿Í»§Ãû³Æ',
-	-- Î»ÖÃÃèÊö
-	adv_position varchar(255) NOT NULL COMMENT 'Î»ÖÃÃèÊö',
+	-- ä¸ºp_communityè¡¨ä¸»é”®
+	adv_community_id bigint(11) NOT NULL COMMENT 'ä¸ºp_communityè¡¨ä¸»é”®',
+	-- è‹¥å¹¿å‘Šä½æ­£åœ¨ä½¿ç”¨ï¼Œåˆ™æ˜¾ç¤ºå®¢æˆ·åç§°
+	adv_name varchar(50) COMMENT 'è‹¥å¹¿å‘Šä½æ­£åœ¨ä½¿ç”¨ï¼Œåˆ™æ˜¾ç¤ºå®¢æˆ·åç§°',
+	-- ä½ç½®æè¿°
+	adv_position varchar(255) NOT NULL COMMENT 'ä½ç½®æè¿°',
 	adv_starttime datetime,
 	adv_endtime datetime,
 	adv_image varchar(255),
-	-- 0.µçÌİ¹ã¸æ
-	-- 1.µÀÕ¢¹ã¸æ
-	-- 2.µÀ¸Ë¹ã¸æ
-	-- 3.µÆÏä
-	-- 4.ĞĞÈËÃÅ½û
-	adv_property int(2) NOT NULL COMMENT '0.µçÌİ¹ã¸æ
-1.µÀÕ¢¹ã¸æ
-2.µÀ¸Ë¹ã¸æ
-3.µÆÏä
-4.ĞĞÈËÃÅ½û',
-	-- p_modelÖ÷¼ü
-	model_id binary(11) COMMENT 'p_modelÖ÷¼ü',
-	-- ´Óp_model±íÖĞ»ñµÃ
-	adv_model varchar(20) COMMENT '´Óp_model±íÖĞ»ñµÃ',
-	-- 0:Î´°²×°
-	-- 1.´ıÎ¬ĞŞ£¨Ëğ»µ£©
-	-- 2.Õı³£Ê¹ÓÃ
-	adv_install_status int(2) COMMENT '0:Î´°²×°
-1.´ıÎ¬ĞŞ£¨Ëğ»µ£©
-2.Õı³£Ê¹ÓÃ',
-	-- 0.ĞÂÔö
-	-- 1.Î´Ê¹ÓÃ
-	-- 2.ÒÑÊ¹ÓÃ
-	adv_use_status int(2) COMMENT '0.ĞÂÔö
-1.Î´Ê¹ÓÃ
-2.ÒÑÊ¹ÓÃ',
-	-- 0.ÏúÊÛ
-	-- 1.ÔùËÍ
-	-- 2.ÖÃ»»
-	adv_sales_status int(2) COMMENT '0.ÏúÊÛ
-1.ÔùËÍ
-2.ÖÃ»»',
-	-- 0.Ô¤¶¨
-	-- 1.´ıÉÏ¿¯
-	-- 2.ÒÑÉÏ¿¯
-	-- 3.´ıÏÂ¿¯
-	-- 4.ÒÑÏÂ¿¯
-	adv_pic_status int(2) COMMENT '0.Ô¤¶¨
-1.´ıÉÏ¿¯
-2.ÒÑÉÏ¿¯
-3.´ıÏÂ¿¯
-4.ÒÑÏÂ¿¯',
+	-- 0.ç”µæ¢¯å¹¿å‘Š
+	-- 1.é“é—¸å¹¿å‘Š
+	-- 2.é“æ†å¹¿å‘Š
+	-- 3.ç¯ç®±
+	-- 4.è¡Œäººé—¨ç¦
+	adv_property int(2) NOT NULL COMMENT '0.ç”µæ¢¯å¹¿å‘Š
+1.é“é—¸å¹¿å‘Š
+2.é“æ†å¹¿å‘Š
+3.ç¯ç®±
+4.è¡Œäººé—¨ç¦',
+	-- p_modelä¸»é”®
+	model_id binary(11) COMMENT 'p_modelä¸»é”®',
+	-- ä»p_modelè¡¨ä¸­è·å¾—
+	adv_model varchar(20) COMMENT 'ä»p_modelè¡¨ä¸­è·å¾—',
+	-- 0:æœªå®‰è£…
+	-- 1.å¾…ç»´ä¿®ï¼ˆæŸåï¼‰
+	-- 2.æ­£å¸¸ä½¿ç”¨
+	adv_install_status int(2) COMMENT '0:æœªå®‰è£…
+1.å¾…ç»´ä¿®ï¼ˆæŸåï¼‰
+2.æ­£å¸¸ä½¿ç”¨',
+	-- 0.æ–°å¢
+	-- 1.æœªä½¿ç”¨
+	-- 2.å·²ä½¿ç”¨
+	adv_use_status int(2) COMMENT '0.æ–°å¢
+1.æœªä½¿ç”¨
+2.å·²ä½¿ç”¨',
+	-- 0.é”€å”®
+	-- 1.èµ é€
+	-- 2.ç½®æ¢
+	adv_sales_status int(2) COMMENT '0.é”€å”®
+1.èµ é€
+2.ç½®æ¢',
+	-- 0.é¢„å®š
+	-- 1.å¾…ä¸ŠåˆŠ
+	-- 2.å·²ä¸ŠåˆŠ
+	-- 3.å¾…ä¸‹åˆŠ
+	-- 4.å·²ä¸‹åˆŠ
+	adv_pic_status int(2) COMMENT '0.é¢„å®š
+1.å¾…ä¸ŠåˆŠ
+2.å·²ä¸ŠåˆŠ
+3.å¾…ä¸‹åˆŠ
+4.å·²ä¸‹åˆŠ',
 	adv_note varchar(500),
-	-- 0.ÎŞĞèÉóºË
-	-- 1.´ıÉóºË
-	-- 2.ÉóºËÖĞ
-	-- 3.ÉóºËÍ¨¹ı
-	-- 4.ÉóºËÎ´Í¨¹ı
-	adv_status int(2) COMMENT '0.ÎŞĞèÉóºË
-1.´ıÉóºË
-2.ÉóºËÖĞ
-3.ÉóºËÍ¨¹ı
-4.ÉóºËÎ´Í¨¹ı',
+	-- 0.æ— éœ€å®¡æ ¸
+	-- 1.å¾…å®¡æ ¸
+	-- 2.å®¡æ ¸ä¸­
+	-- 3.å®¡æ ¸é€šè¿‡
+	-- 4.å®¡æ ¸æœªé€šè¿‡
+	adv_status int(2) COMMENT '0.æ— éœ€å®¡æ ¸
+1.å¾…å®¡æ ¸
+2.å®¡æ ¸ä¸­
+3.å®¡æ ¸é€šè¿‡
+4.å®¡æ ¸æœªé€šè¿‡',
 	company_id bigint(11) NOT NULL,
-	-- 0.·ñ
-	-- 1.ÊÇ
-	is_delete int(2) COMMENT '0.·ñ
-1.ÊÇ',
+	-- 0.å¦
+	-- 1.æ˜¯
+	is_delete int(2) COMMENT '0.å¦
+1.æ˜¯',
 	creator bigint(11),
 	create_time datetime NOT NULL,
 	updater bigint(11),
@@ -109,22 +109,22 @@ CREATE TABLE p_adv
 CREATE TABLE p_check
 (
 	id bigint(11) NOT NULL,
-	-- 0.Â¥ÅÌĞÅÏ¢£¨p_community£©
-	-- 1.¹ã¸æÎ»±í£¨p_adv£©
-	-- 2.Éè±¸ĞÍºÅ±í(p_model)
-	-- 3.ÈÎÎñ·ÖÅä±í(p_task)
-	check_info int(2) NOT NULL COMMENT '0.Â¥ÅÌĞÅÏ¢£¨p_community£©
-1.¹ã¸æÎ»±í£¨p_adv£©
-2.Éè±¸ĞÍºÅ±í(p_model)
-3.ÈÎÎñ·ÖÅä±í(p_task)',
-	-- Îªp_staffÈËÔ±±íÖ÷¼ü
-	staff_id bigint(11) NOT NULL COMMENT 'Îªp_staffÈËÔ±±íÖ÷¼ü',
-	-- ·Ö±ğÎªp_community¡¢p_adv¡¢p_model¡¢p_taskµÄÖ÷¼ü
-	check_id bigint(11) NOT NULL COMMENT '·Ö±ğÎªp_community¡¢p_adv¡¢p_model¡¢p_taskµÄÖ÷¼ü',
-	-- 0.²»Í¨¹ı
-	-- 1.Í¨¹ı
-	check_status int(2) NOT NULL COMMENT '0.²»Í¨¹ı
-1.Í¨¹ı',
+	-- 0.æ¥¼ç›˜ä¿¡æ¯ï¼ˆp_communityï¼‰
+	-- 1.å¹¿å‘Šä½è¡¨ï¼ˆp_advï¼‰
+	-- 2.è®¾å¤‡å‹å·è¡¨(p_model)
+	-- 3.ä»»åŠ¡åˆ†é…è¡¨(p_task)
+	check_info int(2) NOT NULL COMMENT '0.æ¥¼ç›˜ä¿¡æ¯ï¼ˆp_communityï¼‰
+1.å¹¿å‘Šä½è¡¨ï¼ˆp_advï¼‰
+2.è®¾å¤‡å‹å·è¡¨(p_model)
+3.ä»»åŠ¡åˆ†é…è¡¨(p_task)',
+	-- ä¸ºp_staffäººå‘˜è¡¨ä¸»é”®
+	staff_id bigint(11) NOT NULL COMMENT 'ä¸ºp_staffäººå‘˜è¡¨ä¸»é”®',
+	-- åˆ†åˆ«ä¸ºp_communityã€p_advã€p_modelã€p_taskçš„ä¸»é”®
+	check_id bigint(11) NOT NULL COMMENT 'åˆ†åˆ«ä¸ºp_communityã€p_advã€p_modelã€p_taskçš„ä¸»é”®',
+	-- 0.ä¸é€šè¿‡
+	-- 1.é€šè¿‡
+	check_status int(2) NOT NULL COMMENT '0.ä¸é€šè¿‡
+1.é€šè¿‡',
 	create_time datetime NOT NULL,
 	PRIMARY KEY (id)
 );
@@ -133,20 +133,20 @@ CREATE TABLE p_check
 CREATE TABLE p_check_control
 (
 	id bigint(11) NOT NULL,
-	-- ¹«Ë¾£¨p_company£©Ö÷¼ü
-	company_id bigint(11) NOT NULL COMMENT '¹«Ë¾£¨p_company£©Ö÷¼ü',
-	-- 0.²»ĞèÒª
-	-- 1.ĞèÒª£¨Ä¬ÈÏ£©
-	control_community int(2) COMMENT '0.²»ĞèÒª
-1.ĞèÒª£¨Ä¬ÈÏ£©',
-	-- 0.²»ĞèÒª£¨Ä¬ÈÏ£©
-	-- 1.ĞèÒª
-	control_adv int(2) COMMENT '0.²»ĞèÒª£¨Ä¬ÈÏ£©
-1.ĞèÒª',
-	-- 0.²»ĞèÒª
-	-- 1.ĞèÒª£¨Ä¬ÈÏ£©
-	control_model int(2) COMMENT '0.²»ĞèÒª
-1.ĞèÒª£¨Ä¬ÈÏ£©',
+	-- å…¬å¸ï¼ˆp_companyï¼‰ä¸»é”®
+	company_id bigint(11) NOT NULL COMMENT 'å…¬å¸ï¼ˆp_companyï¼‰ä¸»é”®',
+	-- 0.ä¸éœ€è¦
+	-- 1.éœ€è¦ï¼ˆé»˜è®¤ï¼‰
+	control_community int(2) COMMENT '0.ä¸éœ€è¦
+1.éœ€è¦ï¼ˆé»˜è®¤ï¼‰',
+	-- 0.ä¸éœ€è¦ï¼ˆé»˜è®¤ï¼‰
+	-- 1.éœ€è¦
+	control_adv int(2) COMMENT '0.ä¸éœ€è¦ï¼ˆé»˜è®¤ï¼‰
+1.éœ€è¦',
+	-- 0.ä¸éœ€è¦
+	-- 1.éœ€è¦ï¼ˆé»˜è®¤ï¼‰
+	control_model int(2) COMMENT '0.ä¸éœ€è¦
+1.éœ€è¦ï¼ˆé»˜è®¤ï¼‰',
 	updater bigint(11),
 	update_time datetime,
 	PRIMARY KEY (id)
@@ -163,12 +163,12 @@ CREATE TABLE p_community
 	community_level varchar(50),
 	community_price varchar(20),
 	community_cbd varchar(100) NOT NULL,
-	-- 0.ĞÂ½¨Â¥ÅÌ
-	-- 1.ÀÏÂ¥ÅÌ
-	-- 2.¸ÄÔìÂ¥ÅÌ
-	community_nature int(2) COMMENT '0.ĞÂ½¨Â¥ÅÌ
-1.ÀÏÂ¥ÅÌ
-2.¸ÄÔìÂ¥ÅÌ',
+	-- 0.æ–°å»ºæ¥¼ç›˜
+	-- 1.è€æ¥¼ç›˜
+	-- 2.æ”¹é€ æ¥¼ç›˜
+	community_nature int(2) COMMENT '0.æ–°å»ºæ¥¼ç›˜
+1.è€æ¥¼ç›˜
+2.æ”¹é€ æ¥¼ç›˜',
 	community_opentime datetime NOT NULL,
 	community_staytime datetime NOT NULL,
 	community_units int(6) NOT NULL,
@@ -178,26 +178,26 @@ CREATE TABLE p_community
 	community_latitudey varchar(50),
 	community_traffic varchar(255),
 	community_facility varchar(255),
-	-- Ä¬ÈÏ×î¶àÉÏ´«3ÕÅÕÕÆ¬
-	community_image1 varchar(255) COMMENT 'Ä¬ÈÏ×î¶àÉÏ´«3ÕÅÕÕÆ¬',
+	-- é»˜è®¤æœ€å¤šä¸Šä¼ 3å¼ ç…§ç‰‡
+	community_image1 varchar(255) COMMENT 'é»˜è®¤æœ€å¤šä¸Šä¼ 3å¼ ç…§ç‰‡',
 	community_image2 varchar(255),
 	community_image3 varchar(255),
 	community_note varchar(500),
-	-- 0.ÎŞĞèÉóºË
-	-- 1.´ıÉóºË
-	-- 2.ÉóºËÖĞ
-	-- 3.ÉóºËÍ¨¹ı
-	-- 4.ÉóºËÎ´Í¨¹ı
-	community_status int(2) COMMENT '0.ÎŞĞèÉóºË
-1.´ıÉóºË
-2.ÉóºËÖĞ
-3.ÉóºËÍ¨¹ı
-4.ÉóºËÎ´Í¨¹ı',
+	-- 0.æ— éœ€å®¡æ ¸
+	-- 1.å¾…å®¡æ ¸
+	-- 2.å®¡æ ¸ä¸­
+	-- 3.å®¡æ ¸é€šè¿‡
+	-- 4.å®¡æ ¸æœªé€šè¿‡
+	community_status int(2) COMMENT '0.æ— éœ€å®¡æ ¸
+1.å¾…å®¡æ ¸
+2.å®¡æ ¸ä¸­
+3.å®¡æ ¸é€šè¿‡
+4.å®¡æ ¸æœªé€šè¿‡',
 	company_id binary(11) NOT NULL,
-	-- 0.·ñ
-	-- 1.ÊÇ
-	is_delete int(2) COMMENT '0.·ñ
-1.ÊÇ',
+	-- 0.å¦
+	-- 1.æ˜¯
+	is_delete int(2) COMMENT '0.å¦
+1.æ˜¯',
 	creator bigint(11),
 	create_time datetime,
 	updater bigint(11),
@@ -210,12 +210,12 @@ CREATE TABLE p_company
 (
 	id bigint(11) NOT NULL AUTO_INCREMENT,
 	company_name varchar(50) NOT NULL,
-	-- ÁìÓò°üÀ¨£º
-	-- µçÌİ¿ò¼Ü µçÌİÃÅ µÆÏä µÀÕ¢ µ¹¸Ë ¹ã¸æÅÆ
-	-- ²»Í¬µÄ¹«Ë¾¿ÉÄÜÖÆ×÷Ä³¼¸¸öÁìÓò£¬¼´¿É¶àÑ¡
-	company_field int(2) COMMENT 'ÁìÓò°üÀ¨£º
-µçÌİ¿ò¼Ü µçÌİÃÅ µÆÏä µÀÕ¢ µ¹¸Ë ¹ã¸æÅÆ
-²»Í¬µÄ¹«Ë¾¿ÉÄÜÖÆ×÷Ä³¼¸¸öÁìÓò£¬¼´¿É¶àÑ¡',
+	-- é¢†åŸŸåŒ…æ‹¬ï¼š
+	-- ç”µæ¢¯æ¡†æ¶ ç”µæ¢¯é—¨ ç¯ç®± é“é—¸ å€’æ† å¹¿å‘Šç‰Œ
+	-- ä¸åŒçš„å…¬å¸å¯èƒ½åˆ¶ä½œæŸå‡ ä¸ªé¢†åŸŸï¼Œå³å¯å¤šé€‰
+	company_field int(2) COMMENT 'é¢†åŸŸåŒ…æ‹¬ï¼š
+ç”µæ¢¯æ¡†æ¶ ç”µæ¢¯é—¨ ç¯ç®± é“é—¸ å€’æ† å¹¿å‘Šç‰Œ
+ä¸åŒçš„å…¬å¸å¯èƒ½åˆ¶ä½œæŸå‡ ä¸ªé¢†åŸŸï¼Œå³å¯å¤šé€‰',
 	staff_number int,
 	create_time datetime NOT NULL,
 	update_time datetime NOT NULL,
@@ -228,13 +228,13 @@ CREATE TABLE p_customer
 	id bigint(11) NOT NULL AUTO_INCREMENT,
 	customer_company varchar(100) NOT NULL,
 	customer_address varchar(255) NOT NULL,
-	-- ¼´¿Í»§ĞÕÃû
-	customer_contact varchar(20) NOT NULL COMMENT '¼´¿Í»§ĞÕÃû',
+	-- å³å®¢æˆ·å§“å
+	customer_contact varchar(20) NOT NULL COMMENT 'å³å®¢æˆ·å§“å',
 	customer_phone varchar(50),
 	customer_email varchar(100),
 	customer_industry varchar(50) NOT NULL,
-	-- ¶ÔÓ¦Îª¸Ã¿Í»§·şÎñµÄ¹«Ë¾
-	company_id binary(11) NOT NULL COMMENT '¶ÔÓ¦Îª¸Ã¿Í»§·şÎñµÄ¹«Ë¾',
+	-- å¯¹åº”ä¸ºè¯¥å®¢æˆ·æœåŠ¡çš„å…¬å¸
+	company_id binary(11) NOT NULL COMMENT 'å¯¹åº”ä¸ºè¯¥å®¢æˆ·æœåŠ¡çš„å…¬å¸',
 	creator binary(11),
 	create_time datetime,
 	updater bigint(11),
@@ -247,15 +247,15 @@ CREATE TABLE p_group
 (
 	id bigint(11) NOT NULL,
 	group_name varchar(100) NOT NULL,
-	-- ¿É´æ´¢¶àÈËµÄid
-	staff_ids varchar(50) NOT NULL COMMENT '¿É´æ´¢¶àÈËµÄid',
-	-- µ±Ç°Ö»Ö§³ÖËùÓĞ×éÔ±ÔÚÒ»¸ö²¿ÃÅÖĞ
-	staff_sector bigint(11) COMMENT 'µ±Ç°Ö»Ö§³ÖËùÓĞ×éÔ±ÔÚÒ»¸ö²¿ÃÅÖĞ',
+	-- å¯å­˜å‚¨å¤šäººçš„id
+	staff_ids varchar(50) NOT NULL COMMENT 'å¯å­˜å‚¨å¤šäººçš„id',
+	-- å½“å‰åªæ”¯æŒæ‰€æœ‰ç»„å‘˜åœ¨ä¸€ä¸ªéƒ¨é—¨ä¸­
+	staff_sector bigint(11) COMMENT 'å½“å‰åªæ”¯æŒæ‰€æœ‰ç»„å‘˜åœ¨ä¸€ä¸ªéƒ¨é—¨ä¸­',
 	company_id bigint(11) NOT NULL,
-	-- 0.·ñ
-	-- 1.ÊÇ
-	is_delete int(2) COMMENT '0.·ñ
-1.ÊÇ',
+	-- 0.å¦
+	-- 1.æ˜¯
+	is_delete int(2) COMMENT '0.å¦
+1.æ˜¯',
 	updator bigint(11),
 	update_time datetime,
 	PRIMARY KEY (id)
@@ -268,10 +268,10 @@ CREATE TABLE p_menu
 	menu_name varchar(50) NOT NULL,
 	menu_url varchar(255) NOT NULL,
 	parent_id bigint(11) NOT NULL,
-	-- 0 => ÏµÍ³Ö÷²Ëµ¥
-	-- 1 => Ä£¿é²Ëµ¥
-	menu_level int(1) NOT NULL COMMENT '0 => ÏµÍ³Ö÷²Ëµ¥
-1 => Ä£¿é²Ëµ¥',
+	-- 0 => ç³»ç»Ÿä¸»èœå•
+	-- 1 => æ¨¡å—èœå•
+	menu_level int(1) NOT NULL COMMENT '0 => ç³»ç»Ÿä¸»èœå•
+1 => æ¨¡å—èœå•',
 	menu_note varchar(255),
 	create_time datetime NOT NULL,
 	update_time datetime NOT NULL,
@@ -279,16 +279,16 @@ CREATE TABLE p_menu
 );
 
 
--- ÊÊÓÃÓÚp_community¡¢p_adv¡¢p_model
+-- é€‚ç”¨äºp_communityã€p_advã€p_model
 CREATE TABLE p_message
 (
 	id bigint(11) NOT NULL,
 	company_id bigint(11) NOT NULL,
-	-- ÏûÏ¢ÄÚÈİ¸ù¾İÌí¼ÓµÄÄÚÈİ²»Í¬¶ø×Ô¶¯Éú³É
-	message_content varchar(255) COMMENT 'ÏûÏ¢ÄÚÈİ¸ù¾İÌí¼ÓµÄÄÚÈİ²»Í¬¶ø×Ô¶¯Éú³É',
+	-- æ¶ˆæ¯å†…å®¹æ ¹æ®æ·»åŠ çš„å†…å®¹ä¸åŒè€Œè‡ªåŠ¨ç”Ÿæˆ
+	message_content varchar(255) COMMENT 'æ¶ˆæ¯å†…å®¹æ ¹æ®æ·»åŠ çš„å†…å®¹ä¸åŒè€Œè‡ªåŠ¨ç”Ÿæˆ',
 	create_time datetime,
 	PRIMARY KEY (id)
-) COMMENT = 'ÊÊÓÃÓÚp_community¡¢p_adv¡¢p_model';
+) COMMENT = 'é€‚ç”¨äºp_communityã€p_advã€p_model';
 
 
 CREATE TABLE p_model
@@ -303,21 +303,21 @@ CREATE TABLE p_model
 	model_factory varchar(100),
 	model_use varchar(255),
 	model_note varchar(500),
-	-- 0.ÎŞĞèÉóºË
-	-- 1.´ıÉóºË
-	-- 2.ÉóºËÖĞ
-	-- 3.ÉóºËÍ¨¹ı
-	-- 4.ÉóºËÎ´Í¨¹ı
-	model_status int(2) COMMENT '0.ÎŞĞèÉóºË
-1.´ıÉóºË
-2.ÉóºËÖĞ
-3.ÉóºËÍ¨¹ı
-4.ÉóºËÎ´Í¨¹ı',
+	-- 0.æ— éœ€å®¡æ ¸
+	-- 1.å¾…å®¡æ ¸
+	-- 2.å®¡æ ¸ä¸­
+	-- 3.å®¡æ ¸é€šè¿‡
+	-- 4.å®¡æ ¸æœªé€šè¿‡
+	model_status int(2) COMMENT '0.æ— éœ€å®¡æ ¸
+1.å¾…å®¡æ ¸
+2.å®¡æ ¸ä¸­
+3.å®¡æ ¸é€šè¿‡
+4.å®¡æ ¸æœªé€šè¿‡',
 	company_id bigint(11),
-	-- 0.·ñ
-	-- 1.ÊÇ
-	is_delete int(2) COMMENT '0.·ñ
-1.ÊÇ',
+	-- 0.å¦
+	-- 1.æ˜¯
+	is_delete int(2) COMMENT '0.å¦
+1.æ˜¯',
 	creator bigint(11),
 	create_time datetime,
 	updater bigint(11),
@@ -351,19 +351,19 @@ CREATE TABLE p_sales
 (
 	id bigint(11) NOT NULL AUTO_INCREMENT,
 	sales_community_id bigint(11),
-	-- Îªp_adv±íÖ÷¼ü
-	adv_di bigint(11) COMMENT 'Îªp_adv±íÖ÷¼ü',
+	-- ä¸ºp_advè¡¨ä¸»é”®
+	adv_di bigint(11) COMMENT 'ä¸ºp_advè¡¨ä¸»é”®',
 	sales_customer varchar(50),
 	sales_company bigint(100),
 	sales_starttime datetime,
 	sales_endtime datetime,
 	sales_person varchar(100),
-	-- 0.´ıÏúÊÛ
-	-- 1.Ô¤¶¨
-	-- 2.ÒÑÏúÊÛ
-	sales_status int(2) COMMENT '0.´ıÏúÊÛ
-1.Ô¤¶¨
-2.ÒÑÏúÊÛ',
+	-- 0.å¾…é”€å”®
+	-- 1.é¢„å®š
+	-- 2.å·²é”€å”®
+	sales_status int(2) COMMENT '0.å¾…é”€å”®
+1.é¢„å®š
+2.å·²é”€å”®',
 	sales_note varchar(500),
 	company_id bigint(11),
 	create_time datetime,
@@ -404,30 +404,30 @@ CREATE TABLE p_sector
 CREATE TABLE p_staff
 (
 	id bigint(11) NOT NULL AUTO_INCREMENT,
-	-- Ò²ÊÇµÇÂ¼ÕÊºÅ
-	staff_name varchar(20) NOT NULL COMMENT 'Ò²ÊÇµÇÂ¼ÕÊºÅ',
+	-- ä¹Ÿæ˜¯ç™»å½•å¸å·
+	staff_name varchar(20) NOT NULL COMMENT 'ä¹Ÿæ˜¯ç™»å½•å¸å·',
 	password varchar(255) NOT NULL,
 	staff_level int(11),
 	staff_aids_id bigint(11),
 	staff_no bigint(10),
 	staff_in datetime,
 	staff_workplace varchar(100),
-	-- p_company±íÖ÷¼ü
-	company_id bigint(11) NOT NULL COMMENT 'p_company±íÖ÷¼ü',
+	-- p_companyè¡¨ä¸»é”®
+	company_id bigint(11) NOT NULL COMMENT 'p_companyè¡¨ä¸»é”®',
 	staff_sector bigint(11),
 	staff_position varchar(50),
 	staff_phone bigint(11),
 	staff_email varchar(30),
 	staff_lastlogin datetime,
 	staff_logintime datetime,
-	-- 0.·ñ
-	-- 1.ÊÇ
-	is_super int(2) COMMENT '0.·ñ
-1.ÊÇ',
-	-- 0.·ñ
-	-- 1.ÊÇ
-	is_delete int(2) COMMENT '0.·ñ
-1.ÊÇ',
+	-- 0.å¦
+	-- 1.æ˜¯
+	is_super int(2) COMMENT '0.å¦
+1.æ˜¯',
+	-- 0.å¦
+	-- 1.æ˜¯
+	is_delete int(2) COMMENT '0.å¦
+1.æ˜¯',
 	create_time datetime NOT NULL,
 	update_time datetime NOT NULL,
 	PRIMARY KEY (id)
@@ -447,37 +447,37 @@ CREATE TABLE p_staff_role
 CREATE TABLE p_task
 (
 	id bigint(11) NOT NULL,
-	-- 0.°²×°
-	-- 1.Î¬ĞŞ
-	-- 2.²ğ³ı
-	task_category int(2) COMMENT '0.°²×°
-1.Î¬ĞŞ
-2.²ğ³ı',
-	-- ÏÔÊ¾ÏàÓ¦µÄ¹ã¸æÎ»ĞÅÏ¢¡¢Â¥ÅÌĞÅÏ¢
-	adv_id bigint(11) COMMENT 'ÏÔÊ¾ÏàÓ¦µÄ¹ã¸æÎ»ĞÅÏ¢¡¢Â¥ÅÌĞÅÏ¢',
-	-- ÏÔÊ¾ÏàÓ¦µÄÉè±¸ĞÅÏ¢
-	model_id bigint(11) COMMENT 'ÏÔÊ¾ÏàÓ¦µÄÉè±¸ĞÅÏ¢',
-	-- ÏÔÊ¾ÏàÓ¦µÄ°²×°ÈËÔ±
-	group_id bigint(11) COMMENT 'ÏÔÊ¾ÏàÓ¦µÄ°²×°ÈËÔ±',
-	-- 0.Î´¿ªÊ¼
-	-- 1.½øĞĞÖĞ
-	-- 3.ÒÑÍê³É
-	task_status int(2) COMMENT '0.Î´¿ªÊ¼
-1.½øĞĞÖĞ
-3.ÒÑÍê³É',
-	-- 0.Î´ÉÏ¿¯
-	-- 1.ÉÏ¿¯ÖĞ
-	-- 2.ÒÑÉÏ¿¯
-	task_adv_status int(2) COMMENT '0.Î´ÉÏ¿¯
-1.ÉÏ¿¯ÖĞ
-2.ÒÑÉÏ¿¯',
+	-- 0.å®‰è£…
+	-- 1.ç»´ä¿®
+	-- 2.æ‹†é™¤
+	task_category int(2) COMMENT '0.å®‰è£…
+1.ç»´ä¿®
+2.æ‹†é™¤',
+	-- æ˜¾ç¤ºç›¸åº”çš„å¹¿å‘Šä½ä¿¡æ¯ã€æ¥¼ç›˜ä¿¡æ¯
+	adv_id bigint(11) COMMENT 'æ˜¾ç¤ºç›¸åº”çš„å¹¿å‘Šä½ä¿¡æ¯ã€æ¥¼ç›˜ä¿¡æ¯',
+	-- æ˜¾ç¤ºç›¸åº”çš„è®¾å¤‡ä¿¡æ¯
+	model_id bigint(11) COMMENT 'æ˜¾ç¤ºç›¸åº”çš„è®¾å¤‡ä¿¡æ¯',
+	-- æ˜¾ç¤ºç›¸åº”çš„å®‰è£…äººå‘˜
+	group_id bigint(11) COMMENT 'æ˜¾ç¤ºç›¸åº”çš„å®‰è£…äººå‘˜',
+	-- 0.æœªå¼€å§‹
+	-- 1.è¿›è¡Œä¸­
+	-- 3.å·²å®Œæˆ
+	task_status int(2) COMMENT '0.æœªå¼€å§‹
+1.è¿›è¡Œä¸­
+3.å·²å®Œæˆ',
+	-- 0.æœªä¸ŠåˆŠ
+	-- 1.ä¸ŠåˆŠä¸­
+	-- 2.å·²ä¸ŠåˆŠ
+	task_adv_status int(2) COMMENT '0.æœªä¸ŠåˆŠ
+1.ä¸ŠåˆŠä¸­
+2.å·²ä¸ŠåˆŠ',
 	task_deadline datetime,
 	task_note varchar(500),
 	company_id bigint(11),
-	-- 0.·ñ
-	-- 1.ÊÇ
-	is_delete int(2) COMMENT '0.·ñ
-1.ÊÇ',
+	-- 0.å¦
+	-- 1.æ˜¯
+	is_delete int(2) COMMENT '0.å¦
+1.æ˜¯',
 	creator bigint(11),
 	create_time datetime,
 	updater bigint(11),
@@ -489,20 +489,20 @@ CREATE TABLE p_task
 CREATE TABLE p_task_accept
 (
 	id bigint(11) NOT NULL,
-	-- p_taskÖ÷¼ü
-	task_id bigint(11) COMMENT 'p_taskÖ÷¼ü',
-	-- p_staffÖ÷¼ü
-	staff_id bigint(11) COMMENT 'p_staffÖ÷¼ü',
-	-- 0.Î´ÊÜÀí
-	-- 1.ÒÑÊÜÀí
-	-- 2.ÒÑÍê³É£¨ÈÎÎñÍê³Éºó×Ô¶¯¸üĞÂÎª¸Ã×´Ì¬£©
-	accept_status int(2) COMMENT '0.Î´ÊÜÀí
-1.ÒÑÊÜÀí
-2.ÒÑÍê³É£¨ÈÎÎñÍê³Éºó×Ô¶¯¸üĞÂÎª¸Ã×´Ì¬£©',
+	-- p_taskä¸»é”®
+	task_id bigint(11) COMMENT 'p_taskä¸»é”®',
+	-- p_staffä¸»é”®
+	staff_id bigint(11) COMMENT 'p_staffä¸»é”®',
+	-- 0.æœªå—ç†
+	-- 1.å·²å—ç†
+	-- 2.å·²å®Œæˆï¼ˆä»»åŠ¡å®Œæˆåè‡ªåŠ¨æ›´æ–°ä¸ºè¯¥çŠ¶æ€ï¼‰
+	accept_status int(2) COMMENT '0.æœªå—ç†
+1.å·²å—ç†
+2.å·²å®Œæˆï¼ˆä»»åŠ¡å®Œæˆåè‡ªåŠ¨æ›´æ–°ä¸ºè¯¥çŠ¶æ€ï¼‰',
 	create_time datetime,
 	accept_time datetime,
-	-- ÈÎÎñÍê³Éºó×Ô¶¯Éú³É
-	complete_time datetime COMMENT 'ÈÎÎñÍê³Éºó×Ô¶¯Éú³É',
+	-- ä»»åŠ¡å®Œæˆåè‡ªåŠ¨ç”Ÿæˆ
+	complete_time datetime COMMENT 'ä»»åŠ¡å®Œæˆåè‡ªåŠ¨ç”Ÿæˆ',
 	PRIMARY KEY (id)
 );
 
