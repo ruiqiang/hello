@@ -8,19 +8,16 @@ DROP TABLE IF EXISTS p_check_control;
 DROP TABLE IF EXISTS p_community;
 DROP TABLE IF EXISTS p_company;
 DROP TABLE IF EXISTS p_customer;
-DROP TABLE IF EXISTS p_group;
 DROP TABLE IF EXISTS p_menu;
 DROP TABLE IF EXISTS p_message;
 DROP TABLE IF EXISTS p_model;
 DROP TABLE IF EXISTS p_role;
 DROP TABLE IF EXISTS p_role_menu;
 DROP TABLE IF EXISTS p_sales;
-DROP TABLE IF EXISTS p_sales_adv;
 DROP TABLE IF EXISTS p_sector;
 DROP TABLE IF EXISTS p_staff;
 DROP TABLE IF EXISTS p_staff_role;
 DROP TABLE IF EXISTS p_task;
-DROP TABLE IF EXISTS p_task_accept;
 
 
 
@@ -213,7 +210,7 @@ CREATE TABLE p_company
 	-- 领域包括：
 	-- 电梯框架 电梯门 灯箱 道闸 倒杆 广告牌
 	-- 不同的公司可能制作某几个领域，即可多选
-	company_field int(2) COMMENT '领域包括：
+	company_field varchar(50) COMMENT '领域包括：
 电梯框架 电梯门 灯箱 道闸 倒杆 广告牌
 不同的公司可能制作某几个领域，即可多选',
 	staff_number int,
@@ -238,25 +235,6 @@ CREATE TABLE p_customer
 	creator binary(11),
 	create_time datetime,
 	updater bigint(11),
-	update_time datetime,
-	PRIMARY KEY (id)
-);
-
-
-CREATE TABLE p_group
-(
-	id bigint(11) NOT NULL,
-	group_name varchar(100) NOT NULL,
-	-- 可存储多人的id
-	staff_ids varchar(50) NOT NULL COMMENT '可存储多人的id',
-	-- 当前只支持所有组员在一个部门中
-	staff_sector bigint(11) COMMENT '当前只支持所有组员在一个部门中',
-	company_id bigint(11) NOT NULL,
-	-- 0.否
-	-- 1.是
-	is_delete int(2) COMMENT '0.否
-1.是',
-	updator bigint(11),
 	update_time datetime,
 	PRIMARY KEY (id)
 );
@@ -372,17 +350,6 @@ CREATE TABLE p_sales
 );
 
 
-CREATE TABLE p_sales_adv
-(
-	id bigint(11) NOT NULL AUTO_INCREMENT,
-	sales_id bigint(11) NOT NULL,
-	adv_id bigint(11),
-	company_id bigint(11),
-	create_time datetime,
-	PRIMARY KEY (id)
-);
-
-
 CREATE TABLE p_sector
 (
 	id bigint(11) NOT NULL AUTO_INCREMENT,
@@ -457,8 +424,8 @@ CREATE TABLE p_task
 	adv_id bigint(11) COMMENT '显示相应的广告位信息、楼盘信息',
 	-- 显示相应的设备信息
 	model_id bigint(11) COMMENT '显示相应的设备信息',
-	-- 显示相应的安装人员
-	group_id bigint(11) COMMENT '显示相应的安装人员',
+	-- 多选，以"，"隔开
+	staff_ids varchar(25) COMMENT '多选，以"，"隔开',
 	-- 0.未开始
 	-- 1.进行中
 	-- 3.已完成
@@ -482,27 +449,6 @@ CREATE TABLE p_task
 	create_time datetime,
 	updater bigint(11),
 	update_time datetime,
-	PRIMARY KEY (id)
-);
-
-
-CREATE TABLE p_task_accept
-(
-	id bigint(11) NOT NULL,
-	-- p_task主键
-	task_id bigint(11) COMMENT 'p_task主键',
-	-- p_staff主键
-	staff_id bigint(11) COMMENT 'p_staff主键',
-	-- 0.未受理
-	-- 1.已受理
-	-- 2.已完成（任务完成后自动更新为该状态）
-	accept_status int(2) COMMENT '0.未受理
-1.已受理
-2.已完成（任务完成后自动更新为该状态）',
-	create_time datetime,
-	accept_time datetime,
-	-- 任务完成后自动生成
-	complete_time datetime COMMENT '任务完成后自动生成',
 	PRIMARY KEY (id)
 );
 
