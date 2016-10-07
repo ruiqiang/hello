@@ -214,6 +214,10 @@ CREATE TABLE p_company
 电梯框架 电梯门 灯箱 道闸 倒杆 广告牌
 不同的公司可能制作某几个领域，即可多选',
 	staff_number int,
+	-- 0.否
+	-- 1.是
+	is_delete int(2) COMMENT '0.否
+1.是',
 	create_time datetime NOT NULL,
 	update_time datetime NOT NULL,
 	PRIMARY KEY (id)
