@@ -366,6 +366,10 @@ CREATE TABLE p_sector
 	sector_order_no int(4),
 	sector_sid bigint(11),
 	sector_city varchar(20),
+	-- 0.否
+	-- 1.是
+	is_delete int(2) COMMENT '0.否
+1.是',
 	create_time datetime NOT NULL,
 	update_time datetime NOT NULL,
 	PRIMARY KEY (id)
