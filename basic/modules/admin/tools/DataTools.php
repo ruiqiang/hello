@@ -83,7 +83,7 @@ class DataTools
                     $bindRoleHtml = "<a href='javascript:;' staff_id='" . $val->id . "' class='btn btn-success btn-xs bindRole'>关联角色</a>";
                     $editRoleHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEditName'>更新权限名</a>";
                     $editHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEdit'>编辑</a>";
-                    $deleteHtml = '<a href=\'javascript:;\' role_id=\'\" . $val->id . \"\' class=\'btn btn-danger btn-xs roleDelete\'>删除</a>';
+                    $deleteHtml = '<a href=\'javascript:;\' role_id=\'' . $val->id . '\' class=\'btn btn-danger btn-xs roleDelete\'>删除</a>';
                     $nbsp = "&nbsp;&nbsp;";
                     if (strpos($columnVals[$k], '<') === 0) {
                         $html = substr($columnVals[$k], 1);
