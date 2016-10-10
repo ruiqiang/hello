@@ -190,6 +190,104 @@ class DataTools
     }
 
     /**
+     * 专用
+     * DataTables要求的Ajax Json数据,专用于人员staff表
+     * @param $request 请求
+     * @param $order   排序
+     * @param $columns 列
+     * @param $columnVals 列值字段名
+     * @param $name  前缀名称，如roleEdit、roleDelete中role这个前缀即为想也页面的名称
+     * @param $is_delete 该记录是否删除。 默认2（没有is_delete字段），0（未删除），1（已删除）
+     */
+    public static function getJsonDataStaff($request, $order, $columns, $columnVals, $object, $searchField, $name, $is_delete = 2)
+    {
+        $seach = $request->get('search', "");
+        $data = $object::find();
+        $ar = $data;
+        if (isset($seach['value'])) {
+            if ($is_delete == 2)
+                $ar = $data->where("$searchField like \"%" . $seach['value'] . "%\"");
+            else
+                $ar = $data->where("$searchField like \"%" . $seach['value'] . "%\" and is_delete =" . $is_delete);
+        }
+        $length = $request->get('length') ? $request->get('length') : "10";
+        $start = $request->get('start') ? $request->get('start') : "0";
+        $data = $ar->limit($length)->offset($start)->orderBy("id asc")->all();
+        $count = $ar->count();
+        $jsonArray = array(
+            'draw' => $request->get('draw') ? $request->get('draw') : "0",
+            'recordsTotal' => $object::find()->count(),
+            'recordsFiltered' => $count
+        );
+        if (count($data) == 0) {
+            $jsonArray['data'] = [];
+        }
+        foreach ($data as $key => $val) {
+            foreach ($columns as $k => $v) {
+                if (is_array($columnVals[$k])) {
+                    $tempV = $val;
+                    for ($temp = 0; $temp < count($columnVals[$k]); $temp++) {
+                        if ($tempV != null) {
+                            if (is_array($columnVals[$k][$temp])) {
+                                foreach ($columnVals[$k][$temp] as $kkk => $vvv) {
+                                    $tempV = $tempV->$kkk->$vvv;
+                                }
+                            } else {
+                                $tempV = $tempV->$columnVals[$k][$temp];
+                            }
+                        } else {
+                            $tempV = "";
+                        }
+                    }
+                    $array[$v] = $tempV;
+                    continue;
+                }
+                if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
+                    $array[$v] = $val->$columnVals[$k];
+                    //根据公司id加工获得公司名称
+                    if($columns[$k]=="company_id")
+                    {
+                        $company = PCompany::find()->where("id=".$val->$columnVals[$k])->one();
+                        if ($company != null)
+                            $array[$v]=$company->company_name;
+                        else
+                            $array[$v]="";
+                    }
+                    //根据部门id加工获得部门名称
+                    if($columns[$k]=="staff_sector")
+                    {
+                        $sector =PSector::find()->where("id=".$val->$columnVals[$k])->one();
+                        if ($sector != null)
+                            $array[$v]=$sector->sector_name;
+                        else
+                            $array[$v]="";
+                    }
+                } else {
+                    $array[$v] = "";
+                    $editHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-success btn-xs " . $name . "Edit'>编辑</a>";
+                    $deleteHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-danger btn-xs " . $name . "Delete'>删除</a>";
+                    $nbsp = "&nbsp;&nbsp;";
+                    if (strpos($columnVals[$k], '<') === 0) {
+                        $html = substr($columnVals[$k], 1);
+                        $html = substr($html, 0, strlen($html) - 1);
+                        $htmlArray = explode(',', $html);
+                        foreach ($htmlArray as $element) {
+                            if ($element == 'edit')
+                                $array[$v] .= $editHtml . $nbsp;
+                            if ($element == 'delete')
+                                $array[$v] .= $deleteHtml . $nbsp;
+                        }
+                    } else {
+                        $array[$v] = $editHtml . $nbsp . $deleteHtml;
+                    }
+                }
+            }
+            $jsonArray['data'][] = $array;
+        }
+        DataTools::jsonEncodeResponse($jsonArray);
+    }
+
+    /**
      * 作为json字符串返回
      * @param $json
      */

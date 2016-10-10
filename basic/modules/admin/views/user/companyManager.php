@@ -211,7 +211,7 @@
             var addStaffNumber = $('input[name=new_staff_number');
             addCompanyName.val("");
             addCompanyField.val("");
-            addCompanyNumber.val("");
+            addStaffNumber.val("");
             if(addCompanyName.hasClass('alert-danger')) {
                 $('#addcompanyinfo').hide();
                 $('input[name=new_company_name]').removeClass('alert-danger');
