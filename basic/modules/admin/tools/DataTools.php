@@ -56,6 +56,7 @@ class DataTools
         if (count($data) == 0) {
             $jsonArray['data'] = [];
         }
+        $count = 10;
         foreach ($data as $key => $val) {
             foreach ($columns as $k => $v) {
                 if (is_array($columnVals[$k])) {

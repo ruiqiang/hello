@@ -8,10 +8,17 @@ use Yii;
  * This is the model class for table "p_customer".
  *
  * @property string $id
- * @property string $customer_name
- * @property string $customer_contact
- * @property string $customer_industry
+ * @property string $customer_company
  * @property string $customer_address
+ * @property string $customer_contact
+ * @property string $customer_phone
+ * @property string $customer_email
+ * @property string $customer_industry
+ * @property string $company_id
+ * @property string $creator
+ * @property string $create_time
+ * @property string $updater
+ * @property string $update_time
  */
 class PCustomer extends \yii\db\ActiveRecord
 {
@@ -23,29 +30,8 @@ class PCustomer extends \yii\db\ActiveRecord
         return 'p_customer';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+    public function getCompany()
     {
-        return [
-            [['customer_name', 'customer_industry'], 'string', 'max' => 50],
-            [['customer_contact'], 'string', 'max' => 20],
-            [['customer_address'], 'string', 'max' => 100],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'customer_name' => 'Customer Name',
-            'customer_contact' => 'Customer Contact',
-            'customer_industry' => 'Customer Industry',
-            'customer_address' => 'Customer Address',
-        ];
+        return $this->hasOne(PCompany::className(), ['id' => 'company_id']);
     }
 }

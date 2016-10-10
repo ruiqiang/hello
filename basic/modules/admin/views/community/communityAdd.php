@@ -15,7 +15,7 @@
                 <div class="panel-body">
                     <form role="form">
                         <div class="form-group">
-                            <label class="control-label">楼盘名称</label>
+                            <label class="control-label">楼盘编号</label>
                             <input type="text" class="form-control" />
                         </div>
 
@@ -24,11 +24,54 @@
                             <input type="text" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">楼盘名称</label>
+                            <label class="control-label">楼盘详细地址</label>
                             <input type="text" class="form-control" />
                         </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘类型</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘均价</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘所在商圈</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘性质</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘开盘时间</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘入住时间</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘户数</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘入住人数</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘坐标</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">楼盘门头图片</label>
+                            <input type="file" style="float:right;margin-right:67%;"  />
+                        </div>
+                        <div class="form-group1">
+                            <label class="control-label"></label>
+                            <a href="javascript:;" class="btn btn-info" id="addCommunity" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
+                        </div>
                     </form>
-                    <a href="javascript:;" class="btn btn-info" id="addCommunity" style="float:left;margin-top:-0.5rem;">添加楼盘</a>
                 </div>
             </div>
             <!--End Advanced Tables -->
@@ -42,7 +85,7 @@
         clear:both;
     }
     .form-group input.form-control {
-        float:right;width:40%;margin-right:54%;
+        float:right;width:40%;margin-right:50%;
     }
     .form-group label.control-label {
         line-height:34px;

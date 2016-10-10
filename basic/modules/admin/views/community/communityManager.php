@@ -67,23 +67,22 @@ $(window).ready(function(){
                     "data": aoData, //以json格式传递
                     "success": function(data) {
                         fnCallback(data);
-                        $('.bindRole').click(function(){
-                            var staffId = $(this).attr('staff_id');
-                            $.ajax({
-                                "type": "GET",
-                                "url": "/admin/auth/getuserrole",
-                                "data" : {'staff_id' : staffId},
-                                "dataType": "json",
-                                "success": function (data) {
-                                    if(data != null) {
-                                        $('select[name=role_id]').val(data.role_id);
-                                    } else {
-                                        $('select[name=role_id]').val('0');
+                        $('.roleEdit').click(function(){
+                            window.location.href = "/admin/community/edit?id=" + $(this).attr("role_id");
+                        });
+                        $('.roleDelete').click(function(){
+                            if(confirm("确定要删除该楼盘吗？")) {
+                                $.ajax({
+                                    "type": "GET",
+                                    "contentType": "application/json",
+                                    "url": "/admin/community/deleteajax",
+                                    "dataType": "json",
+                                    "data": {id: $(this).attr("role_id")}, //以json格式传递
+                                    "success": function (data) {
+                                        alert(data);
                                     }
-                                }
-                            });
-                            $('input[name=staff_id]').val(staffId);
-                            bindDialog.show();
+                                });
+                            }
                         });
                         if(search == null) {
                             search =  $('input[type=search]');

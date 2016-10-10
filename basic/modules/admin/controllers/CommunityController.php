@@ -1,6 +1,7 @@
 <?php
 
 namespace app\modules\admin\controllers;
+use app\modules\admin\models\PAdv;
 use app\modules\admin\models\PCommunity;
 
 use app\modules\admin\models\DataTools;
@@ -56,5 +57,34 @@ class CommunityController extends \yii\web\Controller
     public function actionAdd()
     {
         return $this->render('communityAdd');
+    }
+
+    /**
+     * 楼盘添加
+     * @param $id
+     * @return string
+     */
+    public function actionEdit($id)
+    {
+        $community = PCommunity::find()->where('id = "' . $id . '"')->one();
+        return $this->render('communityEdit',array('data'=>$community));
+    }
+
+    /**
+     * 楼盘删除
+     * @param $id
+     */
+    public function actionDeleteajax($id)
+    {
+        $community = PCommunity::find('id = "' . $id . '"')->one();
+        if(empty($community)) {
+            echo "0";exit;
+        }
+        $advCount = PAdv::find()->where('adv_community_id = "' . $id . '"')->count();
+        if($advCount > 0) {
+            echo "-1";exit;
+        }
+        $community->delete();
+        echo "1";exit;
     }
 }
