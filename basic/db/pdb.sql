@@ -235,8 +235,8 @@ CREATE TABLE p_customer
 	customer_email varchar(100),
 	customer_industry varchar(50) NOT NULL,
 	-- 对应为该客户服务的公司
-	company_id binary(11) NOT NULL COMMENT '对应为该客户服务的公司',
-	creator binary(11),
+	company_id bigint(11) NOT NULL COMMENT '对应为该客户服务的公司',
+	creator bigint(11),
 	create_time datetime,
 	updater bigint(11),
 	update_time datetime,
