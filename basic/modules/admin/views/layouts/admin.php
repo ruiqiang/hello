@@ -259,7 +259,9 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>-->
                         </li>
                         <li class="divider"></li>
+                        <li><a href="/admin/message/messagemanager"><i class="fa fa-sign-out fa-fw"></i>新消息</a>
                         <li><a href="/admin/login/dologout"><i class="fa fa-sign-out fa-fw"></i>退出登录</a>
+
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

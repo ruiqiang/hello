@@ -288,6 +288,88 @@ class DataTools
     }
 
     /**
+     * DataTables要求的Ajax Json数据(用于涉及公司id的)
+     * @param $request 请求
+     * @param $order   排序
+     * @param $columns 列
+     * @param $columnVals 列值字段名
+     * @param $company_id 公司id
+     */
+    public static function getJsonDataMessage($request, $order, $columns, $columnVals, $object, $searchField,$company_id)
+    {
+        $seach = $request->get('search', "");
+        $data = $object::find();
+        $ar = $data;
+        if (isset($seach['value'])) {
+            $ar = $data->where("company_id =".$company_id." and $searchField like \"%" . $seach['value'] . "%\"");
+        }
+        $length = $request->get('length') ? $request->get('length') : "10";
+        $start = $request->get('start') ? $request->get('start') : "0";
+        $data = $ar->limit($length)->offset($start)->orderBy("id desc")->all();
+        $count = $ar->count();
+        $jsonArray = array(
+            'draw' => $request->get('draw') ? $request->get('draw') : "0",
+            'recordsTotal' => $object::find()->count(),
+            'recordsFiltered' => $count
+        );
+        if (count($data) == 0) {
+            $jsonArray['data'] = [];
+        }
+        $count = 10;
+        foreach ($data as $key => $val) {
+            foreach ($columns as $k => $v) {
+                if (is_array($columnVals[$k])) {
+                    $tempV = $val;
+                    for ($temp = 0; $temp < count($columnVals[$k]); $temp++) {
+                        if ($tempV != null) {
+                            if (is_array($columnVals[$k][$temp])) {
+                                foreach ($columnVals[$k][$temp] as $kkk => $vvv) {
+                                    $tempV = $tempV->$kkk->$vvv;
+                                }
+                            } else {
+                                $tempV = $tempV->$columnVals[$k][$temp];
+                            }
+                        } else {
+                            $tempV = "";
+                        }
+                    }
+                    $array[$v] = $tempV;
+                    continue;
+                }
+                if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
+                    $array[$v] = $val->$columnVals[$k];
+                } else {
+                    $array[$v] = "";
+                    $bindRoleHtml = "<a href='javascript:;' staff_id='" . $val->id . "' class='btn btn-success btn-xs bindRole'>关联角色</a>";
+                    $editRoleHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEditName'>更新权限名</a>";
+                    $editHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEdit'>编辑</a>";
+                    $deleteHtml = '<a href=\'javascript:;\' role_id=\'' . $val->id . '\' class=\'btn btn-danger btn-xs roleDelete\'>删除</a>';
+                    $nbsp = "&nbsp;&nbsp;";
+                    if (strpos($columnVals[$k], '<') === 0) {
+                        $html = substr($columnVals[$k], 1);
+                        $html = substr($html, 0, strlen($html) - 1);
+                        $htmlArray = explode(',', $html);
+                        foreach ($htmlArray as $element) {
+                            if ($element == 'editrole')
+                                $array[$v] .= $editRoleHtml . $nbsp;
+                            if ($element == 'edit')
+                                $array[$v] .= $editHtml . $nbsp;
+                            if ($element == 'delete')
+                                $array[$v] .= $deleteHtml . $nbsp;
+                            if ($element == 'bindrole')
+                                $array[$v] .= $bindRoleHtml . $nbsp;
+                        }
+                    } else {
+                        $array[$v] = $editHtml . $nbsp . $deleteHtml;
+                    }
+                }
+            }
+            $jsonArray['data'][] = $array;
+        }
+        DataTools::jsonEncodeResponse($jsonArray);
+    }
+
+    /**
      * 作为json字符串返回
      * @param $json
      */
