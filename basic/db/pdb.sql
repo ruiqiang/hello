@@ -105,7 +105,7 @@ CREATE TABLE p_adv
 
 CREATE TABLE p_check
 (
-	id bigint(11) NOT NULL,
+	id bigint(11) NOT NULL AUTO_INCREMENT,
 	-- 0.楼盘信息（p_community）
 	-- 1.广告位表（p_adv）
 	-- 2.设备型号表(p_model)
@@ -129,7 +129,7 @@ CREATE TABLE p_check
 
 CREATE TABLE p_check_control
 (
-	id bigint(11) NOT NULL,
+	id bigint(11) NOT NULL AUTO_INCREMENT,
 	-- 公司（p_company）主键
 	company_id bigint(11) NOT NULL COMMENT '公司（p_company）主键',
 	-- 0.不需要
@@ -264,7 +264,7 @@ CREATE TABLE p_menu
 -- 适用于p_community、p_adv、p_model
 CREATE TABLE p_message
 (
-	id bigint(11) NOT NULL,
+	id bigint(11) NOT NULL AUTO_INCREMENT,
 	company_id bigint(11) NOT NULL,
 	-- 消息内容根据添加的内容不同而自动生成
 	message_content varchar(255) COMMENT '消息内容根据添加的内容不同而自动生成',
@@ -421,7 +421,7 @@ CREATE TABLE p_staff_role
 
 CREATE TABLE p_task
 (
-	id bigint(11) NOT NULL,
+	id bigint(11) NOT NULL AUTO_INCREMENT,
 	-- 0.安装
 	-- 1.维修
 	-- 2.拆除
