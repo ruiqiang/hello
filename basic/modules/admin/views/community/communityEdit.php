@@ -49,11 +49,11 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘开盘时间</label>
-                            <input type="text" class="form-control" value="<?=$data->community_opentime?>" />
+                            <input type="text" class="form-control" id="selectDate1" value="<?=$data->community_opentime?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘入住时间</label>
-                            <input type="text" class="form-control" value="<?=$data->community_staytime?>" />
+                            <input type="text" class="form-control" id="selectDate2" value="<?=$data->community_staytime?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘户数</label>
@@ -64,12 +64,11 @@
                             <input type="text" class="form-control" value="<?=$data->community_households?>" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">楼盘坐标(经度)</label>
-                            <input type="text" class="form-control" value="<?=$data->community_longitudex?>" />
+                            <label class="control-label">楼盘坐标</label>
+                            <input type="text" id="position" class="form-control" value="<?=$data->community_longitudex?>,<?=$data->community_latitudey?>" />
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">楼盘坐标(纬度)</label>
-                            <input type="text" class="form-control" value="<?=$data->community_latitudey?>" />
+                        <div id="map" style="width:50rem;height:50rem;margin-left:10%;">
+
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘门头图片</label>
@@ -87,6 +86,10 @@
     </div>
     <!-- /. ROW  -->
 </div>
+<script src="/assets/datepicker/jquery.ui.datepicker.js"></script>
+<script src="/assets/datepicker/jquery-ui.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Ab2CQa603kmx8tYXETWEEOjozKgdUXVL"></script>
+<link rel="stylesheet" href="/css/jquery-ui.css">
 <style type="text/css">
     .form-group:after {
         content:":";
@@ -101,6 +104,22 @@
 </style>
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
+    var map = new BMap.Map("map");                    // 创建Map实例
+    var editpoint = new BMap.Point("<?=$data->community_longitudex?>", "<?=$data->community_latitudey?>");
+    map.addOverlay(new BMap.Marker(editpoint));
+    map.centerAndZoom("南京", 15);                    // 初始化地图,设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true);
+    map.addEventListener("click", function(e){
+        $("#position").val(e.point.lng + "," + e.point.lat);
+        map.clearOverlays();
+        var point = new BMap.Point(e.point.lng, e.point.lat);
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+    });
     $(window).ready(function() {
+
+        $('#selectDate1').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
+
+        $('#selectDate2').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
     });
 </script>

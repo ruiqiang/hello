@@ -32,11 +32,11 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位开始时间</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" id="selectDate1" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位结束时间</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" id="selectDate2" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位画面</label>
@@ -44,7 +44,18 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位性质</label>
-                            <input type="text" class="form-control" />
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                                <option value="0">
+                                    电梯广告</option>
+                                <option value="1">
+                                    道闸广告</option>
+                                <option value="2">
+                                    道杆广告</option>
+                                <option value="3">
+                                    灯箱</option>
+                                <option value="4">
+                                    行人门禁</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位详细地址</label>
@@ -114,6 +125,9 @@
     </div>
     <!-- /. ROW  -->
 </div>
+<script src="/assets/datepicker/jquery.ui.datepicker.js"></script>
+<script src="/assets/datepicker/jquery-ui.js"></script>
+<link rel="stylesheet" href="/css/jquery-ui.css">
 <style type="text/css">
     .form-group:after {
         content:":";
@@ -129,5 +143,7 @@
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
     $(window).ready(function() {
+        $('#selectDate1').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
+        $('#selectDate2').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
     });
 </script>

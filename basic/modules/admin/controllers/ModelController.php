@@ -49,4 +49,15 @@ class ModelController extends \yii\web\Controller
         DataTools::getJsonData(\Yii::$app->request, "id desc", $this->modelColumns, $this->modelColumnsVal,
             new PModel(), "model_name");
     }
+
+    public function actionAdd()
+    {
+        return $this->render('modelAdd');
+    }
+
+    public function actionEdit($id)
+    {
+        $model = PModel::find()->where('id = "' . $id . '"')->one();
+        return $this->render('modelEdit',array('model'=>$model));
+    }
 }

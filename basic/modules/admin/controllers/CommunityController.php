@@ -87,4 +87,13 @@ class CommunityController extends \yii\web\Controller
         $community->delete();
         echo "1";exit;
     }
+
+    /**
+     * 楼盘添加
+     */
+    public function actionMap()
+    {
+        $community = PCommunity::find()->asArray()->all();
+        return $this->render('communityMap', array("data"=>$community,"datajson"=>json_encode($community)));
+    }
 }

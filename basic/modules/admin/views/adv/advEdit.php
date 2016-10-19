@@ -32,11 +32,11 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位开始时间</label>
-                            <input type="text" class="form-control" value="<?=$data->adv_starttime?>" />
+                            <input type="text" class="form-control" id="selectDate1" value="<?=$data->adv_starttime?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位结束时间</label>
-                            <input type="text" class="form-control" value="<?=$data->adv_endtime?>" />
+                            <input type="text" class="form-control" id="selectDate2" value="<?=$data->adv_endtime?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位画面</label>
@@ -44,7 +44,18 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位性质</label>
-                            <input type="text" class="form-control" value="<?=$data->adv_property?>" />
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                                <option value="0" <?php echo $data->adv_property == "0"?"selected=\"selected\"":""?>>
+                                    电梯广告</option>
+                                <option value="1" <?php echo $data->adv_property == "1"?"selected=\"selected\"":""?>>
+                                    道闸广告</option>
+                                <option value="2" <?php echo $data->adv_property == "2"?"selected=\"selected\"":""?>>
+                                    道杆广告</option>
+                                <option value="3" <?php echo $data->adv_property == "3"?"selected=\"selected\"":""?>>
+                                    灯箱</option>
+                                <option value="4" <?php echo $data->adv_property == "4"?"selected=\"selected\"":""?>>
+                                    行人门禁</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位详细地址</label>
@@ -114,6 +125,9 @@
     </div>
     <!-- /. ROW  -->
 </div>
+<script src="/assets/datepicker/jquery.ui.datepicker.js"></script>
+<script src="/assets/datepicker/jquery-ui.js"></script>
+<link rel="stylesheet" href="/css/jquery-ui.css">
 <style type="text/css">
     .form-group:after {
         content:":";
@@ -129,5 +143,7 @@
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
     $(window).ready(function() {
+        $('#selectDate1').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
+        $('#selectDate2').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
     });
 </script>
