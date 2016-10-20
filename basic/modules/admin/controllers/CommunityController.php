@@ -96,4 +96,55 @@ class CommunityController extends \yii\web\Controller
         $community = PCommunity::find()->asArray()->all();
         return $this->render('communityMap', array("data"=>$community,"datajson"=>json_encode($community)));
     }
+
+    /**
+     * 楼盘执行添加
+     * @return string
+     */
+    public function actionDoadd()
+    {
+        $post = \Yii::$app->request->post();
+        $community = new PCommunity();
+        $community->community_no = $post['community_no'];
+        $community->community_name = $post['community_name'];
+        $community->community_position = $post['community_position'];
+        $community->community_category = $post['community_category'];
+        $community->community_price = $post['community_price'];
+        $community->community_cbd = $post['community_cbd'];
+        $community->community_nature = $post['community_nature'];
+        $community->community_opentime = $post['community_opentime'];
+        $community->community_staytime = $post['community_staytime'];
+        $community->community_units = $post['community_units'];
+        $community->community_households = $post['community_households'];
+        $communityMap = explode(",",$post['community_map']);
+        $community->community_longitudex = $communityMap[0];
+        $community->community_latitudey = $communityMap[1];
+        $community->company_id = \Yii::$app->session['loginUser']->company_id;
+        $community->save();
+        $this->redirect("/admin/community/manager");
+    }
+
+    public function actionDoedit()
+    {
+        $post = \Yii::$app->request->post();
+        $community = PCommunity::find()->where('id = "' . $post['id'] . '"')->one();
+        $community->community_no = $post['community_no'];
+        $community->community_name = $post['community_name'];
+        $community->community_position = $post['community_position'];
+        $community->community_category = $post['community_category'];
+        $community->community_price = $post['community_price'];
+        $community->community_cbd = $post['community_cbd'];
+        $community->community_nature = $post['community_nature'];
+        $community->community_opentime = $post['community_opentime'];
+        $community->community_staytime = $post['community_staytime'];
+        $community->community_units = $post['community_units'];
+        $community->community_households = $post['community_households'];
+        $communityMap = explode(",",$post['community_map']);
+        $community->community_longitudex = $communityMap[0];
+        $community->community_latitudey = $communityMap[1];
+        $community->company_id = \Yii::$app->session['loginUser']['company_id'];
+        $community->update_time = date("Y-m-d H:i:s");
+        $community->save();
+        $this->redirect("/admin/community/manager");
+    }
 }

@@ -13,66 +13,66 @@
                     楼盘添加
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" id="communityForm" method="post" action="/admin/community/doadd">
                         <div class="form-group">
-                            <label class="control-label">楼盘编号</label>
-                            <input type="text" class="form-control" />
+                            <label class="control-label">楼盘编号(<span class="mydanger">*</span>)</label>
+                            <input type="text" class="form-control" name="community_no" />
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label">楼盘名称</label>
-                            <input type="text" class="form-control" />
+                            <label class="control-label">楼盘名称(<span class="mydanger">*</span>)</label>
+                            <input type="text" class="form-control" name="community_name" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘详细地址</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="community_position" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘类型</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="community_category" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘均价(￥)</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="community_price" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘所在商圈</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="community_cbd" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘性质</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" name="community_nature" style="width:40%;float:right;margin-right:50%;">
                                 <option value="0">新建楼盘</option>
                                 <option value="1">老楼盘</option>
                                 <option value="2">改造楼盘</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">楼盘开盘时间</label>
-                            <input type="text" id="selectDate1" class="form-control" />
+                            <label class="control-label">楼盘开盘时间(<span class="mydanger">*</span>)</label>
+                            <input type="text" id="selectDate1" name="community_opentime" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">楼盘入住时间</label>
-                            <input type="text" id="selectDate2" class="form-control" />
+                            <label class="control-label">楼盘入住时间(<span class="mydanger">*</span>)</label>
+                            <input type="text" id="selectDate2" name="community_staytime" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">楼盘户数</label>
-                            <input type="text" class="form-control" />
+                            <label class="control-label">楼盘户数(<span class="mydanger">*</span>)</label>
+                            <input type="text" class="form-control" name="community_units" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">楼盘入住人数</label>
-                            <input type="text" class="form-control" />
+                            <label class="control-label">楼盘入住人数(<span class="mydanger">*</span>)</label>
+                            <input type="text" class="form-control" name="community_households" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">楼盘坐标</label>
-                            <input type="text" class="form-control" id="position" />
+                            <label class="control-label">楼盘坐标(<span class="mydanger">*</span>)</label>
+                            <input type="text" class="form-control" id="position" name="community_map" />
                         </div>
                         <div id="map" style="width:50rem;height:50rem;margin-left:10%;">
 
                         </div>
                         <div class="form-group" style="margin-top:2rem;">
                             <label class="control-label">楼盘门头图片</label>
-                            <input type="file" style="float:right;margin-right:67%;"  />
+                            <input type="file" style="float:right;margin-right:67%;" name="community_image1" />
                         </div>
                         <div class="form-group1">
                             <label class="control-label"></label>
@@ -101,6 +101,9 @@
     .form-group label.control-label {
         line-height:34px;
     }
+    .mydanger {
+        color:red;
+    }
 </style>
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
@@ -114,9 +117,21 @@
         var marker = new BMap.Marker(point);
         map.addOverlay(marker);
     });
+    var inputs = ['community_no','community_name','community_opentime','community_staytime','community_units','community_households','community_map'];
     $(window).ready(function() {
-        $('#selectDate1').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
+        $("#addCommunity").click(function(){
+            for(var i in inputs) {
+                if ($("input[name="+inputs[i]+"]").val() == "") {
+                    alert("必填项(*)不能为空！");
+                    $("input[name="+inputs[i]+"]").focus();
+                    return false;
+                }
+            }
+            $("#communityForm").submit();
+        });
 
-        $('#selectDate2').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
+        $('#selectDate1').datepicker({"dateFormat":"yy-mm-dd"});
+
+        $('#selectDate2').datepicker({"dateFormat":"yy-mm-dd"});
     });
 </script>
