@@ -5,6 +5,7 @@ use app\modules\admin\models\PAdv;
 use app\modules\admin\models\PCommunity;
 
 use app\modules\admin\models\DataTools;
+use app\modules\admin\models\PModel;
 
 /**
  * 小区管理
@@ -56,6 +57,7 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionAdd()
     {
+        $company_id = \Yii::$app->session['loginUser']->company_id;
         return $this->render('communityAdd');
     }
 
@@ -66,6 +68,7 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionEdit($id)
     {
+        $company_id = \Yii::$app->session['loginUser']->company_id;
         $community = PCommunity::find()->where('id = "' . $id . '"')->one();
         return $this->render('communityEdit',array('data'=>$community));
     }
@@ -103,6 +106,7 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionDoadd()
     {
+        $now = date("Y-m-d H:i:s");
         $post = \Yii::$app->request->post();
         $community = new PCommunity();
         $community->community_no = $post['community_no'];
@@ -120,6 +124,9 @@ class CommunityController extends \yii\web\Controller
         $community->community_longitudex = $communityMap[0];
         $community->community_latitudey = $communityMap[1];
         $community->company_id = \Yii::$app->session['loginUser']->company_id;
+        $community->creator = \Yii::$app->session['loginUser']->id;
+        $community->create_time = $now;
+        $community->update_time = $now;
         $community->save();
         $this->redirect("/admin/community/manager");
     }
@@ -143,6 +150,7 @@ class CommunityController extends \yii\web\Controller
         $community->community_longitudex = $communityMap[0];
         $community->community_latitudey = $communityMap[1];
         $community->company_id = \Yii::$app->session['loginUser']['company_id'];
+        $community->updater = \Yii::$app->session['loginUser']['id'];
         $community->update_time = date("Y-m-d H:i:s");
         $community->save();
         $this->redirect("/admin/community/manager");

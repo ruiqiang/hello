@@ -13,43 +13,43 @@
                     设备添加
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" id="addModelForm" method="POST" action="/admin/model/doadd">
                         <div class="form-group">
                             <label class="control-label">设备编号</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_no" />
                         </div>
 
                         <div class="form-group">
                             <label class="control-label">产品名称</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_name" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">产品类别</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_category" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">规格型号</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_desc" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">机器尺寸</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_size" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">展示尺寸</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_display" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">生产厂家</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_factory" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">备注</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="model_note" />
                         </div>
                         <div class="form-group1">
                             <label class="control-label"></label>
-                            <a href="javascript:;" class="btn btn-info" id="addCommunity" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
+                            <a href="javascript:;" class="btn btn-info" id="addModel" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
                         </div>
                     </form>
                 </div>
@@ -74,5 +74,8 @@
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
     $(window).ready(function() {
+        $("#addModel").click(function(){
+           $("#addModelForm").submit();
+        });
     });
 </script>

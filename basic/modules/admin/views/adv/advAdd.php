@@ -13,14 +13,14 @@
                     添加广告位
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" id="advForm" action="/admin/adv/doadd" method="POST">
                         <div class="form-group">
                             <label class="control-label">广告位编号</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="adv_no" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">所属楼盘</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" name="adv_community_id" style="width:40%;float:right;margin-right:50%;">
                                 <?php foreach($list as $key=>$value){?>
                                     <option value="<?=$value->id?>"><?=$value->community_name?></option>
                                 <?php }?>
@@ -28,23 +28,23 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位名称</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="adv_name" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位开始时间</label>
-                            <input type="text" class="form-control" id="selectDate1" />
+                            <input type="text" class="form-control" name="adv_starttime" id="selectDate1" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位结束时间</label>
-                            <input type="text" class="form-control" id="selectDate2" />
+                            <input type="text" class="form-control" name="adv_endtime" id="selectDate2" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位画面</label>
-                            <input type="file" style="float:right;margin-right:67%;" />
+                            <input type="file" style="float:right;margin-right:67%;" name="adv_image" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位性质</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" name="adv_property" style="width:40%;float:right;margin-right:50%;">
                                 <option value="0">
                                     电梯广告</option>
                                 <option value="1">
@@ -59,15 +59,19 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位详细地址</label>
-                            <input type="text" class="form-control" />
+                            <input type="text" name="adv_position" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">设备型号</label>
-                            <input type="text" class="form-control" />
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="model_id">
+                                <?php foreach($model as $key=>$value) {?>
+                                    <option value="<?=$value->id?>"><?=$value->model_name?></option>
+                                <?php }?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label">当前状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_install_status">
                                 <option value="0">
                                     未安装</option>
                                 <option value="1">
@@ -78,7 +82,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">使用状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_use_status">
                                 <option value="0">
                                     新增</option>
                                 <option value="1">
@@ -89,7 +93,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">销售状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_sales_status">
                                 <option value="0">
                                     销售</option>
                                 <option value="1">
@@ -100,7 +104,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">画面状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_pic_status">
                                 <option value="0">
                                     预定</option>
                                 <option value="1">
@@ -115,7 +119,7 @@
                         </div>
                         <div class="form-group1">
                             <label class="control-label"></label>
-                            <a href="javascript:;" class="btn btn-info" id="addCommunity" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
+                            <a href="javascript:;" class="btn btn-info" id="addAdv" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
                         </div>
                     </form>
                 </div>
@@ -143,7 +147,10 @@
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
     $(window).ready(function() {
-        $('#selectDate1').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
-        $('#selectDate2').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
+        $("#addAdv").click(function(){
+            $("#advForm").submit();
+        });
+        $('#selectDate1').datepicker({"dateFormat":"yy-mm-dd"});
+        $('#selectDate2').datepicker({"dateFormat": "yy-mm-dd"});
     });
 </script>

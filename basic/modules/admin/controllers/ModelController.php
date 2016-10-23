@@ -60,4 +60,46 @@ class ModelController extends \yii\web\Controller
         $model = PModel::find()->where('id = "' . $id . '"')->one();
         return $this->render('modelEdit',array('model'=>$model));
     }
+
+    public function actionDoadd()
+    {
+        $now = date("Y-m-d H:i:s");
+        $post = \Yii::$app->request->post();
+        $model = new PModel();
+        $model->model_no = $post['model_no'];
+        $model->model_name = $post['model_name'];
+        $model->model_category = $post['model_category'];
+        $model->model_desc = $post['model_desc'];
+        $model->model_size = $post['model_size'];
+        $model->model_display = $post['model_display'];
+        $model->model_factory = $post['model_factory'];
+        $model->model_note = $post['model_note'];
+        $model->company_id = \Yii::$app->session['loginUser']->company_id;
+        $model->is_delete = "0";
+        $model->creator = \Yii::$app->session['loginUser']->id;
+        $model->create_time = $now;
+        $model->update_time = $now;
+        $model->save();
+        $this->redirect("/admin/model/manager");
+    }
+
+    public function actionDoedit()
+    {
+        $now = date("Y-m-d H:i:s");
+        $post = \Yii::$app->request->post();
+        $model = PModel::find()->where('id = "' . $post['id'] . '"')->one();
+        $model->model_no = $post['model_no'];
+        $model->model_name = $post['model_name'];
+        $model->model_category = $post['model_category'];
+        $model->model_desc = $post['model_desc'];
+        $model->model_size = $post['model_size'];
+        $model->model_display = $post['model_display'];
+        $model->model_factory = $post['model_factory'];
+        $model->model_note = $post['model_note'];
+        $model->company_id = \Yii::$app->session['loginUser']->company_id;
+        $model->updater =  \Yii::$app->session['loginUser']->id;
+        $model->update_time = $now;
+        $model->save();
+        $this->redirect("/admin/model/manager");
+    }
 }

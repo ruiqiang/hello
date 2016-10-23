@@ -51,9 +51,4 @@ class PCommunity extends \yii\db\ActiveRecord
     {
         return $this->hasOne(PCompany::className(), ['id' => 'company_id']);
     }
-
-    public function getCommunity()
-    {
-        return $this->hasOne(PCommunity::className(), ['id' => 'adv_community_id']);
-    }
 }

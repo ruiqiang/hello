@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "p_model".
  *
  * @property string $id
- * @property string $model_id
+ * @property string $model_no
  * @property string $model_name
  * @property string $model_category
  * @property string $model_desc

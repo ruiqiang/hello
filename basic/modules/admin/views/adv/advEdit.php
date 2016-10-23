@@ -13,14 +13,15 @@
                     编辑广告位
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" id="editForm" action="/admin/adv/doedit" method="POST">
+                        <input name="id" type="hidden" value="<?=$data->id?>" />
                         <div class="form-group">
                             <label class="control-label">广告位编号</label>
-                            <input type="text" class="form-control" value="<?=$data->adv_no?>" />
+                            <input type="text" class="form-control" value="<?=$data->adv_no?>" name="adv_no" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">所属楼盘</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_community_id">
                                 <?php foreach($list as $key=>$value){?>
                                 <option value="<?=$value->id?>" <?php echo $data->adv_community_id == $value->id?"selected=\"selected\"":""?>><?=$value->community_name?></option>
                                 <?php }?>
@@ -28,23 +29,23 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位名称</label>
-                            <input type="text" class="form-control" value="<?=$data->adv_name?>" />
+                            <input type="text" name="adv_name" class="form-control" value="<?=$data->adv_name?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位开始时间</label>
-                            <input type="text" class="form-control" id="selectDate1" value="<?=$data->adv_starttime?>" />
+                            <input type="text" name="adv_starttime" class="form-control" id="selectDate1" value="<?=substr($data->adv_starttime,0,10)?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位结束时间</label>
-                            <input type="text" class="form-control" id="selectDate2" value="<?=$data->adv_endtime?>" />
+                            <input type="text" name="adv_endtime" class="form-control" id="selectDate2" value="<?=substr($data->adv_endtime,0,10)?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位画面</label>
-                            <input type="file" style="float:right;margin-right:67%;" />
+                            <input type="file" style="float:right;margin-right:67%;" name="adv_image" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位性质</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_property">
                                 <option value="0" <?php echo $data->adv_property == "0"?"selected=\"selected\"":""?>>
                                     电梯广告</option>
                                 <option value="1" <?php echo $data->adv_property == "1"?"selected=\"selected\"":""?>>
@@ -59,15 +60,20 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">广告位详细地址</label>
-                            <input type="text" class="form-control" value="<?=$data->adv_position?>" />
+                            <input type="text" class="form-control" name="adv_position" value="<?=$data->adv_position?>" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">设备型号</label>
-                            <input type="text" class="form-control" value="<?=$data->model_id?>" />
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="model_id">
+                                <?php foreach($model as $key=>$value) {?>
+                                <option value="<?=$value->id?>" <?php echo $data->model_id == $value->id?"selected=\"selected\"":""?>>
+                                    <?=$value->model_name?></option>
+                                <?php }?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label">当前状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_install_status">
                                 <option value="0" <?php echo $data->adv_install_status == "0"?"selected=\"selected\"":""?>>
                                     未安装</option>
                                 <option value="1" <?php echo $data->adv_install_status == "1"?"selected=\"selected\"":""?>>
@@ -78,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">使用状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_use_status">
                                 <option value="0" <?php echo $data->adv_use_status == "0"?"selected=\"selected\"":""?>>
                                     新增</option>
                                 <option value="1" <?php echo $data->adv_use_status == "1"?"selected=\"selected\"":""?>>
@@ -89,7 +95,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">销售状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_sales_status">
                                 <option value="0" <?php echo $data->adv_sales_status == "0"?"selected=\"selected\"":""?>>
                                     销售</option>
                                 <option value="1" <?php echo $data->adv_sales_status == "1"?"selected=\"selected\"":""?>>
@@ -100,7 +106,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">画面状态</label>
-                            <select class="form-control" style="width:40%;float:right;margin-right:50%;">
+                            <select class="form-control" style="width:40%;float:right;margin-right:50%;" name="adv_pic_status">
                                 <option value="0" <?php echo $data->adv_pic_status == "0"?"selected=\"selected\"":""?>>
                                     预定</option>
                                 <option value="1" <?php echo $data->adv_pic_status == "1"?"selected=\"selected\"":""?>>
@@ -115,7 +121,7 @@
                         </div>
                         <div class="form-group1">
                             <label class="control-label"></label>
-                            <a href="javascript:;" class="btn btn-info" id="addCommunity" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
+                            <a href="javascript:;" class="btn btn-info" id="editAdv" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
                         </div>
                     </form>
                 </div>
@@ -143,7 +149,10 @@
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
     $(window).ready(function() {
-        $('#selectDate1').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
-        $('#selectDate2').datepicker().datepicker("option", "dateFormat", "yy-mm-dd");
+        $("#editAdv").click(function(){
+            $("#editForm").submit();
+        });
+        $('#selectDate1').datepicker({"dateFormat":"yy-mm-dd"});
+        $('#selectDate2').datepicker({"dateFormat":"yy-mm-dd"});
     });
 </script>
