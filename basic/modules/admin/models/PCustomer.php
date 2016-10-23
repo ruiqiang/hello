@@ -30,8 +30,41 @@ class PCustomer extends \yii\db\ActiveRecord
         return 'p_customer';
     }
 
-    public function getCompany()
+    /**
+     * @inheritdoc
+     */
+    public function rules()
     {
-        return $this->hasOne(PCompany::className(), ['id' => 'company_id']);
+        return [
+            [['customer_company', 'customer_address', 'customer_contact', 'customer_industry', 'company_id'], 'required'],
+            [['create_time', 'update_time'], 'safe'],
+            [['updater'], 'integer'],
+            [['customer_company', 'customer_email'], 'string', 'max' => 100],
+            [['customer_address'], 'string', 'max' => 255],
+            [['customer_contact'], 'string', 'max' => 20],
+            [['customer_phone', 'customer_industry'], 'string', 'max' => 50],
+            [['company_id', 'creator'], 'string', 'max' => 11],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'customer_company' => 'Customer Company',
+            'customer_address' => 'Customer Address',
+            'customer_contact' => 'Customer Contact',
+            'customer_phone' => 'Customer Phone',
+            'customer_email' => 'Customer Email',
+            'customer_industry' => 'Customer Industry',
+            'company_id' => 'Company ID',
+            'creator' => 'Creator',
+            'create_time' => 'Create Time',
+            'updater' => 'Updater',
+            'update_time' => 'Update Time',
+        ];
     }
 }

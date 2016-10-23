@@ -153,12 +153,12 @@ class UserController extends \yii\web\Controller
      */
     public function actionSectormanager()
     {
-        $companyList = PCompany::find()->where("is_delete=0")->all();
-
         $session = \Yii::$app->session;
         $staff = $session['loginUser'];
+        $company = PCompany::find()->where('id=' . $staff->company_id)->one();
 
-        return $this->render("sectorManager", array('companyList' => $companyList));
+
+        return $this->render("sectorManager", array('company' => $company));
     }
 
     /**
@@ -176,8 +176,8 @@ class UserController extends \yii\web\Controller
      */
     public function actionGetsectorbystaff()
     {
-        $staff_id=\Yii::$app->request->get('staff_id','0');
-        $staff=Pstaff::find()->where('id="'.$staff_id.'"')->one();
+        $staff_id = \Yii::$app->request->get('staff_id', '0');
+        $staff = Pstaff::find()->where('id="' . $staff_id . '"')->one();
         $sectorList = PSector::find()->select('id,sector_name')->where('company_id=' . $staff->company_id . ' and is_delete=0')->asArray()->all();
         DataTools::jsonEncodeResponse($sectorList);
     }
@@ -249,7 +249,7 @@ class UserController extends \yii\web\Controller
      */
     public function actionGetstaffinfo($staff_id)
     {
-        $staff=PStaff::find()->where('id='.$staff_id)->one()->attributes;
+        $staff = PStaff::find()->where('id=' . $staff_id)->one()->attributes;
         DataTools::jsonEncodeResponse($staff);
     }
 
@@ -260,7 +260,7 @@ class UserController extends \yii\web\Controller
     {
         $date = date('Y-m-d H:i:s');
         $request = \Yii::$app->request;
-        $staff_id=$request->post('staffId','0');
+        $staff_id = $request->post('staffId', '0');
         $staff_name = $request->post('staffName', null);
         $staff_no = $request->post('staffNo', null);
         $staff_phone = $request->post('staffPhone', null);
@@ -269,7 +269,7 @@ class UserController extends \yii\web\Controller
         $staff_sector = $request->post('staffSector', '0');
         $staff_position = $request->post('staffPosition', null);
 
-        $staff = PStaff::find()->where('id='.$staff_id.' and is_delete=0')->one();
+        $staff = PStaff::find()->where('id=' . $staff_id . ' and is_delete=0')->one();
         if ($staff != null) {
             $staff->staff_name = trim($staff_name);
             $staff->staff_no = trim($staff_no);
@@ -318,5 +318,44 @@ class UserController extends \yii\web\Controller
         //请求,排序,展示字段,展示字段的字段名(支持relation字段),主表实例,搜索字段
         DataTools::getJsonDataStaff(\Yii::$app->request, "id desc", $this->staffcolumns, $this->staffcolumnsVal,
             new PStaff, "staff_name", "staff", 0);
+    }
+
+    /*
+     * 密码修改
+     */
+    public function actionPasswordmanager()
+    {
+        $session = \Yii::$app->session;
+        $staff = $session['loginUser'];
+
+        return $this->render('passwordmanager', array('staff' => $staff));
+    }
+
+    /*
+     * 密码修改动作
+     */
+    public function actionPasswordchange()
+    {
+        $date = date('Y-m-d H:i:s');
+        $request = \Yii::$app->request;
+        $id = $request->post('staffID', 0);
+        $staff_name = $request->post('staffName', null);
+        $password = md5($request->post('pwd', null));
+        $newPwd = md5($request->post('newPwd', null));
+
+        $staff = PStaff::find()->where('id=' . $id . ' and is_delete=0')->one();
+        if ($staff != null) {
+            if ($staff->password != $password) {
+                echo "-2";   //原密码不符
+            } else {
+                $staff->password = $newPwd;
+                $staff->update_time = $date;
+                $staff->save();
+                echo "1";  //更新成功
+            }
+        } else {
+            echo "-1"; //该id不存在
+        }
+        exit;
     }
 }

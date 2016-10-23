@@ -40,7 +40,7 @@ class MessageController extends \yii\web\Controller
     {
         $session = \Yii::$app->session;
         $staff = $session['loginUser'];
-        DataTools::getJsonDataMessage(\Yii::$app->request, "id asc", $this->messagecolumns, $this->messageVal,
-            new PMessage, "message_content", $staff->company_id);
+        DataTools::getJsonDataGenerl(\Yii::$app->request, "id desc", $this->messagecolumns, $this->messageVal,
+            new PMessage, "message_content","",2, $staff->company_id);
     }
 }

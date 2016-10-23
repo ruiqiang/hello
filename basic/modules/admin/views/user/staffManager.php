@@ -213,7 +213,6 @@
                         }
                     }
                 });
-                this.close();
                 return false;
             },
             cancelValue:'取消',
