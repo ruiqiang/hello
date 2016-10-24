@@ -45,66 +45,99 @@
 
 <div id="staffAdd" style="display:none;width:60rem;">
     <div class="form-group" id="companyAddDialogDiv">
-        <label class="help-block">姓名（必填）：</label>
-        <input class="form-control" type="text" name="new_staff_name" />
-        <br>
-        <label class="help-block">工号：</label>
-        <input class="form-control" type="text" name="new_staff_no" />
-        <br>
-        <label class="help-block">手机号：</label>
-        <input class="form-control" type="text" name="new_staff_phone" />
-        <label class="help-block">邮箱：</label>
-        <input class="form-control" type="text" name="new_staff_email" />
-        <label class="help-block">公司：</label>
-        <select class="form-control" name="new_company_id">
-            <?php foreach($companyList as $company) {?>
-                <option value="<?=$company->id?>"><?=$company->company_name?></option>
-            <?php }?>
-        </select>
-        <label class="help-block">所属部门：</label>
-        <select class="form-control" name="new_staff_sector">
-            <?php foreach($sectorList as $sector) {?>
-                <option value="<?=$sector->id?>"><?=$sector->sector_name?></option>
-            <?php }?>
-        </select>
-        <label class="help-block">职务：</label>
-        <input class="form-control" type="text" name="new_staff_position" />
-
-        <div id="addstaffinfo" style="display:none;margin-top:10px;">
-            <label></label>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">姓名（<label class="mydanger">*</label>）：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_staff_name" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">工号：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_staff_no" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">手机号：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_staff_phone" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">邮箱：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_staff_email" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">公司：</label></div>
+            <div class="col-md-9">
+                <select class="form-control" name="new_company_id">
+                    <?php foreach($companyList as $company) {?>
+                        <option value="<?=$company->id?>"><?=$company->company_name?></option>
+                    <?php }?>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">所属部门：</label></div>
+            <div class="col-md-9">
+                <select class="form-control" name="new_staff_sector">
+                    <?php foreach($sectorList as $sector) {?>
+                        <option value="<?=$sector->id?>"><?=$sector->sector_name?></option>
+                    <?php }?>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">职务：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_staff_position" /></div>
+        </div>
+        <div class="row">
+            <div id="addstaffinfo" style="display:none;margin-top:10px;margin-left:12px;">
+                <label></label>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="staffEdit" style="display:none;width:40rem;">
+<div id="staffEdit" style="display:none;width:60rem;">
     <div class="form-group" id="staffEditDialogDiv">
-        <label class="help-block">姓名（必填）：</label>
-        <input class="form-control" type="text" name="staff_name" />
-        <br>
-        <label class="help-block">工号：</label>
-        <input class="form-control" type="text" name="staff_no" />
-        <br>
-        <label class="help-block">手机号：</label>
-        <input class="form-control" type="text" name="staff_phone" />
-        <label class="help-block">邮箱：</label>
-        <input class="form-control" type="text" name="staff_email" />
-        <label class="help-block">公司：</label>
-        <select class="form-control" name="company_id">
-            <?php foreach($companyList as $company) {?>
-                <option value="<?=$company->id?>"><?=$company->company_name?></option>
-            <?php }?>
-        </select>
-        <label class="help-block">所属部门：</label>
-        <select class="form-control" name="staff_sector">
-            <?php foreach($sectorList as $sector) {?>
-                <option value="<?=$sector->id?>"><?=$sector->sector_name?></option>
-            <?php }?>
-        </select>
-        <label class="help-block">职务：</label>
-        <input class="form-control" type="text" name="staff_position" />
-
-        <input name="staff_id" type="hidden" />
-        <div id="editstaffinfo" style="display:none;margin-top:10px;">
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">姓名（<label class="mydanger">*</label>）：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="staff_name" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">工号：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="staff_no" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">手机号：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="staff_phone" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">邮箱：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="staff_email" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">公司：</label></div>
+            <div class="col-md-9">
+                <select class="form-control" name="company_id">
+                    <?php foreach($companyList as $company) {?>
+                        <option value="<?=$company->id?>"><?=$company->company_name?></option>
+                    <?php }?>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">所属部门：</label></div>
+            <div class="col-md-9">
+                <select class="form-control" name="staff_sector">
+                    <?php foreach($sectorList as $sector) {?>
+                        <option value="<?=$sector->id?>"><?=$sector->sector_name?></option>
+                    <?php }?>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">职务：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="staff_position" /></div>
+        </div>
+        <div class="row">
+            <input name="staff_id" type="hidden" />
+            <div id="editstaffinfo" style="display:none;margin-top:10px;margin-left:12px;"></div>
         </div>
     </div>
 </div>
@@ -119,6 +152,11 @@
 <link rel="stylesheet" href="/assets/adminTemplate/js/jstree/dist/themes/default-dark/style.min.css">
 <!-- JsTree Js-->
 <script src="/assets/adminTemplate/js/jstree/dist/jstree.min.js"></script>
+<style type="text/css">
+    .mydanger {
+        color:red;
+    }
+</style>
 <script type="text/javascript">
     var tree;
     var search = null;
@@ -240,7 +278,7 @@
                 var staffSector = $('select[name=staff_sector]').val();
                 var staffPosition = $('input[name=staff_position]').val();
                 var staffId=$('input[name=staff_id]').val();
-
+//alert(staffName+";"+staffNo+";"+staffPhone+";"+staffEmail+";"+companyId+";"+staffSector+";"+staffPosition+";"+staffId);
                 if(staffName == '') {
                     $('#addstaffinfo').html('姓名不能为空!');
                     $('input[name=staff_name]').addClass('alert-danger').focus();
@@ -265,6 +303,9 @@
                         $('#editstaffinfo').addClass('text-danger').show();
                         if(data == '-1') {//角色名存在
                             $('#editstaffinfo').html('非法人员id!');
+                        }
+                        if(data == '-2') {//角色代码存在
+                            $('#editstaffinfo').html('姓名不能为空!');
                         }
                         if(data == '1') {
                             staffEditDialog.close();

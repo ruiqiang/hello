@@ -44,29 +44,37 @@
 <div class="tree" id="tree" style="min-height:10rem;padding-top:1rem;padding-bottom:1rem;display:none;width:40rem;max-height:40rem;overflow:auto;">
 </div>
 
-<div id="roleAdd" style="display:none;width:40rem;">
+<div id="roleAdd" style="display:none;width:70rem;">
     <div class="form-group" id="roleAddDialogDiv">
-        <label class="help-block">角色名称(不可重复)：</label>
-        <input class="form-control" type="text" name="new_role_name" />
-        <br>
-        <label class="help-block">角色代码(角色的唯一标识,不可重复)：</label>
-        <input class="form-control" type="text" name="new_role_code" />
-
-        <div id="addroleinfo" style="display:none;margin-top:10px;">
-            <label>角色名已经存在!</label>
+        <div class="row">
+            <div class="col-md-5"><label class="help-block">角色名称(不可重复)：</label></div>
+            <div class="col-md-7"><input class="form-control" type="text" name="new_role_name" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-5"><label class="help-block">角色代码(角色的唯一标识,不可重复)：</label></div>
+            <div class="col-md-7"><input class="form-control" type="text" name="new_role_code" /></div>
+        </div>
+        <div class="row">
+            <div id="addroleinfo" style="display:none;margin-top:10px;">
+                <label>角色名已经存在!</label>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="roleEditName" style="display:none;width:40rem;">
+<div id="roleEditName" style="display:none;width:70rem;">
     <div class="form-group" id="roleEditNameDialogDiv">
-        <label class="help-block">角色名称(不可重复)：</label>
-        <input class="form-control" type="text" name="role_name" />
-        <br>
-        <label class="help-block">角色代码(角色的唯一标识,不可重复)：</label>
-        <input class="form-control" type="text" name="role_code" />
-
-        <div id="editrolenameinfo" style="display:none;margin-top:10px;">
+        <div class="row">
+            <div class="col-md-5"><label class="help-block">角色名称(不可重复)：</label></div>
+            <div class="col-md-7"><input class="form-control" type="text" name="role_name" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-5"><label class="help-block">角色代码(角色的唯一标识,不可重复)：</label></div>
+            <div class="col-md-7"><input class="form-control" type="text" name="role_code" /></div>
+        </div>
+        <div class="row">
+            <div id="editrolenameinfo" style="display:none;margin-top:10px;">
+            </div>
         </div>
     </div>
 </div>

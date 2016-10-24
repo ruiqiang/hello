@@ -55,7 +55,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/admin/index">Admin</a>
+                <a class="navbar-brand" style="font-size:26px;" href="/admin/index">传媒发布管理系统</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">

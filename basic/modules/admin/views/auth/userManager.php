@@ -36,17 +36,23 @@
     <!-- /. ROW  -->
 </div>
 
-<div id="roleBind" style="display:none;width:40rem;">
+<div id="roleBind" style="display:none;width:60rem;">
     <div class="form-group" id="roleBindDialogDiv">
-        <label class="help-block">选择角色：</label>
-        <select class="form-control" name="role_id">
-            <option value="0"></option>
-            <?php foreach($rolelist as $role) {?>
-                <option value="<?=$role->id?>"><?=$role->role_name?></option>
-            <?php }?>
-        </select>
-        <input name="staff_id" type="hidden" />
-        <input name="current_role_id" type="hidden" />
+        <div class="row">
+            <div class="col-md-2"><label class="help-block">选择角色：</label></div>
+            <div class="col-md-9">
+                <select class="form-control" name="role_id">
+                    <option value="0"></option>
+                    <?php foreach($rolelist as $role) {?>
+                        <option value="<?=$role->id?>"><?=$role->role_name?></option>
+                    <?php }?>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <input name="staff_id" type="hidden" />
+            <input name="current_role_id" type="hidden" />
+        </div>
     </div>
 </div>
 

@@ -43,32 +43,44 @@
 
 <div id="companyAdd" style="display:none;width:60rem;">
     <div class="form-group" id="companyAddDialogDiv">
-        <label class="help-block">公司名称：</label>
-        <input class="form-control" type="text" name="new_company_name" />
-        <br>
-        <label class="help-block">涉及领域：</label>
-        <input class="form-control" type="text" name="new_company_field" />
-        <br>
-        <label class="help-block">员工规模：</label>
-        <input class="form-control" type="text" name="new_staff_number" />
-
-        <div id="addcompanyinfo" style="display:none;margin-top:10px;">
-            <label>公司名已经存在!</label>
+        <div class="row">
+            <div class="col-md-2"><label class="help-block">公司名称：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_company_name" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><label class="help-block">涉及领域：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_company_field" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><label class="help-block">员工规模：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="new_staff_number" /></div>
+        </div>
+        <div class="row">
+            <div id="addcompanyinfo" style="display:none;margin-top:10px;margin-left:12px;">
+                <label>公司名已经存在!</label>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="companyEdit" style="display:none;width:40rem;">
+<div id="companyEdit" style="display:none;width:60rem;">
     <div class="form-group" id="companyEditDialogDiv">
-        <label class="help-block">公司名称：</label>
-        <input class="form-control" type="text" name="company_name" />
-        <br>
-        <label class="help-block">涉及领域：</label>
-        <input class="form-control" type="text" name="company_field" />
-        <label class="help-block">员工规模：</label>
-        <input class="form-control" type="text" name="staff_number" />
-        <input name="company_id" type="hidden" />
-        <div id="editcompanyinfo" style="display:none;margin-top:10px;">
+        <div class="row">
+            <div class="col-md-2"><label class="help-block">公司名称：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="company_name" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><label class="help-block">涉及领域：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="company_field" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><label class="help-block">员工规模：</label></div>
+            <div class="col-md-9"><input class="form-control" type="text" name="staff_number" /></div>
+        </div>
+        <div class="row">
+            <input name="company_id" type="hidden" />
+            <div id="editcompanyinfo" style="display:none;margin-top:10px;margin-left:12px;">
+        </div>
         </div>
     </div>
 </div>
@@ -181,6 +193,10 @@
                     "dataType": "json",
                     "success": function (data) {
                         $('#editcompanyinfo').addClass('text-danger').show();
+                        if(data == '-3'){
+                            $('#editcompanyinfo').html('公司名称不能为空!');
+                            $('input[name=company_name]').addClass('alert-danger').focus();
+                        }
                         if(data == '-2') {//角色代码存在
                             $('#editcompanyinfo').html('公司名称已存在!');
                             $('input[name=company_name]').addClass('alert-danger').focus();

@@ -107,17 +107,22 @@ class UserController extends \yii\web\Controller
 
         $company = PCompany::find()->where('id = "' . $company_id . '"')->one();
         if ($company != null) {
-            $companyNameExsits = PCompany::find()->where('company_name = "' . $company_name . '"')->one();
-            if ($companyNameExsits != null)
-                echo "-2";  //公司名称存在
-            else {
-                $company->company_name = trim($company_name);
-                $company->company_field = trim($company_field);
-                $company->staff_number = trim($staff_number);
-                $company->update_time = $date;
-                $company->save();
+            if($company_name != null)
+            {
+                $companyNameExsits = PCompany::find()->where('company_name = "' . $company_name . '" and id !='.$company_id)->one();
+                if ($companyNameExsits != null )
+                    echo "-2";  //公司名称存在
+                else {
+                    $company->company_name = trim($company_name);
+                    $company->company_field = trim($company_field);
+                    $company->staff_number = trim($staff_number);
+                    $company->update_time = $date;
+                    $company->save();
 
-                echo "1";  //更新成功
+                    echo "1";  //更新成功
+                }
+            }else{
+                echo "-3";   //公司id已存在
             }
         } else {
             echo "-1"; //该id不存在
@@ -262,15 +267,17 @@ class UserController extends \yii\web\Controller
         $request = \Yii::$app->request;
         $staff_id = $request->post('staffId', '0');
         $staff_name = $request->post('staffName', null);
-        $staff_no = $request->post('staffNo', null);
+        $staff_no = $request->post('staffNo', 0);
         $staff_phone = $request->post('staffPhone', null);
         $staff_email = $request->post('staffEmail', null);
-        $company_id = $request->post('companyId', null);
+        $company_id = $request->post('companyId', 0);
         $staff_sector = $request->post('staffSector', '0');
         $staff_position = $request->post('staffPosition', null);
 
         $staff = PStaff::find()->where('id=' . $staff_id . ' and is_delete=0')->one();
-        if ($staff != null) {
+        if($staff_name == null) {
+            echo "-2";
+        }else if ($staff != null) {
             $staff->staff_name = trim($staff_name);
             $staff->staff_no = trim($staff_no);
             $staff->company_id = $company_id;
