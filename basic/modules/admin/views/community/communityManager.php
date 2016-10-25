@@ -13,6 +13,7 @@
                     楼盘列表
                     <a href="javascript:;" class="btn btn-info" id="map" style="float:right;margin-top:-0.5rem;">楼盘地图</a>
                     <a href="javascript:;" class="btn btn-info" id="addCommunity" style="float:right;margin-top:-0.5rem;margin-right:1rem;">添加楼盘</a>
+                    <a href="javascript:;" class="btn btn-info" id="addExcel" style="float:right;margin-top:-0.5rem;margin-right:1rem;">EXCEL上传</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -47,6 +48,10 @@
 <script type="text/javascript">
 var search = null;
 $(window).ready(function(){
+
+    $("#addExcel").click(function(){
+        window.location.href = "/admin/community/addexcel";
+    });
 
     $("#addCommunity").click(function(){
        window.location.href = "/admin/community/add";
