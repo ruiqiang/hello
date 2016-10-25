@@ -5,7 +5,7 @@ use app\modules\admin\models\PAdv;
 use app\modules\admin\models\PCommunity;
 
 use app\modules\admin\models\DataTools;
-use app\modules\admin\models\PModel;
+use app\modules\admin\models\ExcelTools;
 
 /**
  * 小区管理
@@ -34,6 +34,7 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionManager()
     {
+        ExcelTools::getData();
         $communityList = PCommunity::find()->all();
         $column = DataTools::getDataTablesColumns($this->communityColumns);
         $jsonDataUrl = '/admin/community/managerjson';

@@ -12,6 +12,7 @@
 
 return [
   'app\modules\admin\models\DataTools' => '/../modules/admin/tools/DataTools.php',
+  'app\modules\admin\models\ExcelTools' => '/../modules/admin/tools/ExcelTools.php',
 
   'yii\jui\JuiAsset' => '/../vendor/vendor/yiisoft/yii2-jui/JuiAsset.php',
   'yii\jui\DatePickerLanguageAsset' => '/../vendor/vendor/yiisoft/yii2-jui/DatePickerLanguageAsset.php',
