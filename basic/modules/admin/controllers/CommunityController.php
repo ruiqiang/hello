@@ -34,7 +34,6 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionManager()
     {
-        ExcelTools::getData();
         $communityList = PCommunity::find()->all();
         $column = DataTools::getDataTablesColumns($this->communityColumns);
         $jsonDataUrl = '/admin/community/managerjson';
@@ -60,6 +59,25 @@ class CommunityController extends \yii\web\Controller
     {
         $company_id = \Yii::$app->session['loginUser']->company_id;
         return $this->render('communityAdd');
+    }
+
+    public function actionAddexcel()
+    {
+        return $this->render('communityExcel');
+    }
+
+    public function actionDoexcel()
+    {
+        if ($_FILES["commExcel"]["error"] <= 0)
+        {
+            $temp = explode(".",$_FILES["commExcel"]["name"]);
+            $suffix = end($temp);
+            if($suffix == "xlsx") {
+                $excel = ExcelTools::getExcelObject($_FILES["commExcel"]["tmp_name"]);
+                ExcelTools::setDataIntoCommunity($excel);
+            }
+        }
+        $this->redirect("/admin/community/manager");
     }
 
     /**
