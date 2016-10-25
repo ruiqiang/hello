@@ -11,7 +11,7 @@ class ExcelTools
     }
 
     /**
-     * 这个方法的最终存数据还没写,不过到这里存数据已经很简单了,10月27号来做存入数据部分
+     * 这个方法待完善company_id没写
      * @param $excel
      */
     public static function setDataIntoCommunity($excel) {
