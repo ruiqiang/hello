@@ -117,6 +117,7 @@
         var marker = new BMap.Marker(point);
         map.addOverlay(marker);
     });
+
     var inputs = ['community_no','community_name','community_opentime','community_staytime','community_units','community_households','community_map'];
     $(window).ready(function() {
         $("#addCommunity").click(function(){

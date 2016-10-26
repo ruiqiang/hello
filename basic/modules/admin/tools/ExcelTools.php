@@ -15,8 +15,10 @@ class ExcelTools
      * @param $excel
      */
     public static function setDataIntoCommunity($excel) {
+        $company_id = \Yii::$app->session['loginUser']->company_id;
+        $user_id = \Yii::$app->session['loginUser']->id;
         $sql = 'insert into p_community values ';
-        $array = array('A','C','V','G','H','W','AB','<1>','AA','AE','O','P','AH','BQ','<null>','<null>','<null>','Z','AG','AK','F','<null>','<null>','<null>','<null>','<null>','<null>');
+        $array = array('A','C','V','G','H','W','AB','<1>','AA','AE','O','P','AH','BQ','<null>','<null>','<null>','Z','AG','AK','F','<company>','<0>','<userid>','<now>','<userid>','<now>');
         foreach($excel as $key=>$value) {
             if($key > 2) {
                 if($value['A'] == '') {
@@ -39,10 +41,17 @@ class ExcelTools
                         } else {
                             $v = str_replace("<", "", $v);
                             $v = str_replace(">", "", $v);
-                            if($v != 'null') {
-                                $sql .= '"' . $v . '",';
-                            } else {
+                            if($v == 'null') {
                                 $sql .= 'null,';
+
+                            } else if($v == 'company') {
+                                $sql .= '"' . $company_id . '",';
+                            } else if($v == 'userid') {
+                                $sql .= '"' . $user_id . '",';
+                            } else if($v == 'now') {
+                                $sql .= '"' . date('Y-m-d H:i:s') . '",';
+                            } else {
+                                $sql .= '"' . $v . '",';
                             }
                         }
                     }

@@ -6,15 +6,20 @@
     </div>
     <!-- /. ROW  -->
     <div class="row">
-        <!--<div style="float:left;width:30rem;">
+        <div style="float:left;width:20rem;">
             楼盘列表
-            <ul class="mapul">
-                <?php /*foreach($data as $key=>$value) {*/?>
-                <li position="<?/*=$value['community_longitudex']*/?>,<?/*=$value['community_latitudey']*/?>"><?/*=$value['community_name']*/?></li>
-                <?php /*}*/?>
+            <ul class="mapul" style="margin-left:-3.5rem;">
+                <li><input name="" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="搜索" /></li>
+                <?php foreach($data as $key=>$value) {?>
+                <li position="<?=$value['community_longitudex']?>,<?=$value['community_latitudey']?>">
+                    <a href="javascript:;" class="custom_map" mapid="<?=$value['id']?>"
+                       map_value_x="<?=$value['community_longitudex']?>"
+                       map_value_y="<?=$value['community_latitudey']?>">
+                        <?=$value['community_name']?></a></li>
+                <?php }?>
             </ul>
-        </div>-->
-        <div class="col-md-12" id="map" style="width:85rem;height:50rem;/*float:left;*/">
+        </div>
+        <div class="col-md-12" id="map" style="width:82rem;height:50rem;">
         </div>
     </div>
     <!-- /. ROW  -->
@@ -27,6 +32,26 @@
     map.centerAndZoom("南京", 15);                    // 初始化地图,设置中心点坐标和地图级别
     map.enableScrollWheelZoom(true);
 
+    $(".custom_map").click(function(){
+        $map_x = $(this).attr("map_value_x");
+        $map_y = $(this).attr("map_value_y");
+        map.panTo(new BMap.Point($map_x,$map_y));
+        var allOverlay = map.getOverlays();
+        for (var i = 1; i < allOverlay.length; i++){
+            if(allOverlay[i]._id == $(this).attr("mapid")) {
+                allOverlay[i]._div.style.color = "#EAFF00";
+                allOverlay[i]._div.style.zIndex = 1000;
+            } else {
+                if(allOverlay[i]._div != undefined) {
+                    allOverlay[i]._div.style.color = "white";
+                    allOverlay[i]._div.style.zIndex = 1;
+                }
+            }
+        }
+        /*var marker = new BMap.Marker(new BMap.Point($map_x,$map_y));
+        map.addOverlay(marker);
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE);*/
+    });
 
     // 复杂的自定义覆盖物
     function ComplexCustomOverlay(point, text, mouseoverText, id){
@@ -44,7 +69,7 @@
         div.style.backgroundColor = "#EE5D5B";
         div.style.border = "1px solid #BC3B3A";
         div.style.color = "white";
-        div.style.width = "80px";
+        //div.style.width = "80px";
         div.style.height = "24px";
         div.style.padding = "3px";
         div.style.lineHeight = "17px";
@@ -61,7 +86,7 @@
         var arrow = this._arrow = document.createElement("div");
         arrow.style.background = "url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
         arrow.style.position = "absolute";
-        arrow.style.width = "11px";
+        arrow.style.width = "40px";
         arrow.style.height = "10px";
         arrow.style.top = "22px";
         arrow.style.left = "10px";
@@ -70,8 +95,8 @@
 
         div.onmouseover = function(){
             this.style.backgroundColor = "#6BADCA";
-            this.style.borderColor = "#0000ff";
-            this.getElementsByTagName("span")[0].innerHTML = "广告数: 1";
+            this.style.borderColor = "#6BADCA";
+            this.getElementsByTagName("span")[0].innerHTML = "广告数: {count}";
             arrow.style.backgroundPosition = "0px -20px";
         }
 
@@ -101,9 +126,6 @@
         var point = new BMap.Point(data[i]['community_longitudex'], data[i]['community_latitudey']);
         var myCompOverlay = new ComplexCustomOverlay(point, data[i]['community_name'], "", data[i]['id']);
         map.addOverlay(myCompOverlay);
-        //var marker = new BMap.Marker(point);
-        //map.addOverlay(marker);
-        //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
     }
 </script>
 <style type="text/css">
