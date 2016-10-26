@@ -57,6 +57,7 @@ class DataTools
             $jsonArray['data'] = [];
         }
         $count = 10;
+        $num = $start + 1;   //自定义自增长;
         foreach ($data as $key => $val) {
             foreach ($columns as $k => $v) {
                 if (is_array($columnVals[$k])) {
@@ -78,7 +79,13 @@ class DataTools
                     continue;
                 }
                 if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
-                    $array[$v] = $val->$columnVals[$k];
+                    if($k=="id")      //序号自增长
+                    {
+                        $array[$v]=$num;
+                        $num++;
+                    }else
+                        $array[$v] = $val->$columnVals[$k];
+                    //$array[$v] = $val->$columnVals[$k];
                 } else {
                     $array[$v] = "";
                     $bindRoleHtml = "<a href='javascript:;' staff_id='" . $val->id . "' class='btn btn-success btn-xs bindRole'>关联角色</a>";
@@ -147,6 +154,8 @@ class DataTools
         if (count($data) == 0) {
             $jsonArray['data'] = [];
         }
+
+        $num = $start + 1;   //自定义自增长;
         foreach ($data as $key => $val) {
             foreach ($columns as $k => $v) {
                 if (is_array($columnVals[$k])) {
@@ -168,7 +177,13 @@ class DataTools
                     continue;
                 }
                 if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
-                    $array[$v] = $val->$columnVals[$k];
+                    if($k=="id")      //序号自增长
+                    {
+                        $array[$v]=$num;
+                        $num++;
+                    }else
+                        $array[$v] = $val->$columnVals[$k];
+                    //$array[$v] = $val->$columnVals[$k];
                 } else {
                     $array[$v] = "";
                     $editHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-success btn-xs " . $name . "Edit'>编辑</a>";
@@ -227,6 +242,8 @@ class DataTools
         if (count($data) == 0) {
             $jsonArray['data'] = [];
         }
+
+        $num = $start + 1;   //自定义自增长;
         foreach ($data as $key => $val) {
             foreach ($columns as $k => $v) {
                 if (is_array($columnVals[$k])) {
@@ -248,22 +265,28 @@ class DataTools
                     continue;
                 }
                 if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
-                    $array[$v] = $val->$columnVals[$k];
-                    //根据公司id加工获得公司名称
-                    if ($columns[$k] == "company_id") {
-                        $company = PCompany::find()->where("id=" . $val->$columnVals[$k])->one();
-                        if ($company != null)
-                            $array[$v] = $company->company_name;
-                        else
-                            $array[$v] = "";
-                    }
-                    //根据部门id加工获得部门名称
-                    if ($columns[$k] == "staff_sector") {
-                        $sector = PSector::find()->where("id=" . $val->$columnVals[$k])->one();
-                        if ($sector != null)
-                            $array[$v] = $sector->sector_name;
-                        else
-                            $array[$v] = "";
+                    if($k=="id")      //序号自增长
+                    {
+                        $array[$v]=$num;
+                        $num++;
+                    }else {
+                        $array[$v] = $val->$columnVals[$k];
+                        //根据公司id加工获得公司名称
+                        if ($columns[$k] == "company_id") {
+                            $company = PCompany::find()->where("id=" . $val->$columnVals[$k])->one();
+                            if ($company != null)
+                                $array[$v] = $company->company_name;
+                            else
+                                $array[$v] = "";
+                        }
+                        //根据部门id加工获得部门名称
+                        if ($columns[$k] == "staff_sector") {
+                            $sector = PSector::find()->where("id=" . $val->$columnVals[$k])->one();
+                            if ($sector != null)
+                                $array[$v] = $sector->sector_name;
+                            else
+                                $array[$v] = "";
+                        }
                     }
                 } else {
                     $array[$v] = "";
