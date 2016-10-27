@@ -43,7 +43,6 @@ class ExcelTools
                             $v = str_replace(">", "", $v);
                             if($v == 'null') {
                                 $sql .= 'null,';
-
                             } else if($v == 'company') {
                                 $sql .= '"' . $company_id . '",';
                             } else if($v == 'userid') {

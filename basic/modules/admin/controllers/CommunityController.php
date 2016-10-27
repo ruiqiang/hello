@@ -6,6 +6,7 @@ use app\modules\admin\models\PCommunity;
 
 use app\modules\admin\models\DataTools;
 use app\modules\admin\models\ExcelTools;
+use app\modules\admin\models\PPTools;
 
 /**
  * 小区管理
@@ -34,6 +35,7 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionManager()
     {
+        PPTools::createPPT();exit;
         $communityList = PCommunity::find()->all();
         $column = DataTools::getDataTablesColumns($this->communityColumns);
         $jsonDataUrl = '/admin/community/managerjson';
