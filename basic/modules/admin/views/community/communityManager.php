@@ -14,6 +14,7 @@
                     <a href="javascript:;" class="btn btn-info" id="map" style="float:right;margin-top:-0.5rem;">楼盘地图</a>
                     <a href="javascript:;" class="btn btn-info" id="addCommunity" style="float:right;margin-top:-0.5rem;margin-right:1rem;">添加楼盘</a>
                     <a href="javascript:;" class="btn btn-info" id="addExcel" style="float:right;margin-top:-0.5rem;margin-right:1rem;">EXCEL上传</a>
+                    <a href="javascript:;" class="btn btn-info" id="downloadPPT" style="float:right;margin-top:-0.5rem;margin-right:1rem;">导出PPT</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -51,6 +52,10 @@ $(window).ready(function(){
 
     $("#addExcel").click(function(){
         window.location.href = "/admin/community/addexcel";
+    });
+
+    $("#downloadPPT").click(function(){
+        window.location.href = "/admin/community/downloadppt";
     });
 
     $("#addCommunity").click(function(){

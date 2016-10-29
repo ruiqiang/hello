@@ -13,7 +13,7 @@ class PPTools
         return $objPHPPowerPoint;
     }
 
-    public static function createPPT() {
+    public static function createPPT($module) {
         $objPHPPowerPoint = PPTools::getPPT();
 
         //设置文件属性
@@ -31,10 +31,10 @@ class PPTools
         $shape = $currentSlide->createDrawingShape();
         $shape->setName('PHPPowerPoint logo');
         $shape->setDescription('PHPPowerPoint logo');
-        $shape->setPath('C:/Users/ruiqiang/Desktop/logo.gif');
-        $shape->setHeight(36);
-        $shape->setOffsetX(10);
-        $shape->setOffsetY(10);
+        $shape->setPath('C:/Users/ruiqiang/Desktop/xx.jpg');
+        $shape->setHeight(106);
+        $shape->setOffsetX(100);
+        $shape->setOffsetY(100);
         $shape->getShadow()->setVisible(true);
         $shape->getShadow()->setDirection(45);
         $shape->getShadow()->setDistance(10);
@@ -53,11 +53,17 @@ class PPTools
 
         $objWriter = \PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
 
-        $folder = dirname(dirname(dirname(dirname(__FILE__)))) . '\\ppt';
+        $folder = dirname(dirname(dirname(dirname(__FILE__)))) . '\\web\ppt';
 
-        $fileName = '\\2.pptx';
+        $date = date('Y-m-d');
+
+        $fileNameOrg = "\\$module$date.pptx";
+
+        $fileName =  iconv("utf-8","gb2312",$fileNameOrg);
 
         $objWriter->save($folder . $fileName);
+
+        return $fileNameOrg;
     }
 }
 ?>

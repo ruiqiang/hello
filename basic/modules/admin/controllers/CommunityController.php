@@ -35,7 +35,6 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionManager()
     {
-        PPTools::createPPT();exit;
         $communityList = PCommunity::find()->all();
         $column = DataTools::getDataTablesColumns($this->communityColumns);
         $jsonDataUrl = '/admin/community/managerjson';
@@ -175,5 +174,11 @@ class CommunityController extends \yii\web\Controller
         $community->update_time = date("Y-m-d H:i:s");
         $community->save();
         $this->redirect("/admin/community/manager");
+    }
+
+    public function actionDownloadppt()
+    {
+        $fileName = PPTools::createPPT("楼盘管理");
+        $this->redirect("/ppt/" . $fileName);
     }
 }
