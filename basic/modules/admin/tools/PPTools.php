@@ -7,13 +7,64 @@ include '/../vendor/phpppt/Classes/PHPPowerpoint/IOFactory.php';
 
 class PPTools
 {
+    public static function getPPTFilePath() {
+        return dirname(dirname(dirname(dirname(__FILE__)))) . '/web/ppt/';
+    }
+
+    public static function setSlide($objPHPPowerPoint, $data) {
+        $tools = new PPTools();
+        foreach($data as $key=>$value) {
+            $currentSlide = $tools->createTemplatedSlide($objPHPPowerPoint);
+
+            $shape = $currentSlide->createDrawingShape();
+            $shape->setName('image1');
+            $shape->setDescription('the first description image1');
+            $shape->setPath(PPTools::getPPTFilePath().'images/2.jpg');
+            $shape->setWidth(300);
+            $shape->setOffsetX(180);
+            $shape->setOffsetY(190);
+
+            $shape = $currentSlide->createDrawingShape();
+            $shape->setName('image2');
+            $shape->setDescription('the first description image2');
+            $shape->setPath(PPTools::getPPTFilePath().'images/1.jpg');
+            $shape->setWidth(320);
+            $shape->setOffsetX(680);
+            $shape->setOffsetY(290);
+
+            //创建富文本区
+            $shape = $currentSlide->createRichTextShape();
+            $shape->setHeight(90);
+            $shape->setWidth(300);
+            $shape->setOffsetX(200);
+            $shape->setOffsetY(490);
+            $shape->getAlignment()->setHorizontal(\PHPPowerPoint_Style_Alignment::HORIZONTAL_CENTER);
+            $textRun = $shape->createTextRun($value->community_name);
+            $textRun->getFont()->setBold(true);
+            $textRun->getFont()->setSize(16);
+            $textRun->getFont()->setColor(new \PHPPowerPoint_Style_Color('000000'));
+
+            $shape = $currentSlide->createRichTextShape();
+            $shape->setHeight(200);
+            $shape->setWidth(300);
+            $shape->setOffsetX(680);
+            $shape->setOffsetY(190);
+            $shape->getAlignment()->setHorizontal(\PHPPowerPoint_Style_Alignment::HORIZONTAL_LEFT);
+            $textRun = $shape->createTextRun("位置:" . $value->community_position . "\n数量:20\n实际发布:2");
+            $textRun->getFont()->setBold(false);
+            $textRun->getFont()->setSize(12);
+            $textRun->getFont()->setColor(new \PHPPowerPoint_Style_Color('000000'));
+        }
+    }
+
     public static function getPPT()
     {
         $objPHPPowerPoint = new \PHPPowerPoint();
         return $objPHPPowerPoint;
     }
 
-    public static function createPPT($module) {
+    public static function createPPT($module, $data)
+    {
         $objPHPPowerPoint = PPTools::getPPT();
 
         //设置文件属性
@@ -25,45 +76,49 @@ class PPTools
         $objPHPPowerPoint->getProperties()->setKeywords("office 2007 openxml php");
         $objPHPPowerPoint->getProperties()->setCategory("Test result file");
 
-        $currentSlide = $objPHPPowerPoint->getActiveSlide();
+        $objPHPPowerPoint->removeSlideByIndex(0);
 
-        //创建左上角Logo
-        $shape = $currentSlide->createDrawingShape();
-        $shape->setName('PHPPowerPoint logo');
-        $shape->setDescription('PHPPowerPoint logo');
-        $shape->setPath('C:/Users/ruiqiang/Desktop/xx.jpg');
-        $shape->setHeight(106);
-        $shape->setOffsetX(100);
-        $shape->setOffsetY(100);
-        $shape->getShadow()->setVisible(true);
-        $shape->getShadow()->setDirection(45);
-        $shape->getShadow()->setDistance(10);
-
-        //创建富文本区
-        $shape = $currentSlide->createRichTextShape();
-        $shape->setHeight(300);
-        $shape->setWidth(600);
-        $shape->setOffsetX(170);
-        $shape->setOffsetY(180);
-        $shape->getAlignment()->setHorizontal( \PHPPowerPoint_Style_Alignment::HORIZONTAL_CENTER );
-        $textRun = $shape->createTextRun('Thank you for using PHPPowerPoint!My name is 芮强');
-        $textRun->getFont()->setBold(true);
-        $textRun->getFont()->setSize(60);
-        $textRun->getFont()->setColor( new \PHPPowerPoint_Style_Color('FFC00000') );
+        PPTools::setSlide($objPHPPowerPoint, $data);
 
         $objWriter = \PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
+        $fileArray = PPTools::getFileName($module);
+        $objWriter->save($fileArray['name']);
 
-        $folder = dirname(dirname(dirname(dirname(__FILE__)))) . '\\web\ppt';
+        return $fileArray['nameorg'];
+    }
 
+    public static function getFileName($module) {
+        $folder = PPTools::getPPTFilePath();
         $date = date('Y-m-d');
+        $fileNameOrg = "/$module$date.pptx";
+        $fileName =  $folder.iconv("utf-8","gb2312",$fileNameOrg);
+        $fileNameArray = array('name'=>$fileName,'nameorg'=>$fileNameOrg);
+        return $fileNameArray;
+    }
 
-        $fileNameOrg = "\\$module$date.pptx";
+    /**
+     * Creates a templated slide
+     *
+     * @param \PHPPowerPoint $objPHPPowerPoint
+     * @return \PHPPowerPoint_Slide
+     */
+    function createTemplatedSlide(\PHPPowerPoint $objPHPPowerPoint)
+    {
+        // Create slide
+        $slide = $objPHPPowerPoint->createSlide();
 
-        $fileName =  iconv("utf-8","gb2312",$fileNameOrg);
+        // Add background image
+        $shape = $slide->createDrawingShape();
+        $shape->setName('Background');
+        $shape->setDescription('Background');
+        $shape->setPath(PPTools::getPPTFilePath() . 'images/background.jpg');
+        $shape->setWidth(850);
+        $shape->setHeight(720);
+        $shape->setOffsetX(0);
+        $shape->setOffsetY(0);
 
-        $objWriter->save($folder . $fileName);
-
-        return $fileNameOrg;
+        // Return slide
+        return $slide;
     }
 }
 ?>

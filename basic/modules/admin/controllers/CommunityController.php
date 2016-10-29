@@ -178,7 +178,8 @@ class CommunityController extends \yii\web\Controller
 
     public function actionDownloadppt()
     {
-        $fileName = PPTools::createPPT("楼盘管理");
+        $community = PCommunity::find()->all();
+        $fileName = PPTools::createPPT("楼盘管理", $community);
         $this->redirect("/ppt/" . $fileName);
     }
 }
