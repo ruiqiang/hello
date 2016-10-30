@@ -293,12 +293,18 @@
         });
 
         var detailsDialog = dialog({
+            autoOpen:false,
             title:'客户信息',
             id:'customerDetails',
             drag:true,
             content:$('#customerDetails'),
             fixed:true,
             top : '0%',
+            cancelValue:'取消',
+            cancel: function () {
+                this.close();// 隐藏
+                return false;
+            },
             resize:true,
         });
 
