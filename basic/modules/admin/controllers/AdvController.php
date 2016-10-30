@@ -6,6 +6,7 @@ use app\modules\admin\models\PAdv;
 use app\modules\admin\models\DataTools;
 use app\modules\admin\models\PCommunity;
 use app\modules\admin\models\PModel;
+use app\modules\admin\models\ExcelTools;
 
 /**
  * 广告点管理
@@ -126,6 +127,37 @@ class AdvController extends \yii\web\Controller
         $adv->updater = \Yii::$app->session['loginUser']->id;
         $adv->update_time = $now;
         $adv->save();
+        $this->redirect("/admin/adv/manager");
+    }
+
+    /*
+     * excel 导入
+     */
+    public function actionAddexcel()
+    {
+        return $this->render('advExcel');
+    }
+
+    public function actionDoexcel()
+    {
+        if ($_FILES["commExcel"]["error"] <= 0)
+        {
+            $temp = explode(".",$_FILES["commExcel"]["name"]);
+            $suffix = end($temp);
+            if($suffix == "xlsx") {
+                $excel = ExcelTools::getExcelObject($_FILES["commExcel"]["tmp_name"]);
+
+                $company_id = \Yii::$app->session['loginUser']->company_id;
+
+                $communityList = PCommunity::find()->select('id,community_name')->where('company_id=' . $company_id . ' and is_delete=0')->asArray()->all();
+//                foreach($communityList as $k=>$v)
+//                    echo $v["community_name"];
+
+                $modelList = PModel::find()->select('id,model_id,model_name')->where('company_id=' . $company_id . ' and is_delete=0')->asArray()->all();
+
+                ExcelTools::setDataIntoAdv($excel,$communityList,$modelList);
+            }
+        }
         $this->redirect("/admin/adv/manager");
     }
 }

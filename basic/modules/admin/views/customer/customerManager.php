@@ -12,6 +12,7 @@
                 <div class="panel-heading">
                     客户列表
                     <a href="javascript:;" class="btn btn-info" id="dialog" style="float:right;margin-top:-0.5rem;">客户信息报备</a>
+                    <a href="javascript:;" class="btn btn-info" id="addExcel" style="float:right;margin-top:-0.5rem;margin-right:1rem;">EXCEL上传</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -117,6 +118,12 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        //excel上传
+        $("#addExcel").click(function(){
+            window.location.href = "/admin/customer/addexcel";
+        });
+
         var addDialog = dialog({
             title:'添加客户信息',
             id:'customerAdd',

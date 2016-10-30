@@ -13,6 +13,7 @@ use app\modules\admin\models\PRoleMenu;
 use app\modules\admin\models\PSector;
 use app\modules\admin\models\PStaff;
 use app\modules\admin\models\PStaffRole;
+use app\modules\admin\models\ExcelTools;
 
 class UserController extends \yii\web\Controller
 {
@@ -107,10 +108,9 @@ class UserController extends \yii\web\Controller
 
         $company = PCompany::find()->where('id = "' . $company_id . '"')->one();
         if ($company != null) {
-            if($company_name != null)
-            {
-                $companyNameExsits = PCompany::find()->where('company_name = "' . $company_name . '" and id !='.$company_id)->one();
-                if ($companyNameExsits != null )
+            if ($company_name != null) {
+                $companyNameExsits = PCompany::find()->where('company_name = "' . $company_name . '" and id !=' . $company_id)->one();
+                if ($companyNameExsits != null)
                     echo "-2";  //公司名称存在
                 else {
                     $company->company_name = trim($company_name);
@@ -121,7 +121,7 @@ class UserController extends \yii\web\Controller
 
                     echo "1";  //更新成功
                 }
-            }else{
+            } else {
                 echo "-3";   //公司id已存在
             }
         } else {
@@ -249,6 +249,33 @@ class UserController extends \yii\web\Controller
         }
     }
 
+    /*
+     * excel 导入
+     */
+    public function actionAddexcel()
+    {
+        return $this->render('staffExcel');
+    }
+
+    /*
+     * 导入人员excel
+     */
+    public function actionDoexcel()
+    {
+        if ($_FILES["commExcel"]["error"] <= 0) {
+            $temp = explode(".", $_FILES["commExcel"]["name"]);
+            $suffix = end($temp);
+            if ($suffix == "xlsx") {
+                $excel = ExcelTools::getExcelObject($_FILES["commExcel"]["tmp_name"]);
+
+                $company_id = \Yii::$app->session['loginUser']->company_id;
+                $sectorList = PSector::find()->select('id,sector_name')->where('company_id=' . $company_id . ' and is_delete=0')->asArray()->all();
+                ExcelTools::setDataIntoStaff($excel,$sectorList);
+            }
+        }
+        $this->redirect("/admin/user/staffmanager");
+    }
+
     /**
      * 根据id获得人员信息
      */
@@ -275,9 +302,9 @@ class UserController extends \yii\web\Controller
         $staff_position = $request->post('staffPosition', null);
 
         $staff = PStaff::find()->where('id=' . $staff_id . ' and is_delete=0')->one();
-        if($staff_name == null) {
+        if ($staff_name == null) {
             echo "-2";
-        }else if ($staff != null) {
+        } else if ($staff != null) {
             $staff->staff_name = trim($staff_name);
             $staff->staff_no = trim($staff_no);
             $staff->company_id = $company_id;

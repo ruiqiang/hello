@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use app\modules\admin\models\DataTools;
 use app\modules\admin\models\PCustomer;
+use app\modules\admin\models\ExcelTools;
 
 class CustomerController extends \yii\web\Controller
 {
@@ -151,5 +152,30 @@ class CustomerController extends \yii\web\Controller
             echo "-1";   //id不存在
         }
         exit;
+    }
+
+    /*
+     * 添加excel页面
+     */
+    public function actionAddexcel()
+    {
+        return $this->render('customerExcel');
+    }
+
+    /*
+     * excel上传
+     */
+    public function actionDoexcel()
+    {
+        if ($_FILES["commExcel"]["error"] <= 0)
+        {
+            $temp = explode(".",$_FILES["commExcel"]["name"]);
+            $suffix = end($temp);
+            if($suffix == "xlsx") {
+                $excel = ExcelTools::getExcelObject($_FILES["commExcel"]["tmp_name"]);
+                ExcelTools::setDataIntoCustomer($excel);
+            }
+        }
+        $this->redirect("/admin/customer/manager");
     }
 }

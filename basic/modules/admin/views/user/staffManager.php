@@ -17,6 +17,7 @@
                 <div class="panel-heading">
                     人员信息列表
                     <a href="javascript:;" class="btn btn-info" id="dialog" style="float:right;margin-top:-0.5rem;">添加人员信息</a>
+                    <a href="javascript:;" class="btn btn-info" id="addExcel" style="float:right;margin-top:-0.5rem;margin-right:1rem;">EXCEL上传</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -161,6 +162,10 @@
     var tree;
     var search = null;
     $(document).ready(function () {
+        $("#addExcel").click(function(){
+            window.location.href = "/admin/user/addexcel";
+        });
+
         $('input[name=new_staff_name]').keydown(function(){
             if($(this).hasClass('alert-danger')) {
                 $('#addstaffinfo').hide();

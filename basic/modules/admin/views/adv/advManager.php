@@ -12,6 +12,7 @@
                 <div class="panel-heading">
                     广告位列表
                     <a href="javascript:;" class="btn btn-info" id="addAdv" style="float:right;margin-top:-0.5rem;">添加广告位</a>
+                    <a href="javascript:;" class="btn btn-info" id="addExcel" style="float:right;margin-top:-0.5rem;margin-right:1rem;">EXCEL上传</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -45,6 +46,10 @@
 <script type="text/javascript">
 var search = null;
 $(window).ready(function(){
+
+    $("#addExcel").click(function(){
+        window.location.href = "/admin/adv/addexcel";
+    });
 
     $("#addAdv").click(function(){
         window.location.href = "/admin/adv/add";
