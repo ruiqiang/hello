@@ -58,7 +58,7 @@ class LoginController extends \yii\web\Controller
     {
         $session = \Yii::$app->session;
         unset($session['loginUser']);
-        $this->redirect('/admin');
+        $this->redirect('/admin/login/index');
     }
 
     /**
