@@ -20,7 +20,7 @@ class CustomerController extends \yii\web\Controller
      * relation 关联的字段做成数组,支持多relation的深层字段属性
      * @var array
      */
-    public $columnsVal = array("id", "customer_company", "customer_address", "customer_contact", "customer_phone", "<edit,delete>");
+    public $columnsVal = array("id", "customer_company", "customer_address", "customer_contact", "customer_phone", "<details,edit,delete>");
 
     /**
      *

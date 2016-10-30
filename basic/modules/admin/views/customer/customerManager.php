@@ -103,6 +103,34 @@
         </div>
     </div>
 
+    <div id="customerDetails" style="display:none;width:60rem;">
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">公司名称：</label></div>
+            <div class="col-md-9"><label class="help-block" id="showCompany"></label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">公司地址：</label></div>
+            <div class="col-md-9"><label class="help-block" id="showAddress"></label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">联系人：</label></div>
+            <div class="col-md-9"><label class="help-block" id="showContact"></label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">联系电话：</label></div>
+            <div class="col-md-9"><label class="help-block" id="showPhone"></label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">邮&nbsp;&nbsp;箱：</label></div>
+            <div class="col-md-9"><label class="help-block" id="showEmail"></label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><label class="help-block">所属行业：</label></div>
+            <div class="col-md-9"><label class="help-block" id="showIndustry"></label></div>
+        </div>
+    </div>
+
+
 </div>
 <!-- /. PAGE INNER  -->
 <script src="/assets/artDialog/dist/dialog.js"></script>
@@ -264,6 +292,16 @@
             resize:true,
         });
 
+        var detailsDialog = dialog({
+            title:'客户信息',
+            id:'customerDetails',
+            drag:true,
+            content:$('#customerDetails'),
+            fixed:true,
+            top : '0%',
+            resize:true,
+        });
+
         mybind("#dialog",function() {
             //移除提示项
             $('input[name=company]').keydown(function(){
@@ -313,6 +351,30 @@
                     "data": aoData, //以json格式传递
                     "success": function(data) {
                         fnCallback(data);
+
+                        //详情
+                        $('.customerDetails').bind("click", function(){
+                            var customerID = $(this).attr('customer_id');
+                            $.ajax({
+                                "type": "GET",
+                                "url": "/admin/customer/getcustomerinfo",
+                                "data": {'customerID': customerID},
+                                "dataType": "json",
+                                "success": function (data) {
+                                    if(data != null && data.customer_company != null) {
+                                        $('#showCompany').html(data.customer_company);
+                                        $('#showAddress').html(data.customer_address);
+                                        $('#showContact').html(data.customer_contact);
+                                        $('#showPhone').html(data.customer_phone);
+                                        $('#showEmail').html(data.customer_email);
+                                        $('#showIndustry').html(data.customer_industry);
+                                    } else {
+                                        alert("获取人员信息失败,请刷新页面重试!");
+                                    }
+                                }
+                            });
+                            detailsDialog.show();
+                        });
                         //更新
                         $('.customerEdit').bind("click", function(){
                             var companyEdit = $('input[name=companyEdit]');
@@ -372,7 +434,6 @@
                                 }
                             });
                         });
-
                     }
                 });
             },

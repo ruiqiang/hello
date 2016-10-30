@@ -186,6 +186,7 @@ class DataTools
                     //$array[$v] = $val->$columnVals[$k];
                 } else {
                     $array[$v] = "";
+                    $detailsHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-success btn-xs " . $name . "Details'>详情</a>";
                     $editHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-success btn-xs " . $name . "Edit'>编辑</a>";
                     $deleteHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-danger btn-xs " . $name . "Delete'>删除</a>";
                     $nbsp = "&nbsp;&nbsp;";
@@ -194,6 +195,8 @@ class DataTools
                         $html = substr($html, 0, strlen($html) - 1);
                         $htmlArray = explode(',', $html);
                         foreach ($htmlArray as $element) {
+                            if ($element == 'details')
+                                $array[$v] .= $detailsHtml . $nbsp;
                             if ($element == 'edit')
                                 $array[$v] .= $editHtml . $nbsp;
                             if ($element == 'delete')
