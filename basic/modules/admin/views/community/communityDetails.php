@@ -101,7 +101,8 @@
     var map = new BMap.Map("map");                    // 创建Map实例
     var editpoint = new BMap.Point("<?=$data->community_longitudex?>", "<?=$data->community_latitudey?>");
     map.addOverlay(new BMap.Marker(editpoint));
-    map.centerAndZoom("南京", 15);                    // 初始化地图,设置中心点坐标和地图级别
+    map.centerAndZoom(editpoint, 15);                    // 初始化地图,设置中心点坐标
+    //map.centerAndZoom("南京", 15);                    // 初始化地图,设置中心点坐标和地图级别
     map.enableScrollWheelZoom(true);
     map.addEventListener("click", function(e){
         $("#position").val(e.point.lng + "," + e.point.lat);
