@@ -11,6 +11,10 @@ class PPTools
         return dirname(dirname(dirname(dirname(__FILE__)))) . '/web/ppt/';
     }
 
+    public static function getImageFilePath() {
+        return dirname(dirname(dirname(dirname(__FILE__)))) . '\web\\';
+    }
+
     public static function setSlide($objPHPPowerPoint, $data) {
         $tools = new PPTools();
         foreach($data as $key=>$value) {
@@ -19,7 +23,7 @@ class PPTools
             $shape = $currentSlide->createDrawingShape();
             $shape->setName('image1');
             $shape->setDescription('the first description image1');
-            $shape->setPath(PPTools::getPPTFilePath().'images/2.jpg');
+            $shape->setPath(PPTools::getPPTFilePath() . 'images/2.jpg');
             $shape->setWidth(300);
             $shape->setOffsetX(180);
             $shape->setOffsetY(190);
@@ -27,7 +31,11 @@ class PPTools
             $shape = $currentSlide->createDrawingShape();
             $shape->setName('image2');
             $shape->setDescription('the first description image2');
-            $shape->setPath(PPTools::getPPTFilePath().'images/1.jpg');
+            if ($value['community_image1'] != "") {
+                $shape->setPath(PPTools::getImageFilePath() . $value['community_image1']);
+            } else {
+                $shape->setPath(PPTools::getPPTFilePath() . 'images/2.jpg');
+            }
             $shape->setWidth(320);
             $shape->setOffsetX(680);
             $shape->setOffsetY(290);
