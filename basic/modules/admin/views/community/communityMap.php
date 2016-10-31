@@ -1,7 +1,7 @@
 <div id="page-inner">
     <div class="row">
         <div class="col-md-12">
-            <h1 class="page-header">楼盘管理/ <small>楼盘地图</small></h1>
+            <h1 class="page-header">楼盘管理/ <small>楼盘地图</small> </h1>
         </div>
     </div>
     <!-- /. ROW  -->
@@ -9,13 +9,13 @@
         <div style="float:left;width:20rem;">
             楼盘列表
             <ul class="mapul" style="margin-left:-3.5rem;">
-                <li><input name="" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="搜索" /></li>
+                <li><input name="search" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;<input id="searchComm" type="submit" value="搜索" /></li>
+                <li>显示选取周围范围<br><input name="mapfield" type="text" style="width:9rem;" />&nbsp;&nbsp;公里圆形区域</li>
                 <?php foreach($data as $key=>$value) {?>
-                <li position="<?=$value['community_longitudex']?>,<?=$value['community_latitudey']?>">
+                <li class="liComm" position="<?=$value['community_longitudex']?>,<?=$value['community_latitudey']?>">
                     <a href="javascript:;" class="custom_map" mapid="<?=$value['id']?>"
                        map_value_x="<?=$value['community_longitudex']?>"
-                       map_value_y="<?=$value['community_latitudey']?>">
-                        <?=$value['community_name']?></a></li>
+                       map_value_y="<?=$value['community_latitudey']?>"><?=$value['community_name']?></a></li>
                 <?php }?>
             </ul>
         </div>
@@ -27,6 +27,19 @@
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Ab2CQa603kmx8tYXETWEEOjozKgdUXVL"></script>
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
+    $("#searchComm").click(function(){
+        var searchValue = $("input[name=search]").val();
+        $(".mapul>li").each(function() {
+            if ($(this).hasClass("liComm")) {
+                var lihtml = $(this).find("a").html();
+                if (lihtml.indexOf(searchValue) < 0) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            }
+        });
+    });
     var data = <?=$datajson?>;
     var map = new BMap.Map("map");                    // 创建Map实例
     map.centerAndZoom("南京", 15);                    // 初始化地图,设置中心点坐标和地图级别
@@ -127,6 +140,15 @@
         var myCompOverlay = new ComplexCustomOverlay(point, data[i]['community_name'], "", data[i]['id']);
         map.addOverlay(myCompOverlay);
     }
+
+    var circle = null;
+    map.addEventListener("click", function(e){
+        $("#position").val(e.point.lng + "," + e.point.lat);
+        map.removeOverlay(circle);
+        var mpoint = new BMap.Point(e.point.lng,e.point.lat);
+        circle = new BMap.Circle(mpoint,$("input[name=mapfield]").val() * 1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+        map.addOverlay(circle);
+    });
 </script>
 <style type="text/css">
 .mapul li {
