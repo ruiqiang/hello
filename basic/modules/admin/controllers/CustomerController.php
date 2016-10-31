@@ -178,4 +178,9 @@ class CustomerController extends \yii\web\Controller
         }
         $this->redirect("/admin/customer/manager");
     }
+
+    public function actionDownloadexcel()
+    {
+        $this->redirect("/excel/模版（客户信息）.xlsx");
+    }
 }

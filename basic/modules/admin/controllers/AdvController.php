@@ -174,4 +174,9 @@ class AdvController extends \yii\web\Controller
         }
         $this->redirect("/admin/adv/manager");
     }
+
+    public function actionDownloadexcel()
+    {
+        $this->redirect("/excel/模版（广告位信息）.xlsx");
+    }
 }

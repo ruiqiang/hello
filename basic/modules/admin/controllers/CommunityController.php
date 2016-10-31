@@ -194,4 +194,9 @@ class CommunityController extends \yii\web\Controller
         $fileName = PPTools::createPPT("楼盘管理", $community);
         $this->redirect("/ppt/" . $fileName);
     }
+
+    public function actionDownloadexcel()
+    {
+        $this->redirect("/excel/模版（楼盘信息）.xlsx");
+    }
 }
