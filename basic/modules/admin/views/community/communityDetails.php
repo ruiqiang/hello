@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">楼盘门头图片：</label>
-<!--                            <input type="file" name="community_image1" style="float:right;margin-right:67%;"  />-->
+                            <img src="<?=$data->community_image1?>" style="float:right;margin-right:67%;"/>
                         </div>
                     </form>
                 </div>
