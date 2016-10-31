@@ -21,13 +21,13 @@ class CommunityController extends \yii\web\Controller
     /**
      * @var array 显示的数据列
      */
-    public $communityColumns = array("id","community_no","community_name","community_cbd","company_name","edit");
+    public $communityColumns = array("id","community_no","community_name","community_position","community_category","community_cbd","company_name","edit");
 
     /**
      * relation 关联的字段做成数组,支持多relation的深层字段属性(最多三层)
      * @var array
      */
-    public $communityColumnsVal = array("id","community_no","community_name","community_cbd",array("company","company_name"),"");
+    public $communityColumnsVal = array("id","community_no","community_name","community_position","community_category","community_cbd",array("company","company_name"),"");
 
     /**
      *
@@ -91,6 +91,18 @@ class CommunityController extends \yii\web\Controller
         $company_id = \Yii::$app->session['loginUser']->company_id;
         $community = PCommunity::find()->where('id = "' . $id . '"')->one();
         return $this->render('communityEdit',array('data'=>$community));
+    }
+
+    /**
+     * 楼盘详情
+     * @param $id
+     * @return string
+     */
+    public function actionDetails($id)
+    {
+        $company_id = \Yii::$app->session['loginUser']->company_id;
+        $community = PCommunity::find()->where('id = "' . $id . '"')->one();
+        return $this->render('communityDetails',array('data'=>$community));
     }
 
     /**

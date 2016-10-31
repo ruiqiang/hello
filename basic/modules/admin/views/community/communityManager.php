@@ -24,6 +24,8 @@
                                     <th>序号</th>
                                     <th>楼盘编号</th>
                                     <th>楼盘名称</th>
+                                    <th>楼盘地址</th>
+                                    <th>类型</th>
                                     <th>楼盘商圈</th>
                                     <th>所属公司</th>
                                     <th>编辑</th>
@@ -82,6 +84,10 @@ $(window).ready(function(){
                     "data": aoData, //以json格式传递
                     "success": function(data) {
                         fnCallback(data);
+                        $('.roleDetails').click(function(){
+                            window.location.href = "/admin/community/details?id=" + $(this).attr("role_id");
+                        });
+
                         $('.roleEdit').click(function(){
                             window.location.href = "/admin/community/edit?id=" + $(this).attr("role_id");
                         });

@@ -300,7 +300,7 @@
             content:$('#customerDetails'),
             fixed:true,
             top : '0%',
-            cancelValue:'取消',
+            cancelValue:'确定',
             cancel: function () {
                 this.close();// 隐藏
                 return false;

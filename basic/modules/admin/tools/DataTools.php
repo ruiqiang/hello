@@ -79,11 +79,11 @@ class DataTools
                     continue;
                 }
                 if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
-                    if($k=="id")      //序号自增长
+                    if ($k == "id")      //序号自增长
                     {
-                        $array[$v]=$num;
+                        $array[$v] = $num;
                         $num++;
-                    }else
+                    } else
                         $array[$v] = $val->$columnVals[$k];
                     //$array[$v] = $val->$columnVals[$k];
                 } else {
@@ -92,6 +92,7 @@ class DataTools
                     $editRoleHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEditName'>更新权限名</a>";
                     $editHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEdit'>编辑</a>";
                     $deleteHtml = '<a href=\'javascript:;\' role_id=\'' . $val->id . '\' class=\'btn btn-danger btn-xs roleDelete\'>删除</a>';
+                    $detailsHtml = '<a href=\'javascript:;\' role_id=\'' . $val->id . '\' class=\'btn btn-info btn-xs roleDetails\'>详情</a>';    //增加了详情页面
                     $nbsp = "&nbsp;&nbsp;";
                     if (strpos($columnVals[$k], '<') === 0) {
                         $html = substr($columnVals[$k], 1);
@@ -108,7 +109,7 @@ class DataTools
                                 $array[$v] .= $bindRoleHtml . $nbsp;
                         }
                     } else {
-                        $array[$v] = $editHtml . $nbsp . $deleteHtml;
+                        $array[$v] = $detailsHtml . $nbsp . $editHtml . $nbsp . $deleteHtml;
                     }
                 }
             }
@@ -177,16 +178,16 @@ class DataTools
                     continue;
                 }
                 if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
-                    if($k=="id")      //序号自增长
+                    if ($k == "id")      //序号自增长
                     {
-                        $array[$v]=$num;
+                        $array[$v] = $num;
                         $num++;
-                    }else
+                    } else
                         $array[$v] = $val->$columnVals[$k];
                     //$array[$v] = $val->$columnVals[$k];
                 } else {
                     $array[$v] = "";
-                    $detailsHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-success btn-xs " . $name . "Details'>详情</a>";
+                    $detailsHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-info btn-xs " . $name . "Details'>详情</a>";
                     $editHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-success btn-xs " . $name . "Edit'>编辑</a>";
                     $deleteHtml = "<a href='javascript:;' " . $name . "_id='" . $val->id . "' class='btn btn-danger btn-xs " . $name . "Delete'>删除</a>";
                     $nbsp = "&nbsp;&nbsp;";
@@ -268,11 +269,11 @@ class DataTools
                     continue;
                 }
                 if (isset($columnVals[$k]) && trim($columnVals[$k]) != "" && strpos($columnVals[$k], '<') !== 0) {
-                    if($k=="id")      //序号自增长
+                    if ($k == "id")      //序号自增长
                     {
-                        $array[$v]=$num;
+                        $array[$v] = $num;
                         $num++;
-                    }else {
+                    } else {
                         $array[$v] = $val->$columnVals[$k];
                         //根据公司id加工获得公司名称
                         if ($columns[$k] == "company_id") {
