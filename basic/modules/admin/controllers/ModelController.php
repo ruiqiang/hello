@@ -61,6 +61,12 @@ class ModelController extends \yii\web\Controller
         return $this->render('modelEdit',array('model'=>$model));
     }
 
+    public function actionDetails($id)
+    {
+        $model = PModel::find()->where('id = "' . $id . '"')->one();
+        return $this->render('modelDetails',array('model'=>$model));
+    }
+
     public function actionDoadd()
     {
         $now = date("Y-m-d H:i:s");

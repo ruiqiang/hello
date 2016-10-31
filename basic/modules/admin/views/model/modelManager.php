@@ -67,6 +67,9 @@
                         "data": aoData, //以json格式传递
                         "success": function(data) {
                             fnCallback(data);
+                            $('.roleDetails').click(function(){
+                                window.location.href = "/admin/model/details?id=" + $(this).attr("role_id");
+                            });
                             $('.roleEdit').click(function(){
                                 window.location.href = "/admin/model/edit?id=" + $(this).attr("role_id");
                             });
