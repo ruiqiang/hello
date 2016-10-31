@@ -1,6 +1,7 @@
 <?php
 
 namespace app\modules\admin\controllers;
+use app\modules\admin\models\FileTools;
 use app\modules\admin\models\PAdv;
 use app\modules\admin\models\PCommunity;
 
@@ -156,6 +157,9 @@ class CommunityController extends \yii\web\Controller
         $community->creator = \Yii::$app->session['loginUser']->id;
         $community->create_time = $now;
         $community->update_time = $now;
+        if($_FILES['community_image1']['error'] <= 0) {
+            $community->community_image1 = FileTools::uploadFile($_FILES['community_image1'], 'community');
+        }
         $community->save();
         $this->redirect("/admin/community/manager");
     }
@@ -181,6 +185,10 @@ class CommunityController extends \yii\web\Controller
         $community->company_id = \Yii::$app->session['loginUser']['company_id'];
         $community->updater = \Yii::$app->session['loginUser']['id'];
         $community->update_time = date("Y-m-d H:i:s");
+
+        if($_FILES['community_image1']['error'] <= 0) {
+            $community->community_image1 = FileTools::uploadFile($_FILES['community_image1'], 'community');
+        }
         $community->save();
         $this->redirect("/admin/community/manager");
     }

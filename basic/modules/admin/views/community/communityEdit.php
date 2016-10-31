@@ -13,7 +13,7 @@
                     编辑楼盘
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="communityForm" method="post" action="/admin/community/doedit">
+                    <form role="form" id="communityForm" method="post" action="/admin/community/doedit" enctype="multipart/form-data">
                         <input name="id" type="hidden" value="<?=$data->id?>" />
                         <div class="form-group">
                             <label class="control-label">楼盘编号(<span class="mydanger">*</span>)</label>
@@ -75,9 +75,13 @@
                             <label class="control-label">楼盘门头图片</label>
                             <input type="file" name="community_image1" style="float:right;margin-right:67%;"  />
                         </div>
+                        <div class="form-group">
+                            <label class="control-label">原图</label>
+                            <img src="<?=$data->community_image1?>" style="float:right;margin-right:63%;width:400px;" />
+                        </div>
                         <div class="form-group1">
                             <label class="control-label"></label>
-                            <a href="javascript:;" class="btn btn-info" id="editCommunity" style="float:right;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
+                            <a href="javascript:;" class="btn btn-info" id="editCommunity" style="float:right;width:5rem;text-align:center;margin-right:50%;margin-top:50px;">提&nbsp;交</a>
                         </div>
                     </form>
                 </div>

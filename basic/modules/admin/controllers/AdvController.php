@@ -177,6 +177,11 @@ class AdvController extends \yii\web\Controller
         $this->redirect("/admin/adv/manager");
     }
 
+    public function actionProcess()
+    {
+        return $this->render('process');
+    }
+
     public function actionFlow($id) {
         $company_id = \Yii::$app->session['loginUser']->company_id;
         $adv = PAdv::find()->where('id = "' . $id . '" and company_id = "' .$company_id. '"')->one();

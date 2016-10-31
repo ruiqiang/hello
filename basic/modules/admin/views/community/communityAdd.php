@@ -13,7 +13,7 @@
                     楼盘添加
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="communityForm" method="post" action="/admin/community/doadd">
+                    <form role="form" id="communityForm" method="post" action="/admin/community/doadd" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="control-label">楼盘编号(<span class="mydanger">*</span>)</label>
                             <input type="text" class="form-control" name="community_no" />
