@@ -15,12 +15,16 @@
                 <div class="panel-body">
                     <form role="form" id="staffForm" method="post" action="/admin/user/doexcel" enctype="multipart/form-data">
                         <div class="form-group">
+                            <label class="control-label"></label>
+                            <a href="javascript:;" class="btn btn-info" id="downloadExcel" style="float:left;width:8rem;text-align:center;margin-right:50%;">模版下载</a>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label">上传文件(<span class="mydanger">*</span>)</label>
                             <input type="file" name="commExcel" />
                         </div>
-                        <div class="form-group1">
+                        <div class="form-group1" style="padding-top: 15px;">
                             <label class="control-label"></label>
-                            <a href="javascript:;" class="btn btn-info" id="addStaff" style="float:left;width:5rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
+                            <a href="javascript:;" class="btn btn-info" id="addStaff" style="float:left;width:8rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
                         </div>
                     </form>
                 </div>
@@ -47,6 +51,10 @@
 <!-- /. PAGE INNER  -->
 <script type="text/javascript">
     $(window).ready(function() {
+        $("#downloadExcel").click(function(){
+            window.location.href = "/admin/user/downloadexcel";
+        });
+
         $("#addStaff").click(function(){
             $("#staffForm").submit();
         });

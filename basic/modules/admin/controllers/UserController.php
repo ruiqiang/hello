@@ -276,6 +276,11 @@ class UserController extends \yii\web\Controller
         $this->redirect("/admin/user/staffmanager");
     }
 
+    public function actionDownloadexcel()
+    {
+        $this->redirect("/excel/模版（用户信息）.xlsx");
+    }
+
     /**
      * 根据id获得人员信息
      */

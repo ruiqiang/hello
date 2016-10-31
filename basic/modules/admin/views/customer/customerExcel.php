@@ -16,14 +16,14 @@
                     <form role="form" id="customerForm" method="post" action="/admin/customer/doexcel" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="control-label"></label>
-                            <a href="javascript:;" class="btn btn-info" id="downloadExcel" style="float:left;width:7rem;text-align:center;margin-right:50%;">模版下载</a>
+                            <a href="javascript:;" class="btn btn-info" id="downloadExcel" style="float:left;width:8rem;text-align:center;margin-right:50%;">模版下载</a>
                         </div>
                         <div class="form-group">
                             <label class="control-label">上传文件(<span class="mydanger">*</span>)</label>
                             <input type="file" name="commExcel" />
                         <div class="form-group1" style="padding-top: 15px;">
                             <label class="control-label"></label>
-                            <a href="javascript:;" class="btn btn-info" id="addCustomer" style="float:left;width:7rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
+                            <a href="javascript:;" class="btn btn-info" id="addCustomer" style="float:left;width:8rem;text-align:center;margin-right:50%;">提&nbsp;交</a>
                         </div>
                     </form>
                 </div>
