@@ -27,7 +27,7 @@ class AdvController extends \yii\web\Controller
      * relation 关联的字段做成数组,支持多relation的深层字段属性(最多三层)
      * @var array
      */
-    public $advColumnsVal = array("id","adv_name",array("community","community_name"),array("company","company_name"),"<editrole,edit,delete>");
+    public $advColumnsVal = array("id","adv_name",array("community","community_name"),array("company","company_name"),"");
 
     /**
      *
@@ -66,6 +66,20 @@ class AdvController extends \yii\web\Controller
         $models = PModel::find()->where('company_id = "' .$company_id. '"')->all();
         $community = PCommunity::find()->all();
         return $this->render('advEdit',array('data'=>$adv,'list'=>$community, 'model'=>$models));
+    }
+
+    /**
+     * 广告位详情
+     * @param $id
+     * @return string
+     */
+    public function actionDetails($id)
+    {
+        $company_id = \Yii::$app->session['loginUser']->company_id;
+        $adv = PAdv::find()->where('id = "' . $id . '"')->one();
+        $models = PModel::find()->where('company_id = "' .$company_id. '"')->all();
+        $community = PCommunity::find()->all();
+        return $this->render('advDetails',array('data'=>$adv,'list'=>$community, 'model'=>$models));
     }
 
     /**

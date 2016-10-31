@@ -71,6 +71,9 @@ $(window).ready(function(){
                     "data": aoData, //以json格式传递
                     "success": function(data) {
                         fnCallback(data);
+                        $('.roleDetails').click(function(){
+                            window.location.href = "/admin/adv/details?id=" + $(this).attr("role_id");
+                        });
                         $('.roleEdit').click(function(){
                             window.location.href = "/admin/adv/edit?id=" + $(this).attr("role_id");
                         });
