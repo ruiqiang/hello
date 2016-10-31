@@ -92,6 +92,7 @@ class DataTools
                     $editRoleHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEditName'>更新权限名</a>";
                     $editHtml = "<a href='javascript:;' role_id='" . $val->id . "' class='btn btn-success btn-xs roleEdit'>编辑</a>";
                     $deleteHtml = '<a href=\'javascript:;\' role_id=\'' . $val->id . '\' class=\'btn btn-danger btn-xs roleDelete\'>删除</a>';
+                    $bindadv = '<a href=\'javascript:;\' adv_id=\'' . $val->id . '\' class=\'btn btn-success btn-xs advBind\'>流程状态</a>';
                     $detailsHtml = '<a href=\'javascript:;\' role_id=\'' . $val->id . '\' class=\'btn btn-info btn-xs roleDetails\'>详情</a>';    //增加了详情页面
                     $nbsp = "&nbsp;&nbsp;";
                     if (strpos($columnVals[$k], '<') === 0) {
@@ -107,6 +108,8 @@ class DataTools
                                 $array[$v] .= $deleteHtml . $nbsp;
                             if ($element == 'bindrole')
                                 $array[$v] .= $bindRoleHtml . $nbsp;
+                            if($element == 'bindadv')
+                                $array[$v] .= $bindadv . $nbsp;
                         }
                     } else {
                         $array[$v] = $detailsHtml . $nbsp . $editHtml . $nbsp . $deleteHtml;

@@ -7,6 +7,8 @@ use app\modules\admin\models\DataTools;
 use app\modules\admin\models\PCommunity;
 use app\modules\admin\models\PModel;
 use app\modules\admin\models\ExcelTools;
+use app\modules\admin\models\PStaff;
+use app\modules\admin\models\PStaffRole;
 
 /**
  * 广告点管理
@@ -27,7 +29,7 @@ class AdvController extends \yii\web\Controller
      * relation 关联的字段做成数组,支持多relation的深层字段属性(最多三层)
      * @var array
      */
-    public $advColumnsVal = array("id","adv_name",array("community","community_name"),array("company","company_name"),"");
+    public $advColumnsVal = array("id","adv_name",array("community","community_name"),array("company","company_name"),"<bindadv,edit,delete>");
 
     /**
      *
@@ -173,6 +175,16 @@ class AdvController extends \yii\web\Controller
             }
         }
         $this->redirect("/admin/adv/manager");
+    }
+
+    public function actionFlow($id) {
+        $company_id = \Yii::$app->session['loginUser']->company_id;
+        $adv = PAdv::find()->where('id = "' . $id . '" and company_id = "' .$company_id. '"')->one();
+        $models = PModel::find()->where('company_id = "' .$company_id. '"')->all();
+        $community = PCommunity::find()->where('company_id = "' .$company_id. '"')->all();
+        $staff = PStaff::find()->where('company_id = "' .$company_id. '"')->all();
+        return $this->render('advFlow', array('data'=>$adv,'list'=>$community, 'model'=>$models,
+            'staff'=>$staff));
     }
 
     public function actionDownloadexcel()

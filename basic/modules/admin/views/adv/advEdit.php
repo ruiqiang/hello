@@ -13,7 +13,7 @@
                     编辑广告位
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="editForm" action="/admin/adv/doedit" method="POST">
+                    <form role="form" id="editForm" action="/admin/adv/doedit" method="POST" enctype="multipart/form-data">
                         <input name="id" type="hidden" value="<?=$data->id?>" />
                         <div class="form-group">
                             <label class="control-label">广告位编号</label>

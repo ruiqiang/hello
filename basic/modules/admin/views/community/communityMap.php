@@ -10,7 +10,7 @@
             楼盘列表
             <ul class="mapul" style="margin-left:-3.5rem;">
                 <li><input name="search" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;<input id="searchComm" type="submit" value="搜索" /></li>
-                <li>显示选取周围范围<br><input name="mapfield" type="text" style="width:9rem;" />&nbsp;&nbsp;公里圆形区域</li>
+                <li>显示选取周围范围<br><input name="mapfield" value="0.5" type="text" style="width:9rem;" />&nbsp;&nbsp;公里圆形区域</li>
                 <?php foreach($data as $key=>$value) {?>
                 <li class="liComm" position="<?=$value['community_longitudex']?>,<?=$value['community_latitudey']?>">
                     <a href="javascript:;" class="custom_map" mapid="<?=$value['id']?>"

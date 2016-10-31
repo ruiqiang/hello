@@ -158,12 +158,12 @@ class UserController extends \yii\web\Controller
      */
     public function actionSectormanager()
     {
-        $session = \Yii::$app->session;
-        $staff = $session['loginUser'];
-        $company = PCompany::find()->where('id=' . $staff->company_id)->one();
-
-
-        return $this->render("sectorManager", array('company' => $company));
+        $sectorArray = PSector::find()->asArray()->all();
+        foreach($sectorArray as $key=>&$value) {
+            $staffs = PStaff::find()->where('staff_sector = "' .$value['id']. '"')->asArray()->all();
+            $value['staffs'] = $staffs;
+        }
+        return $this->render("sectorManager", array('list' => $sectorArray));
     }
 
     /**
@@ -199,11 +199,11 @@ class UserController extends \yii\web\Controller
             //超级管理员
             $companyList = PCompany::find()->where("is_delete=0")->all();
             $company = PCompany::find()->one();
-            $sectorList = PSector::find()->where("company_id = " . $company->id . " and is_delete=0 ")->all();
+            $sectorList = PSector::find()->where("company_id = " . $company->id)->all();
         } else {
             //普通人员
-            $companyList = PCompany::find()->where("id = " . $staffInfo->company_id . " and is_delete=0 ")->all();
-            $sectorList = PSector::find()->where("company_id = " . $staffInfo->company_id . " and is_delete=0 ")->all();
+            $companyList = PCompany::find()->where("id = " . $staffInfo->company_id)->all();
+            $sectorList = PSector::find()->where("company_id = " . $staffInfo->company_id)->all();
         }
 
         $staffList = PStaff::find()->where(' is_delete = 0 ')->all();

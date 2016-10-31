@@ -58,7 +58,6 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionAdd()
     {
-        $company_id = \Yii::$app->session['loginUser']->company_id;
         return $this->render('communityAdd');
     }
 
@@ -88,7 +87,6 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionEdit($id)
     {
-        $company_id = \Yii::$app->session['loginUser']->company_id;
         $community = PCommunity::find()->where('id = "' . $id . '"')->one();
         return $this->render('communityEdit',array('data'=>$community));
     }
@@ -100,7 +98,6 @@ class CommunityController extends \yii\web\Controller
      */
     public function actionDetails($id)
     {
-        $company_id = \Yii::$app->session['loginUser']->company_id;
         $community = PCommunity::find()->where('id = "' . $id . '"')->one();
         return $this->render('communityDetails',array('data'=>$community));
     }

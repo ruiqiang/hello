@@ -19,11 +19,11 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                             <tr>
-                                <th>序号</th>
-                                <th>广告名称</th>
-                                <th>楼盘名称</th>
-                                <th>公司名称</th>
-                                <th>编辑</th>
+                                <th width="5%">序号</th>
+                                <th width="25%">广告名称</th>
+                                <th width="25%">楼盘名称</th>
+                                <th width="15%">公司名称</th>
+                                <th width="20%">编辑</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -77,10 +77,8 @@ $(window).ready(function(){
                         $('.roleEdit').click(function(){
                             window.location.href = "/admin/adv/edit?id=" + $(this).attr("role_id");
                         });
-                        $('.roleDelete').click(function(){
-                            if(confirm("确定要删除该广告位吗?")){
-
-                            }
+                        $('.advBind').click(function(){
+                            window.location.href = "/admin/adv/flow?id=" + $(this).attr("adv_id")
                         });
                         if(search == null) {
                             search =  $('input[type=search]');

@@ -13,7 +13,7 @@
                     添加广告位
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="advForm" action="/admin/adv/doadd" method="POST">
+                    <form role="form" id="advForm" action="/admin/adv/doadd" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="control-label">广告位编号</label>
                             <input type="text" class="form-control" name="adv_no" />
