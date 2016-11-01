@@ -1,9 +1,0 @@
-INSERT INTO `p_role_menu` VALUES (1, 1, 2, '0000-0-0 00:00:00');
-INSERT INTO `p_role_menu` VALUES (2, 8, 2, '0000-0-0 00:00:00');
-INSERT INTO `p_role_menu` VALUES (3, 1, 3, '0000-0-0 00:00:00');
-INSERT INTO `p_role_menu` VALUES (4, 11, 3, '0000-0-0 00:00:00');
-INSERT INTO `p_role_menu` VALUES (5, 12, 3, '0000-0-0 00:00:00');
-INSERT INTO `p_role_menu` VALUES (6, 16, 3, '2016-9-14 09:22:49');
-INSERT INTO `p_role_menu` VALUES (7, 17, 3, '2016-9-14 09:22:49');
-INSERT INTO `p_role_menu` VALUES (8, 16, 6, '2016-9-14 10:04:41');
-INSERT INTO `p_role_menu` VALUES (9, 17, 6, '2016-9-14 10:04:41');
